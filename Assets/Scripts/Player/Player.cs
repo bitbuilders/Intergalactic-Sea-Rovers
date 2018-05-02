@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] Controller m_controller = null;
 
+    public Controller Controller { get { return m_controller; } }
+
     void Start()
     {
 

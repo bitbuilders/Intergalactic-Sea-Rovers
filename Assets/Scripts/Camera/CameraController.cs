@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] [Range(-10.0f, 10.0f)] float m_distanceFromTarget = 5.0f;
     [SerializeField] bool m_2D = true;
 
+    Controller m_playerController;
     Camera m_camera;
     Vector3 m_actualPosition;
     Vector3 m_shake;
@@ -19,6 +20,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        m_playerController = m_target.GetComponent<Player>().Controller;
         m_camera = GetComponent<Camera>();
         m_actualPosition = transform.position;
         m_shake = Vector3.zero;
@@ -40,10 +42,10 @@ public class CameraController : MonoBehaviour
     {
         if (m_2D)
         {
-            m_actualPosition = m_target.position + Vector3.back * 10;
-
-            // TODO: Lead camera in front of where target is moving (without using velocity)
-
+            Vector3 nextPosition = Vector3.zero;
+            nextPosition = m_target.position + Vector3.back * 10;
+            nextPosition += m_playerController.Velocity.normalized * 3.0f * m_playerController.SpeedPercentage;
+            m_actualPosition = Vector3.Lerp(m_actualPosition, nextPosition, Time.deltaTime * m_cameraStiffness);
         }
         else
         {
@@ -55,7 +57,7 @@ public class CameraController : MonoBehaviour
         
         Vector3 newPosition = m_actualPosition + m_shake;
 
-        transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * m_cameraStiffness);
+        transform.position = newPosition;
     }
 
     public void Shake(float time, float amplitude = 8.0f, float rate = 6.0f)
