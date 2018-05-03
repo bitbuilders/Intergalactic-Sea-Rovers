@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 8
+  serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,6 +39,7 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -54,11 +55,10 @@ LightmapSettings:
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 9
+    serializedVersion: 10
     m_Resolution: 2
     m_BakeResolution: 40
-    m_TextureWidth: 1024
-    m_TextureHeight: 1024
+    m_AtlasSize: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -142,6 +142,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -280,11 +281,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_target: {fileID: 949711384}
-  m_cameraStiffness: 3
+  m_cameraStiffness: 5
+  m_distanceFromTarget: 5
+  m_cameraLead: 4
   m_shakeAmplitude: 8
   m_shakeRate: 6
-  m_shakeTime: 1
-  m_distanceFromTarget: 5
+  m_shakeTime: 0
   m_2D: 1
 --- !u!1 &638430641
 GameObject:
@@ -404,7 +406,7 @@ GameObject:
   - component: {fileID: 1304715058}
   - component: {fileID: 1304715057}
   - component: {fileID: 1304715060}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: NoWalk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,6 +439,7 @@ TilemapRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -459,9 +462,11 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -5
   m_ChunkSize: {x: 32, y: 32, z: 32}
+  m_ChunkCullingBounds: {x: 0.27999997, y: 0.27999997, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
+  m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
 --- !u!1839735485 &1304715056
 Tilemap:
@@ -565,11 +570,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
-  m_TileRefreshArray:
-  - serializedVersion: 1
-    m_DirtyIndex: 0
-  - serializedVersion: 1
-    m_DirtyIndex: 0
 --- !u!19719996 &1304715057
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -602,7 +602,17 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 1304715057}
     m_ColliderPaths:
-    - - X: 49999996
+    - - X: 49700004
+        Y: 75300000
+      - X: 49700004
+        Y: 50299996
+      - X: 24700000
+        Y: 50299996
+      - X: 24700000
+        Y: -299999
+      - X: 25000000
+        Y: -299999
+      - X: 49999996
         Y: 24700000
       - X: 50299996
         Y: 24700000
@@ -614,16 +624,6 @@ CompositeCollider2D:
         Y: 49700004
       - X: 75300000
         Y: 75300000
-      - X: 49700004
-        Y: 75300000
-      - X: 49700004
-        Y: 50299996
-      - X: 24700000
-        Y: 50299996
-      - X: 24700000
-        Y: -299999
-      - X: 25000000
-        Y: -299999
   m_CompositePaths:
     m_Paths:
     - - {x: 4.9999995, y: 2.47}
@@ -719,6 +719,7 @@ TilemapRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -741,9 +742,11 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
+  m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
 --- !u!1839735485 &1470052788
 Tilemap:
@@ -781,7 +784,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
-  m_TileRefreshArray: []
 --- !u!1 &1746735459
 GameObject:
   m_ObjectHideFlags: 0
@@ -945,16 +947,6 @@ Prefab:
     - target: {fileID: 4316221000410422, guid: ec72fed1ce93a8e4a9ad837cbd4d2142, type: 2}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 70875702199823668, guid: ec72fed1ce93a8e4a9ad837cbd4d2142,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 70875702199823668, guid: ec72fed1ce93a8e4a9ad837cbd4d2142,
-        type: 2}
-      propertyPath: m_Offset.y
-      value: -0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ec72fed1ce93a8e4a9ad837cbd4d2142, type: 2}
