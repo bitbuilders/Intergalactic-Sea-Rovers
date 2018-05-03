@@ -51,13 +51,14 @@ public class Controller2D : Controller
         m_velocity.y = verticalSpeed * (1.0f - horizontalSpeed * 0.25f); // "
         m_velocity *= Time.deltaTime * m_speed;
 
-        m_speedPercentageHoriz = horizontalSpeed;
-        m_speedPercentageVert = verticalSpeed;
-
         if (m_velocity.magnitude > 0.0f)
         {
             m_velocity = LimitVelocity(m_velocity);
         }
+
+        m_speedPercentageHoriz = horizontalSpeed;
+        m_speedPercentageVert = verticalSpeed;
+
         transform.position += m_velocity;
     }
     

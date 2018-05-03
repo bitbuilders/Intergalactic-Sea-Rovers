@@ -17,7 +17,6 @@ public class CameraController : MonoBehaviour
     Camera m_camera;
     Vector3 m_actualPosition;
     Vector3 m_shake;
-    Vector3 m_offset;
     float m_followRateHoriz = 0.0f;
     float m_followRateVert = 0.0f;
 
@@ -47,20 +46,11 @@ public class CameraController : MonoBehaviour
         {
             Vector3 nextPosition = Vector3.zero;
             nextPosition = m_target.position + Vector3.back * 10;
-            m_followRateHoriz = Mathf.Lerp(m_followRateHoriz, m_playerController.SpeedPercentageHoriz, Time.deltaTime * m_cameraStiffness * Mathf.Abs(m_playerController.SpeedPercentageHoriz));
-            m_followRateVert = Mathf.Lerp(m_followRateVert, m_playerController.SpeedPercentageVert, Time.deltaTime * m_cameraStiffness * Mathf.Abs(m_playerController.SpeedPercentageVert));
+            m_followRateHoriz = Mathf.Lerp(m_followRateHoriz, m_playerController.SpeedPercentageHoriz, Time.deltaTime);
+            m_followRateVert = Mathf.Lerp(m_followRateVert, m_playerController.SpeedPercentageVert, Time.deltaTime);
             Vector3 attemptedPosition = m_playerController.Velocity.normalized;
-            float horizModifier = 0.0f;
-            float vertModifier = 0.0f;
-            if (m_followRateHoriz < 0.0f && m_playerController.SpeedPercentageHoriz > 0.0f)
-                horizModifier = m_followRateHoriz + 1.0f / m_playerController.SpeedPercentageHoriz + 1.0f;
-            else horizModifier = m_followRateHoriz;
-            if (m_followRateVert < 0.0f) vertModifier = Mathf.Abs(m_followRateVert);
-            else vertModifier = m_followRateVert;
-            attemptedPosition.x *= horizModifier;
-            attemptedPosition.y *= vertModifier;
-            print("followH: " + m_followRateHoriz + " | actualH: " + m_playerController.SpeedPercentageHoriz
-                + " | followV: " + m_followRateVert + " | actualV: " + m_playerController.SpeedPercentageVert);
+            attemptedPosition.x = Mathf.Abs(attemptedPosition.x) * m_followRateHoriz;
+            attemptedPosition.y = Mathf.Abs(attemptedPosition.y) * m_followRateVert;
             nextPosition += attemptedPosition * m_cameraLead;
             m_actualPosition = Vector3.Lerp(m_actualPosition, nextPosition, Time.deltaTime * m_cameraStiffness);
         }
