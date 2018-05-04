@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-
+        InteractionManager.Instance.Interact(null);
     }
 
     private void Update()
