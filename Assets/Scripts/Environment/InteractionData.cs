@@ -5,7 +5,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "InteractionData.asset", menuName = "Assets/Interaction/InteractionData", order = 1)]
 public class InteractionData : ScriptableObject
 {
-    public Interactee leftInteractor;
-    public Interactee rightInteractor;
+    public enum InteractionType
+    {
+        EVENT,
+        CONVERSATION,
+        MONOLOG
+    }
+    public Interactee firstInteractor;
+    public Interactee secondInteractor;
+    public InteractionType interactionType;
     public string dialogFileName;
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : Singleton<CameraController>
 {
     [SerializeField] Transform m_target = null;
     [SerializeField] [Range(1.0f, 20.0f)] float m_cameraStiffness = 5.0f;
