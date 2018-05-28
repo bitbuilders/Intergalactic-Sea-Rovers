@@ -18,6 +18,7 @@ public class DialogAction : ScriptableObject
     public float blinkSize;
     public float blinkDuration;
     public float textSpeed;
+    public float textAnimationSpeed;
     public EntryPoint entryPoint;
     public string text;
     public Interactee interactee;

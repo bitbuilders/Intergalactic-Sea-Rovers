@@ -10,7 +10,9 @@ public class InteractionManager : Singleton<InteractionManager>
     [SerializeField] [Range(0.0f, 5.0f)] float m_fadeTime = 1.0f;
     [SerializeField] Transform m_leftPosition = null;
     [SerializeField] Transform m_rightPosition = null;
-    [SerializeField] Transform m_centerPosition = null;
+    [SerializeField] GameObject m_character = null;
+    [SerializeField] GameObject m_carret = null;
+    [SerializeField] Transform m_characterContainer = null;
     [SerializeField] KeyCode m_continueKey = KeyCode.Space;
     [SerializeField] SpriteRenderer m_first = null;
     [SerializeField] SpriteRenderer m_second = null;
@@ -42,8 +44,7 @@ public class InteractionManager : Singleton<InteractionManager>
     {
         if (Input.GetKeyDown(m_continueKey) && m_textFinished)
         {
-            m_playAction = true;
-            m_dialogText.text = "";
+            ResetDialog();
         }
 
         if (m_dialogData != null)
@@ -65,7 +66,8 @@ public class InteractionManager : Singleton<InteractionManager>
                     StartCoroutine(MoveSprite(action.interactee.sprite, action.entryPoint));
                 }
 
-                StartCoroutine(DrawText(action.text, action.textSpeed));
+                float animSpeed = action.textAnimationSpeed == 0.0f ? 1.0f : action.textAnimationSpeed;
+                StartCoroutine(DrawText(action.text, action.textSpeed, animSpeed));
 
                 m_playAction = false;
                 m_textFinished = false;
@@ -85,29 +87,115 @@ public class InteractionManager : Singleton<InteractionManager>
         ParseFileIntoDialog(data.dialogFileName, data, out dialogData);
         m_dialogData = dialogData;
         ResetDialog();
+        m_dialogIndex = 0;
     }
 
     private void ResetDialog()
     {
         m_playAction = true;
         m_textFinished = false;
-        m_dialogIndex = 0;
         m_dialogText.text = "";
+        Transform[] children = m_characterContainer.GetComponentsInChildren<Transform>();
+        for (int i = children.Length - 1; i >= 0; i--)
+        {
+            if (children[i] != m_characterContainer.transform)
+            {
+                Destroy(children[i].gameObject);
+            }
+        }
     }
 
-    private IEnumerator DrawText(string text, float speed)
+    private IEnumerator DrawText(string text, float speed, float animSpeed)
     {
         m_textSpeed = speed;
 
+        RectTransform rect = m_dialogText.transform.parent.GetComponent<RectTransform>();
+        RectTransform carSize = m_carret.GetComponent<RectTransform>();
+        float xStart = -rect.sizeDelta.x * 0.5f + carSize.sizeDelta.x;
+        float yStart = rect.sizeDelta.x * 0.5f - carSize.sizeDelta.x;
+        float x = xStart;
+        float y = yStart;
+        float xGrowth = 20.0f;
+        float yGrowth = 35.0f;
+        float xGrown = 0.0f;
         for (int i = 0; i < text.Length; ++i)
         {
-            m_dialogText.text += text[i];
+            //m_dialogText.text += text[i];
+            int amountLeft = (int)(rect.sizeDelta.x - xGrown) / (int)xGrowth;
+            if (WillWrap(text, i, amountLeft))
+            {
+                xGrown = 0.0f;
+                x = xStart;
+                y -= yGrowth;
+            }
+            m_carret.transform.localPosition = new Vector3(x, y);
+            x += xGrowth;
+            xGrown += xGrowth;
+            if (xGrown >= rect.sizeDelta.x - 25.0f)
+            {
+                xGrown = 0.0f;
+                x = xStart;
+                y -= yGrowth;
+            }
+
+            var t = CreateCharacter();
+            t.text = text[i].ToString();
+            t.transform.position = new Vector3(m_carret.transform.position.x, 0.0f);
+            StartCoroutine(AnimateText(t, animSpeed, m_carret.transform.position));
 
             float multiplier = Input.GetKey(m_continueKey) ? 0.5f : 1.0f;
             yield return new WaitForSeconds(speed * multiplier);
         }
 
         m_textFinished = true;
+    }
+
+    private bool WillWrap(string text, int charIndex, int maxAmount)
+    {
+        bool willWrap = true;
+
+        if (text[charIndex].ToString() == "")
+            return false;
+
+        for (int i = charIndex; i < charIndex + maxAmount; ++i)
+        {
+            if (i >= text.Length)
+            {
+                if (i <= charIndex + maxAmount)
+                    willWrap = false;
+
+                break;
+            }
+            if (text[i].ToString() == " ")
+            {
+                willWrap = false;
+                break;
+            }
+        }
+
+        return willWrap;
+    }
+
+    private TextMeshProUGUI CreateCharacter()
+    {
+        GameObject obj = Instantiate(m_character, Vector3.zero, Quaternion.identity, m_characterContainer);
+        obj.transform.localPosition = Vector3.zero;
+        TextMeshProUGUI text = obj.GetComponent<TextMeshProUGUI>();
+
+        return text;
+    }
+
+    private IEnumerator AnimateText(TextMeshProUGUI text, float speed, Vector3 target)
+    {
+        target.x = 0.0f;
+        for (float i = 0.0f; i <= 1.0f; i += Time.deltaTime * speed)
+        {
+            Vector3 pos = Interpolation.BackOut(i) * target;
+            text.transform.position = new Vector3(text.transform.position.x, pos.y);
+            yield return null;
+        }
+
+        text.transform.position = new Vector3(text.transform.position.x, target.y);
     }
 
     private IEnumerator BlinkSprite(SpriteRenderer sprite, float size, float duration)
@@ -142,9 +230,6 @@ public class InteractionManager : Singleton<InteractionManager>
                 break;
             case DialogAction.EntryPoint.RIGHT:
                 endPoint = m_rightPosition.position;
-                break;
-            case DialogAction.EntryPoint.CENTER:
-                endPoint = m_centerPosition.position;
                 break;
         }
 
@@ -271,6 +356,11 @@ public class InteractionManager : Singleton<InteractionManager>
                 float speed;
                 float.TryParse(value, out speed);
                 action.textSpeed = speed;
+                break;
+            case "TEXT_ANIM_SPEED":
+                float anim;
+                float.TryParse(value, out anim);
+                action.textAnimationSpeed = anim;
                 break;
             case "ENTRY_POINT":
                 action.entryPoint = (DialogAction.EntryPoint)Enum.Parse(typeof(DialogAction.EntryPoint), value);
