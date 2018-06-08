@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
     [SerializeField] Controller m_controller = null;
 
@@ -10,11 +10,14 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        InteractionManager.Instance.Interact(null);
+        CanMove = true;
     }
 
     private void Update()
     {
-        m_controller.Move();
+        if (CanMove)
+        {
+            m_controller.Move();
+        }
     }
 }

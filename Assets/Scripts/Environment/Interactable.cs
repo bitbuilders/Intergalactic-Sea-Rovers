@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public abstract class Interactable : MonoBehaviour
+public abstract class Interactable : Entity
 {
     [SerializeField] [Range(0.0f, 10.0f)] float m_interactionDistance = 1.5f;
     [SerializeField] GameObject m_indicator = null;

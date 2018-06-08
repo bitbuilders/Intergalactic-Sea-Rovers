@@ -17,8 +17,6 @@ public class CameraController : Singleton<CameraController>
     Camera m_camera;
     Vector3 m_actualPosition;
     Vector3 m_shake;
-    float m_followRateHoriz = 0.0f;
-    float m_followRateVert = 0.0f;
 
     void Start()
     {
@@ -44,14 +42,12 @@ public class CameraController : Singleton<CameraController>
     {
         if (m_2D)
         {
+            Vector3 offset = Vector3.zero;
+            offset.x = m_playerController.SpeedPercentageHoriz * m_cameraLead;
+            offset.y = m_playerController.SpeedPercentageVert * m_cameraLead;
             Vector3 nextPosition = Vector3.zero;
-            nextPosition = m_target.position + Vector3.back * 10;
-            m_followRateHoriz = Mathf.Lerp(m_followRateHoriz, m_playerController.SpeedPercentageHoriz, Time.deltaTime);
-            m_followRateVert = Mathf.Lerp(m_followRateVert, m_playerController.SpeedPercentageVert, Time.deltaTime);
-            Vector3 attemptedPosition = m_playerController.Velocity.normalized;
-            attemptedPosition.x = Mathf.Abs(attemptedPosition.x) * m_followRateHoriz;
-            attemptedPosition.y = Mathf.Abs(attemptedPosition.y) * m_followRateVert;
-            nextPosition += attemptedPosition * m_cameraLead;
+            nextPosition = m_target.transform.position + offset;
+            nextPosition.z = -10.0f;
             m_actualPosition = Vector3.Lerp(m_actualPosition, nextPosition, Time.deltaTime * m_cameraStiffness);
         }
         else

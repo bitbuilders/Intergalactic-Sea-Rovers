@@ -56,10 +56,52 @@ public class Controller2D : Controller
             m_velocity = LimitVelocity(m_velocity);
         }
 
-        m_speedPercentageHoriz = horizontalSpeed;
-        m_speedPercentageVert = verticalSpeed;
+        CalculateSpeedPercentage(m_velocity);
 
         transform.position += m_velocity;
+    }
+
+    private void CalculateSpeedPercentage(Vector2 direction)
+    {
+        float speed = Time.deltaTime * 1.0f;
+        if (direction.x < -0.05f)
+        {
+            m_speedPercentageHoriz -= speed;
+        }
+        else if (direction.x > 0.05f)
+        {
+            m_speedPercentageHoriz += speed;
+        }
+        else
+        {
+            if (m_speedPercentageHoriz > 0.05f)
+                m_speedPercentageHoriz -= speed * 2.0f;
+            else if (m_speedPercentageHoriz < -0.05f)
+                m_speedPercentageHoriz += speed * 2.0f;
+            else
+                m_speedPercentageHoriz = 0.0f;
+        }
+
+        if (direction.y < -0.05f)
+        {
+            m_speedPercentageVert -= speed;
+        }
+        else if (direction.y > 0.05f)
+        {
+            m_speedPercentageVert += speed;
+        }
+        else
+        {
+            if (m_speedPercentageVert > 0.05f)
+                m_speedPercentageVert -= speed * 2.0f;
+            else if (m_speedPercentageVert < -0.05f)
+                m_speedPercentageVert += speed * 2.0f;
+            else
+                m_speedPercentageVert = 0.0f;
+        }
+
+        m_speedPercentageHoriz = Mathf.Clamp(m_speedPercentageHoriz, -1.0f, 1.0f);
+        m_speedPercentageVert = Mathf.Clamp(m_speedPercentageVert, -1.0f, 1.0f);
     }
     
 

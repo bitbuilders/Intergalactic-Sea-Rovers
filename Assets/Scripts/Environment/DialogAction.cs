@@ -10,7 +10,8 @@ public class DialogAction : ScriptableObject
         NONE,
         LEFT,
         RIGHT,
-        CENTER
+        LEFT_START,
+        RIGHT_START
     }
     public float shakeAmplitude;
     public float shakeRate;
