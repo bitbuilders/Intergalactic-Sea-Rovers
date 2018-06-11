@@ -9,6 +9,8 @@ public abstract class Interactable : Entity
     [SerializeField] GameObject m_indicator = null;
     [SerializeField] KeyCode m_interactionKey = KeyCode.A;
 
+    public bool Busy { get; set; }
+
     protected Player m_player = null;
     GameObject m_indicatorHUB = null;
     TextMeshProUGUI m_indicatorText = null;
@@ -38,7 +40,7 @@ public abstract class Interactable : Entity
             DisplayIndicator();
             AnimateIndicator();
 
-            if (Input.GetKeyDown(m_interactionKey))
+            if (Input.GetKeyDown(m_interactionKey) && !Busy)
             {
                 Interact();
             }

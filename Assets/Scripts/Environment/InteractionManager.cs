@@ -11,6 +11,7 @@ public class InteractionManager : Singleton<InteractionManager>
     [Header("Display Info")]
     [SerializeField] [Range(0.0f, 5.0f)] float m_fadeTime = 1.0f;
     [SerializeField] [Range(0.0f, 1.0f)] float m_tintOpacity = 0.4f;
+    [SerializeField] GameObject m_interactionCanvas = null;
     [SerializeField] GameObject m_character = null;
     [SerializeField] GameObject m_carret = null;
     [SerializeField] Transform m_characterContainer = null;
@@ -19,11 +20,9 @@ public class InteractionManager : Singleton<InteractionManager>
     [SerializeField] TextMeshProUGUI m_entity1NameText = null;
     [SerializeField] TextMeshProUGUI m_entity2NameText = null;
     [SerializeField] Image m_tint = null;
-    [SerializeField] Image m_e1Tint = null;
-    [SerializeField] Image m_e2Tint = null;
+    //[SerializeField] Image m_e1Tint = null;
+    //[SerializeField] Image m_e2Tint = null;
     [Header("Dialog Info")]
-    [SerializeField] Entity m_player = null;
-    [SerializeField] Entity m_NPC = null;
     [SerializeField] Image m_firstEntity = null;
     [SerializeField] Image m_secondEntity = null;
     [SerializeField] Transform m_leftPosition = null;
@@ -32,27 +31,28 @@ public class InteractionManager : Singleton<InteractionManager>
     [SerializeField] Transform m_rightPosition = null;
     [SerializeField] Transform m_rightPositionEnd = null;
     [SerializeField] Transform m_rightPositionStart = null;
+    [Header("General")]
 
-    AudioSource m_audioSource;
+    AudioManager m_audioManager;
     DialogData m_dialogData = null;
+    Interactable m_npc = null;
     Interactee[] m_currentInteractees = null;
     CameraController m_camera = null;
-    float m_textSpeed = 0.0f;
     int m_dialogIndex = 0;
     bool m_playAction = false;
     bool m_textFinished = false;
 
     private void Awake()
     {
-        m_audioSource = GetComponent<AudioSource>();
+        m_audioManager = AudioManager.Instance;
         m_camera = CameraController.Instance;
         m_currentInteractees = new Interactee[2];
     }
 
     private void Start()
     {
-        InteractionData data = CreateInteraction(m_player.m_interacteeInfo, InteractionData.InteractionType.CONVERSATION, "test", m_NPC.m_interacteeInfo);
-        Interact(data);
+        //InteractionData data = CreateInteraction(m_player.m_interacteeInfo, InteractionData.InteractionType.CONVERSATION, "test", m_NPC.m_interacteeInfo);
+        //Interact(data);
     }
 
     private void Update()
@@ -76,7 +76,7 @@ public class InteractionManager : Singleton<InteractionManager>
 
                 if (action.shakeDuration > 0.0f)
                 {
-                    m_camera.Shake(action.shakeDuration, action.shakeAmplitude, action.shakeRate);
+                    Shake(action);
                 }
                 if (action.blinkDuration > 0.0f)
                 {
@@ -88,7 +88,7 @@ public class InteractionManager : Singleton<InteractionManager>
                 }
 
                 float animSpeed = action.textAnimationSpeed == 0.0f ? 1.0f : action.textAnimationSpeed;
-                StartCoroutine(DrawText(action.text, action.textSpeed, animSpeed, action.interactee.color));
+                StartCoroutine(DrawText(action.text, action.textSpeed, animSpeed, action.interactee.pitch, action.interactee.color));
 
                 m_playAction = false;
                 m_textFinished = false;
@@ -105,8 +105,9 @@ public class InteractionManager : Singleton<InteractionManager>
         }
     }
 
-    public void Interact(InteractionData data)
+    public void Interact(InteractionData data, Interactable npc)
     {
+        m_interactionCanvas.SetActive(true);
         StartCoroutine(FadeTint(m_tint, 1.0f, true));
         DialogData dialogData;
         ParseFileIntoDialog(data.dialogFileName, data, out dialogData);
@@ -115,6 +116,8 @@ public class InteractionManager : Singleton<InteractionManager>
         m_dialogIndex = 0;
         m_entity1NameText.text = "";
         m_entity2NameText.text = "";
+        m_npc = npc;
+        m_npc.Busy = true;
     }
 
     private void UpdateCurrent(out DialogAction action, out Image entity)
@@ -136,8 +139,10 @@ public class InteractionManager : Singleton<InteractionManager>
         {
             if (m_dialogData.current == DialogData.CurrentInteractee.FIRST)
             {
-                StartCoroutine(FadeTint(m_e1Tint, 2.0f, false, true));
-                StartCoroutine(FadeTint(m_e2Tint, 2.0f, true, true));
+                StartCoroutine(FadeEntity(m_firstEntity, 2.0f, true, 1.0f, true));
+                StartCoroutine(FadeEntity(m_secondEntity, 2.0f, false, 0.5f, true));
+                StartCoroutine(FadeText(m_entity1NameText, 2.0f, true, 1.0f, true));
+                StartCoroutine(FadeText(m_entity2NameText, 2.0f, false, 0.5f, true));
                 m_entity1NameText.color = action.interactee.color;
                 m_entity1NameText.text = action.interactee.entityName;
                 m_firstEntity.sprite = action.interactee.sprite;
@@ -145,8 +150,10 @@ public class InteractionManager : Singleton<InteractionManager>
             }
             else if (m_dialogData.current == DialogData.CurrentInteractee.SECOND)
             {
-                StartCoroutine(FadeTint(m_e1Tint, 2.0f, true, true));
-                StartCoroutine(FadeTint(m_e2Tint, 2.0f, false, true));
+                StartCoroutine(FadeEntity(m_firstEntity, 2.0f, false, 0.5f, true));
+                StartCoroutine(FadeEntity(m_secondEntity, 2.0f, true, 1.0f, true));
+                StartCoroutine(FadeText(m_entity1NameText, 2.0f, false, 0.5f, true));
+                StartCoroutine(FadeText(m_entity2NameText, 2.0f, true, 1.0f, true));
                 m_entity2NameText.color = action.interactee.color;
                 m_entity2NameText.text = action.interactee.entityName;
                 m_secondEntity.sprite = action.interactee.sprite;
@@ -155,19 +162,34 @@ public class InteractionManager : Singleton<InteractionManager>
         }
     }
 
+    private void Shake(DialogAction action)
+    {
+        float UIMultiplier = 100.0f;
+        m_camera.Shake(action.shakeDuration, action.shakeAmplitude, action.shakeRate);
+        Shaker.Instance.ShakeObject(m_firstEntity.gameObject, action.shakeDuration, action.shakeAmplitude * UIMultiplier, action.shakeRate);
+        Shaker.Instance.ShakeObject(m_secondEntity.gameObject, action.shakeDuration, action.shakeAmplitude * UIMultiplier, action.shakeRate);
+        Shaker.Instance.ShakeObject(m_entity1NameText.gameObject, action.shakeDuration, action.shakeAmplitude * UIMultiplier, action.shakeRate);
+        Shaker.Instance.ShakeObject(m_entity2NameText.gameObject, action.shakeDuration, action.shakeAmplitude * UIMultiplier, action.shakeRate);
+    }
+
     private IEnumerator ResetSprites()
     {
         StartCoroutine(FadeTint(m_tint, 1.0f, false));
-        StartCoroutine(FadeTint(m_e1Tint, 1.0f, false, true));
-        StartCoroutine(FadeTint(m_e2Tint, 1.0f, false, true));
+        StartCoroutine(FadeEntity(m_firstEntity, 1.0f, false, 0.0f, true));
+        StartCoroutine(FadeEntity(m_secondEntity, 1.0f, false, 0.0f, true));
+        StartCoroutine(FadeText(m_entity1NameText, 2.0f, false, 0.0f, true));
+        StartCoroutine(FadeText(m_entity2NameText, 2.0f, false, 0.0f, true));
         StartCoroutine(MoveSprite(m_firstEntity, DialogAction.EntryPoint.LEFT_START, 2.0f));
         StartCoroutine(MoveSprite(m_secondEntity, DialogAction.EntryPoint.RIGHT_START, 2.0f));
 
         yield return new WaitForSeconds(1.0f);
+        m_npc.Busy = false;
+        m_npc = null;
         m_firstEntity.sprite = null;
         m_secondEntity.sprite = null;
         m_firstEntity.transform.position = m_leftPositionStart.position;
         m_secondEntity.transform.position = m_rightPositionStart.position;
+        m_interactionCanvas.SetActive(false);
     }
 
     private void ResetDialog()
@@ -182,6 +204,102 @@ public class InteractionManager : Singleton<InteractionManager>
             {
                 Destroy(children[i].gameObject);
             }
+        }
+    }
+
+    private IEnumerator FadeText(TextMeshProUGUI text, float speed, bool fadeIn, float limit = 0.0f, bool keepStartingOpacity = false)
+    {
+        if (fadeIn)
+        {
+            limit = limit == 0.0f ? 1.0f : limit;
+            float start = text.color.a;
+            if (!keepStartingOpacity)
+            {
+                start = 0.0f;
+                Color color = text.color;
+                color.a = 0.0f;
+                text.color = color;
+            }
+
+            for (float i = start; i <= limit; i += Time.deltaTime * speed)
+            {
+                Color c = text.color;
+                c.a = i;
+                text.color = c;
+                yield return null;
+            }
+            Color co = text.color;
+            co.a = limit;
+            text.color = co;
+        }
+        else
+        {
+            float start = text.color.a;
+            if (!keepStartingOpacity)
+            {
+                start = 1.0f;
+                Color color = text.color;
+                color.a = 1.0f;
+                text.color = color;
+            }
+            for (float i = start; i >= limit; i -= Time.deltaTime * speed)
+            {
+                Color c = text.color;
+                c.a = i;
+                text.color = c;
+                yield return null;
+            }
+            Color co = text.color;
+            co.a = limit;
+            text.color = co;
+        }
+    }
+
+    private IEnumerator FadeEntity(Image entity, float speed, bool fadeIn, float limit = 0.0f, bool keepStartingOpacity = false)
+    {
+        if (fadeIn)
+        {
+            limit = limit == 0.0f ? 1.0f : limit;
+            float start = entity.color.a;
+            if (!keepStartingOpacity)
+            {
+                start = 0.0f;
+                Color color = entity.color;
+                color.a = 0.0f;
+                entity.color = color;
+            }
+
+            for (float i = start; i <= limit; i += Time.deltaTime * speed)
+            {
+                Color c = entity.color;
+                c.a = i;
+                entity.color = c;
+                yield return null;
+            }
+            Color co = entity.color;
+            co.a = limit;
+            entity.color = co;
+        }
+        else
+        {
+            float start = entity.color.a;
+            if (!keepStartingOpacity)
+            {
+                start = 1.0f;
+                Color color = entity.color;
+                color.a = 1.0f;
+                entity.color = color;
+            }
+            for (float i = start; i >= limit; i -= Time.deltaTime * speed)
+            {
+                Color c = entity.color;
+                c.a = i;
+                entity.color = c;
+                yield return null;
+            }
+            Color co = entity.color;
+            co.a = limit;
+            entity.color = co;
         }
     }
 
@@ -228,10 +346,8 @@ public class InteractionManager : Singleton<InteractionManager>
         }
     }
 
-    private IEnumerator DrawText(string text, float speed, float animSpeed, Color color)
+    private IEnumerator DrawText(string text, float speed, float animSpeed, float pitch, Color color)
     {
-        m_textSpeed = speed;
-
         RectTransform rect = m_dialogText.transform.parent.GetComponent<RectTransform>();
         RectTransform carSize = m_carret.GetComponent<RectTransform>();
         float xStart = -rect.sizeDelta.x * 0.5f + carSize.sizeDelta.x;
@@ -239,7 +355,7 @@ public class InteractionManager : Singleton<InteractionManager>
         float x = xStart;
         float y = yStart;
         float xGrowth = 20.0f;
-        float yGrowth = 35.0f;
+        float yGrowth = 40.0f;
         float xGrown = 0.0f;
         for (int i = 0; i < text.Length; ++i)
         {
@@ -265,8 +381,9 @@ public class InteractionManager : Singleton<InteractionManager>
             t.text = text[i].ToString();
             t.transform.position = new Vector3(m_carret.transform.position.x, 0.0f);
             StartCoroutine(AnimateText(t, animSpeed, m_carret.transform.position));
-
             float multiplier = Input.GetKey(m_continueKey) ? 0.5f : 1.0f;
+
+            m_audioManager.PlayClip("Dialog", Vector3.zero, false, transform, pitch);
             yield return new WaitForSeconds(speed * multiplier);
         }
 
@@ -393,10 +510,10 @@ public class InteractionManager : Singleton<InteractionManager>
 
     private void ParseFileIntoDialog(string fileName, InteractionData interactionData, out DialogData dialogData)
     {
-        string path = Application.dataPath + "/Dialog/Interactions/" + fileName + ".txt";
-        if (!Directory.Exists(Application.dataPath + "/Dialog/Interactions/"))
+        string path = Application.dataPath + "/StreamingAssets/Interactions/" + fileName + ".txt";
+        if (!Directory.Exists(Application.dataPath + "/StreamingAssets/Interactions/"))
         {
-            Directory.CreateDirectory(Application.dataPath + "/Dialog/Interactions/");
+            Directory.CreateDirectory(Application.dataPath + "/StreamingAssets/Interactions/");
         }
         if (!File.Exists(path))
         {
@@ -412,12 +529,12 @@ public class InteractionManager : Singleton<InteractionManager>
             DialogAction action = ScriptableObject.CreateInstance<DialogAction>();
             for (int i = 0; i < dialog.Length; ++i)
             {
-                if (dialog[i] == "[" + interactionData.firstInteractor.entityName.ToLower() + "]")
+                if (dialog[i].ToLower() == "[" + interactionData.firstInteractor.entityName.ToLower() + "]")
                 {
                     action.interactee = interactionData.firstInteractor;
                     continue;
                 }
-                else if (dialog[i] == "[" + interactionData.secondInteractor.entityName.ToLower() + "]")
+                else if (dialog[i].ToLower() == "[" + interactionData.secondInteractor.entityName.ToLower() + "]")
                 {
                     action.interactee = interactionData.secondInteractor;
                     continue;
