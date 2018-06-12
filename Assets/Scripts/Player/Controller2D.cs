@@ -6,49 +6,25 @@ public class Controller2D : Controller
 {
     [SerializeField] [Range(0.0f, 10.0f)] float friction = 1.0f;
     [SerializeField] [Range(0.0f, 10.0f)] float speedRamp = 2.0f;
+    [SerializeField] [Range(0.1f, 10.0f)] float maxSpeed = 5.0f;
     [SerializeField] LayerMask m_barrierMask = 0;
-
-    float maxSpeed;
+    
     float horizontalSpeed = 0.0f;
     float verticalSpeed = 0.0f;
-
-    private void Start()
-    {
-        maxSpeed = speedRamp;
-    }
 
     public override void Move()
     {
         m_velocity = Vector3.zero;
-        
-        float horizOpp = 0.0f;
-        float vertOpp = 0.0f;
-        if (horizontalSpeed > 0.05f) horizOpp = -1.0f * friction;
-        else if (horizontalSpeed < -0.05f) horizOpp = 1.0f * friction;
-        else horizOpp = 0.0f;
-        if (verticalSpeed > 0.05f) vertOpp = -1.0f * friction;
-        else if (verticalSpeed < -0.05f) vertOpp = 1.0f * friction;
-        else vertOpp = 0.0f;
 
-        float horiz = Input.GetAxis("Horizontal");
-        float vert = Input.GetAxis("Vertical");
+        float s = Time.deltaTime * speedRamp;
+        horizontalSpeed += Input.GetAxis("Horizontal") * s;
+        verticalSpeed += Input.GetAxis("Vertical") * s;
 
-        if (horiz * horizontalSpeed < 0.0f || vert * verticalSpeed < 0.0f) speedRamp = maxSpeed * 2.0f;
-        else speedRamp = maxSpeed;
+        horizontalSpeed = Mathf.Clamp(horizontalSpeed, -maxSpeed, maxSpeed);
+        verticalSpeed = Mathf.Clamp(verticalSpeed, -maxSpeed, maxSpeed);
 
-        float speedModifier = speedRamp * Time.deltaTime;
-        if (horiz == 0.0f && vert == 0.0f)
-        {
-            if (horizontalSpeed >= -0.05f && horizontalSpeed <= 0.05f) horizontalSpeed = 0.0f;
-            if (verticalSpeed >= -0.05f && verticalSpeed <= 0.05f) verticalSpeed = 0.0f;
-        }
-        horizontalSpeed += horiz == 0.0f ? horizOpp * speedModifier : horiz * speedModifier;
-        verticalSpeed += vert == 0.0f ? vertOpp * speedModifier : vert * speedModifier;
-        horizontalSpeed = Mathf.Clamp(horizontalSpeed, -1.0f, 1.0f);
-        verticalSpeed = Mathf.Clamp(verticalSpeed, -1.0f, 1.0f);
-
-        m_velocity.x = horizontalSpeed * (1.0f - verticalSpeed * 0.25f); // Limits velocity if traveling diagonally
-        m_velocity.y = verticalSpeed * (1.0f - horizontalSpeed * 0.25f); // "
+        m_velocity.x = horizontalSpeed * (1.0f - Mathf.Abs(verticalSpeed) * 0.05f); // Limits velocity if traveling diagonally
+        m_velocity.y = verticalSpeed * (1.0f - Mathf.Abs(horizontalSpeed) * 0.05f); // "
         m_velocity *= Time.deltaTime * m_speed;
 
         if (m_velocity.magnitude > 0.0f)
@@ -59,6 +35,14 @@ public class Controller2D : Controller
         CalculateSpeedPercentage(m_velocity);
 
         transform.position += m_velocity;
+
+        float f = Time.deltaTime * friction;
+        if (horizontalSpeed > 0.05f) horizontalSpeed -= f;
+        else if (horizontalSpeed < -0.05f) horizontalSpeed += f;
+        else horizontalSpeed = 0.0f;
+        if (verticalSpeed > 0.05f) verticalSpeed -= f;
+        else if (verticalSpeed < -0.05f) verticalSpeed += f;
+        else verticalSpeed = 0.0f;
     }
 
     private void CalculateSpeedPercentage(Vector2 direction)

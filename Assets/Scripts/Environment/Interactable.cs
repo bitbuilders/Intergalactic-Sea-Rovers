@@ -22,7 +22,7 @@ public abstract class Interactable : Entity
     bool m_movingUp = true;
     float m_maxFontSize;
     float m_startFontSize;
-    float m_fontGrowthRate = 0.25f;
+    float m_fontGrowthRate = 0.1f;
     bool m_enlarging = true;
     Vector3 m_currentIndicatorPosition = Vector3.zero;
 
@@ -34,13 +34,15 @@ public abstract class Interactable : Entity
 
     private void Update()
     {
-        if (DistanceFromPlayer() < m_interactionDistance)
+        m_player.CanMove = (Busy) ? false : true;
+
+        if (DistanceFromPlayer() < m_interactionDistance && !Busy)
         {
             m_indicatorHUB.SetActive(true);
             DisplayIndicator();
             AnimateIndicator();
 
-            if (Input.GetKeyDown(m_interactionKey) && !Busy)
+            if (Input.GetKeyDown(m_interactionKey))
             {
                 Interact();
             }

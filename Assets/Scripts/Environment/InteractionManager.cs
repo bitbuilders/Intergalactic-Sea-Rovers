@@ -19,9 +19,8 @@ public class InteractionManager : Singleton<InteractionManager>
     [SerializeField] TextMeshProUGUI m_dialogText = null;
     [SerializeField] TextMeshProUGUI m_entity1NameText = null;
     [SerializeField] TextMeshProUGUI m_entity2NameText = null;
+    [SerializeField] TextMeshProUGUI m_continueText = null;
     [SerializeField] Image m_tint = null;
-    //[SerializeField] Image m_e1Tint = null;
-    //[SerializeField] Image m_e2Tint = null;
     [Header("Dialog Info")]
     [SerializeField] Image m_firstEntity = null;
     [SerializeField] Image m_secondEntity = null;
@@ -41,6 +40,7 @@ public class InteractionManager : Singleton<InteractionManager>
     int m_dialogIndex = 0;
     bool m_playAction = false;
     bool m_textFinished = false;
+    bool m_contFadeIn = false;
 
     private void Awake()
     {
@@ -51,14 +51,22 @@ public class InteractionManager : Singleton<InteractionManager>
 
     private void Start()
     {
-        //InteractionData data = CreateInteraction(m_player.m_interacteeInfo, InteractionData.InteractionType.CONVERSATION, "test", m_NPC.m_interacteeInfo);
-        //Interact(data);
+        m_continueText.text = "Press " + m_continueKey.ToString() + " to Continue";
+        Color c = m_continueText.color;
+        c.a = 0.0f;
+        m_continueText.color = c;
     }
 
     private void Update()
     {
+        if (m_textFinished)
+        {
+            FadeBlink();
+        }
+
         if (Input.GetKeyDown(m_continueKey) && m_textFinished)
         {
+            m_continueText.enabled = false;
             ResetDialog();
             if (m_dialogData == null)
             {
@@ -84,11 +92,11 @@ public class InteractionManager : Singleton<InteractionManager>
                 }
                 if (action.entryPoint != DialogAction.EntryPoint.NONE)
                 {
-                    StartCoroutine(MoveSprite(entity, action.entryPoint));
+                    StartCoroutine(MoveSprite(entity, action.entryPoint, 2.0f));
                 }
 
                 float animSpeed = action.textAnimationSpeed == 0.0f ? 1.0f : action.textAnimationSpeed;
-                StartCoroutine(DrawText(action.text, action.textSpeed, animSpeed, action.interactee.pitch, action.interactee.color));
+                StartCoroutine(DrawText(action.text, action.textSpeed, animSpeed, action.interactee.pitch * action.pitchModifier, action.interactee.color));
 
                 m_playAction = false;
                 m_textFinished = false;
@@ -103,6 +111,33 @@ public class InteractionManager : Singleton<InteractionManager>
                 }
             }
         }
+    }
+
+    private void FadeBlink()
+    {
+        Color c = m_continueText.color;
+        float speed = Time.deltaTime * 0.5f;
+
+        if (m_contFadeIn)
+        {
+            c.a += speed;
+            if (c.a >= 1.0f)
+            {
+                m_contFadeIn = false;
+                c.a = 0.99f;
+            }
+        }
+        else
+        {
+            c.a -= speed;
+            if (c.a < 0.1f)
+            {
+                m_contFadeIn = true;
+                c.a = 0.1f;
+            }
+        }
+
+        m_continueText.color = c;
     }
 
     public void Interact(InteractionData data, Interactable npc)
@@ -381,13 +416,15 @@ public class InteractionManager : Singleton<InteractionManager>
             t.text = text[i].ToString();
             t.transform.position = new Vector3(m_carret.transform.position.x, 0.0f);
             StartCoroutine(AnimateText(t, animSpeed, m_carret.transform.position));
-            float multiplier = Input.GetKey(m_continueKey) ? 0.5f : 1.0f;
+            float multiplier = Input.GetKey(m_continueKey) ? 0.2f : 1.0f;
 
             m_audioManager.PlayClip("Dialog", Vector3.zero, false, transform, pitch);
             yield return new WaitForSeconds(speed * multiplier);
         }
 
         yield return new WaitForSeconds(0.5f);
+        m_continueText.enabled = true;
+        StartCoroutine(FadeText(m_continueText, 2.0f, true, 1.0f, false));
         m_textFinished = true;
     }
 
@@ -454,14 +491,14 @@ public class InteractionManager : Singleton<InteractionManager>
 
         for (float i = 1.0f; i >= 0.0f; i -= Time.deltaTime / time)
         {
-            sprite.transform.localScale = Vector3.Lerp(maxScale, startScale, i);
+            sprite.transform.localScale = Vector3.Lerp(startScale, maxScale, i);
             yield return null;
         }
 
         sprite.transform.localScale = startScale;
     }
 
-    private IEnumerator MoveSprite(Image sprite, DialogAction.EntryPoint entry, float speed = 2.0f)
+    private IEnumerator MoveSprite(Image sprite, DialogAction.EntryPoint entry, float speed = 1.0f)
     {
         Vector3 startPoint = sprite.transform.position;
         Vector3 endPoint = Vector3.zero;
@@ -551,10 +588,19 @@ public class InteractionManager : Singleton<InteractionManager>
                 }
                 else
                 {
-                    if (action != null) ParseAction(action, dialog[i]);
+                    if (action != null)
+                    {
+                        SetActionDefaults(ref action);
+                        ParseAction(action, dialog[i]);
+                    }
                 }
             }
         }
+    }
+
+    private void SetActionDefaults(ref DialogAction action)
+    {
+        action.pitchModifier = 1.0f;
     }
 
     private void ParseAction(DialogAction dialogAction, string action)
@@ -612,6 +658,11 @@ public class InteractionManager : Singleton<InteractionManager>
                 break;
             case "ENTRY_POINT":
                 action.entryPoint = (DialogAction.EntryPoint)Enum.Parse(typeof(DialogAction.EntryPoint), value);
+                break;
+            case "PITCH":
+                float pitch;
+                float.TryParse(value, out pitch);
+                action.pitchModifier = pitch;
                 break;
         }
     }
