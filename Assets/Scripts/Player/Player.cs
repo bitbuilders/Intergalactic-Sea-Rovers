@@ -8,8 +8,15 @@ public class Player : Entity
 
     public Controller Controller { get { return m_controller; } }
 
+    static Player ms_instance = null;
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
+        if (ms_instance == null)
+            ms_instance = this;
+        else
+            Destroy(gameObject);
+
         CanMove = true;
     }
 

@@ -20,6 +20,7 @@ public class CameraController : Singleton<CameraController>
 
     void Start()
     {
+        m_target = FindObjectOfType<Player>().transform;
         m_playerController = m_target.GetComponent<Player>().Controller;
         m_camera = GetComponent<Camera>();
         m_actualPosition = transform.position;
