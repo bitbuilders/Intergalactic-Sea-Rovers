@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
     [SerializeField] GameObject m_pauseCanvas = null;
     [SerializeField] GameObject[] m_pauseCanvasElements = null;
 
+    public bool Disabled { get { return SceneManager.GetActiveScene().name == "MainMenu"; } }
     public bool Paused { get { return m_pauseCanvas.activeSelf; } }
     public bool Prompting { get; private set; }
     

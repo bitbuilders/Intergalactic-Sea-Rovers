@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 114363003542304804}
   - component: {fileID: 114207816655335664}
   - component: {fileID: 114933189211323878}
+  - component: {fileID: 114773114937849264}
   - component: {fileID: 50197094620123224}
   - component: {fileID: 70875702199823668}
   m_Layer: 0
@@ -53,7 +54,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1908784483321062}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -121,8 +122,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 5
-  friction: 2
-  speedRamp: 3
+  friction: 4
+  speedRamp: 7
+  maxSpeed: 1
   m_barrierMask:
     serializedVersion: 2
     m_Bits: 256
@@ -137,7 +139,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ee4ce451d0cbd4b96f66c905a9c5bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_interacteeInfo: {fileID: 11400000, guid: f7cc3d74bc9685c4c87ebd35b68c1371, type: 2}
   m_controller: {fileID: 114207816655335664}
+--- !u!114 &114773114937849264
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1908784483321062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c94a59c70c64f394783ec7c36565c0a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114933189211323878
 MonoBehaviour:
   m_ObjectHideFlags: 1
