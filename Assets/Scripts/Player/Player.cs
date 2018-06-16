@@ -18,6 +18,7 @@ public class Player : Entity
             Destroy(gameObject);
 
         CanMove = true;
+        base.Initialize(this);
     }
 
     private void Update()

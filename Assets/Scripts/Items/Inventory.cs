@@ -7,6 +7,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] [Range(0, 100)] int m_capacity = 1;
     [SerializeField] public List<ItemEntity> Items = null;
 
+    public Entity Owner { get; set; }
     public int Capacity { get { return m_capacity; } set { m_capacity = value; } }
 
     public bool ObtainItem(Weapon weapon)

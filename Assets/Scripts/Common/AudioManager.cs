@@ -9,8 +9,15 @@ public class AudioManager : Singleton<AudioManager>
 
     AudioSource[] m_loopedSounds;
 
+    static AudioManager ms_instance = null;
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
+        if (ms_instance == null)
+            ms_instance = this;
+        else
+            Destroy(gameObject);
+
         m_loopedSounds = new AudioSource[m_channelCount];
 
         for (int i = 0; i < m_loopedSounds.Length; ++i)

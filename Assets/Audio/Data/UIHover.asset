@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bca0a033c63e6f46a95f59a2de8eed5, type: 3}
+  m_Name: UIHover
+  m_EditorClassIdentifier: 
+  clipName: UIHover
+  clip: {fileID: 8300000, guid: b79cb89ba73aec047a32346c32a0f48d, type: 3}
+  startPosition: {x: 0, y: 0, z: 0}
+  volume: 0.5
+  pitch: 1
+  radius: 0
+  global: 1
+  loop: 0
+  playOnAwake: 0
+  output: {fileID: 243447921656421886, guid: 6e775b00239d78047a20afc835fc64d3, type: 2}

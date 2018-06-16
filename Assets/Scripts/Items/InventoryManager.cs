@@ -35,7 +35,8 @@ public class InventoryManager : MonoBehaviour
         foreach (ItemEntity item in m_inventory.Items)
         {
             InventoryIcon icon = CreateIcon();
-            icon.Initialize(item);
+            Color c = GetColorFromRarity(item.Rareness);
+            icon.Initialize(item, c);
             icon.transform.localPosition = pos - m_origin;
             pos.x += m_iconDim;
             xCount++;
@@ -54,5 +55,28 @@ public class InventoryManager : MonoBehaviour
         InventoryIcon icon = i.GetComponent<InventoryIcon>();
 
         return icon;
+    }
+
+    private Color GetColorFromRarity(ItemEntity.Rarity rarity)
+    {
+        Color color = Color.black;
+
+        switch (rarity)
+        {
+            case ItemEntity.Rarity.BASIC:
+                ColorUtility.TryParseHtmlString("#83C5D7FF", out color);
+                break;
+            case ItemEntity.Rarity.ADVANCED:
+                ColorUtility.TryParseHtmlString("#43C663FF", out color);
+                break;
+            case ItemEntity.Rarity.LEGENDARY:
+                ColorUtility.TryParseHtmlString("#EAAC51FF", out color);
+                break;
+            case ItemEntity.Rarity.GODLIKE:
+                ColorUtility.TryParseHtmlString("#B45AD2FF", out color);
+                break;
+        }
+
+        return color;
     }
 }

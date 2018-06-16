@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class NPC : Interactable
 {
+    private void Start()
+    {
+        base.Initialize(this);
+    }
+
     protected override void Interact()
     {
         InteractionManager interactionManager = InteractionManager.Instance;
