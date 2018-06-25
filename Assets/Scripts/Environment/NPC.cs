@@ -7,6 +7,7 @@ public class NPC : Interactable
     private void Start()
     {
         base.Initialize(this);
+        InitializeInteraction();
     }
 
     protected override void Interact()

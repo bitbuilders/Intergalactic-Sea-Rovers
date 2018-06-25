@@ -26,7 +26,7 @@ public abstract class Interactable : Entity
     bool m_enlarging = true;
     Vector3 m_currentIndicatorPosition = Vector3.zero;
 
-    private void Start()
+    protected void InitializeInteraction()
     {
         FindPlayer();
         CreateIndicator();
@@ -34,6 +34,9 @@ public abstract class Interactable : Entity
 
     private void Update()
     {
+        if (!m_player)
+            return;
+
         m_player.CanMove = (Busy) ? false : true;
 
         if (DistanceFromPlayer() < m_interactionDistance && !Busy)
