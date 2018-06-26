@@ -2460,17 +2460,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114509622978820210, guid: fc025a2ee0da5504481cb96d018b2f41,
-        type: 2}
-      propertyPath: m_interacteeInfo
-      value: 
-      objectReference: {fileID: 11400000, guid: c3d548bd62c71cc4b8c2badfbd2a3a54,
-        type: 2}
-    - target: {fileID: 114509622978820210, guid: fc025a2ee0da5504481cb96d018b2f41,
-        type: 2}
-      propertyPath: m_interactionKey
-      value: 32
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fc025a2ee0da5504481cb96d018b2f41, type: 2}
   m_IsPrefabParent: 0

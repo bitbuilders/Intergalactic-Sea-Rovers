@@ -132,11 +132,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab849a2ccb27e74cb32911b0cc38d8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_interacteeInfo: {fileID: 0}
+  m_interacteeInfo: {fileID: 11400000, guid: 485322a205033a5458d0043fd1cfc2e1, type: 2}
   m_interactionDistance: 2.25
   m_indicator: {fileID: 1673325655900170, guid: 047528438a58f1142a771b476f7d0a53,
     type: 2}
-  m_interactionKey: 97
+  m_interactionKey: 32
 --- !u!212 &212444332045601996
 SpriteRenderer:
   m_ObjectHideFlags: 1

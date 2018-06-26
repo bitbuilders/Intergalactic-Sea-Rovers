@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "InteractionData.asset", menuName = "Assets/Interaction/InteractionData", order = 1)]
+[CreateAssetMenu(fileName = "InteractionData.asset", menuName = "Interaction/InteractionData", order = 1)]
 public class InteractionData : ScriptableObject
 {
     public enum InteractionType

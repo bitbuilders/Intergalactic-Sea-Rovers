@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DialogAction.asset", menuName = "Assets/Interaction/DialogAction", order = 3)]
+[CreateAssetMenu(fileName = "DialogAction.asset", menuName = "Interaction/DialogAction", order = 3)]
 public class DialogAction : ScriptableObject
 {
     public enum EntryPoint

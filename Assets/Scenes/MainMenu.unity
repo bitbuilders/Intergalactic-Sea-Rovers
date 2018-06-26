@@ -1639,11 +1639,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114773114937849264, guid: ec72fed1ce93a8e4a9ad837cbd4d2142,
-        type: 2}
-      propertyPath: Items.Array.size
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 4316221000410422, guid: ec72fed1ce93a8e4a9ad837cbd4d2142, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3259,11 +3254,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:

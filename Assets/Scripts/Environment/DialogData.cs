@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DialogData.asset", menuName = "Assets/Interaction/DialogData", order = 2)]
+[CreateAssetMenu(fileName = "DialogData.asset", menuName = "Interaction/DialogData", order = 2)]
 public class DialogData : ScriptableObject
 {
     public enum CurrentInteractee
