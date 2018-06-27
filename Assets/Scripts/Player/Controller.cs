@@ -14,4 +14,5 @@ public abstract class Controller : MonoBehaviour
     public float SpeedPercentageVert { get { return m_speedPercentageVert; } protected set { m_speedPercentageVert = value; } }
 
     public abstract void Move();
+    public abstract void PhysicsUpdate();
 }

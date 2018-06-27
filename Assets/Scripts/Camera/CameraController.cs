@@ -7,6 +7,8 @@ public class CameraController : Singleton<CameraController>
     [SerializeField] Transform m_target = null;
     [SerializeField] [Range(1.0f, 20.0f)] float m_cameraStiffness = 5.0f;
     [SerializeField] [Range(-10.0f, 10.0f)] float m_distanceFromTarget = 5.0f;
+    [SerializeField] [Range(-10.0f, 10.0f)] float m_heightFromTarget = 5.0f;
+    [SerializeField] [Range(0.0f, 10.0f)] float m_focusLead = 3.0f;
     [SerializeField] [Range(0.0f, 10.0f)] float m_cameraLead = 5.0f;
     [SerializeField] [Range(1.0f, 25.0f)] float m_shakeAmplitude = 5.0f;
     [SerializeField] [Range(1.0f, 50.0f)] float m_shakeRate = 5.0f;
@@ -53,15 +55,24 @@ public class CameraController : Singleton<CameraController>
         }
         else
         {
-            m_actualPosition = m_target.position + (-m_target.forward * m_distanceFromTarget);
+            Vector3 offset = Vector3.up * m_heightFromTarget;
+            Vector3 dirToTarget = m_target.transform.position + (m_target.forward * m_focusLead) - m_playerController.transform.position;
+            Vector3 newPos = m_playerController.transform.position + (-dirToTarget.normalized * m_distanceFromTarget + offset);
+            m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness);
+            //TODO: Place camera behind player to see target
 
-            Quaternion rotation = Quaternion.LookRotation(m_target.position - transform.position);
+            Quaternion rotation = Quaternion.LookRotation(m_target.position + (m_target.forward * m_focusLead) - transform.position);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * m_cameraStiffness);
         }
         
         Vector3 newPosition = m_actualPosition + m_shake;
 
         transform.position = newPosition;
+    }
+
+    public void Target(Transform target)
+    {
+        m_target = target;
     }
 
     public void Shake(float time, float amplitude = 8.0f, float rate = 6.0f)

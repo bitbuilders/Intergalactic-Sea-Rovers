@@ -5,8 +5,8 @@ using UnityEngine;
 public class Controller2D : Controller
 {
     [SerializeField] [Range(0.0f, 10.0f)] float friction = 1.0f;
-    [SerializeField] [Range(0.0f, 10.0f)] float speedRamp = 2.0f;
-    [SerializeField] [Range(0.1f, 10.0f)] float maxSpeed = 5.0f;
+    [SerializeField] [Range(0.0f, 30.0f)] float speedRamp = 2.0f;
+    [SerializeField] [Range(0.1f, 30.0f)] float maxSpeed = 5.0f;
     [SerializeField] LayerMask m_barrierMask = 0;
     
     float horizontalSpeed = 0.0f;
@@ -43,6 +43,11 @@ public class Controller2D : Controller
         if (verticalSpeed > 0.05f) verticalSpeed -= f;
         else if (verticalSpeed < -0.05f) verticalSpeed += f;
         else verticalSpeed = 0.0f;
+    }
+
+    public override void PhysicsUpdate()
+    {
+
     }
 
     private void CalculateSpeedPercentage(Vector2 direction)
