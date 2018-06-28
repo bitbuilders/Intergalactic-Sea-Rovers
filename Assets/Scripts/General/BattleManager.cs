@@ -22,10 +22,10 @@ public class BattleManager : Singleton<BattleManager>
         m_player = FindObjectOfType<Player>();
     }
 
-    public void LoadBattle()
+    public void LoadBattle(Transform target)
     {
         m_player.transform.position = Vector3.zero;
-        m_player.SwapControllers("3d");
-        FindObjectOfType<CameraController>().Target(m_player.transform);
+        m_player.SwapControllers("3D");
+        FindObjectOfType<CameraController>().Target(target);
     }
 }

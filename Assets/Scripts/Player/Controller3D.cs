@@ -31,7 +31,8 @@ public class Controller3D : Controller
         m_velocity.x = horizontalSpeed * (1.0f - verticalSpeed * 0.25f); // Limits velocity if traveling diagonally
         m_velocity.z = verticalSpeed * (1.0f - horizontalSpeed * 0.25f); // "
         m_velocity *= Time.deltaTime * m_speed;
-        m_velocity = transform.rotation * m_velocity;
+        m_velocity = CameraController.Instance.transform.rotation * m_velocity;
+        m_velocity.y = 0.0f;
 
         transform.position += m_velocity;
 
@@ -39,9 +40,13 @@ public class Controller3D : Controller
         {
             m_rigidbody.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
         }
-        
-        Quaternion look = Quaternion.LookRotation(m_velocity);
-        transform.rotation = Quaternion.Lerp(transform.rotation, look, Time.deltaTime * m_rotationSpeed);
+
+        if (m_velocity.magnitude != 0.0f)
+        {
+            Vector3 dir = (m_velocity + transform.position) - transform.position;
+            Quaternion look = Quaternion.LookRotation(dir.normalized, Vector3.up);
+            transform.rotation = Quaternion.Lerp(transform.rotation, look, Time.deltaTime * m_rotationSpeed);
+        }
     }
 
     public override void PhysicsUpdate()
