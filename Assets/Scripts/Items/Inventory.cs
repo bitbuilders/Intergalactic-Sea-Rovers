@@ -7,9 +7,10 @@ public class Inventory : MonoBehaviour
     [SerializeField] [Range(0, 100)] int m_capacity = 1;
     [SerializeField] GameObject m_weapons = null;
     [SerializeField] GameObject m_items = null;
-
+    
     public List<Weapon> Weapons { get; private set; }
     public List<ItemEntity> Items { get; private set; }
+    public EquipmentSet EquippedItems { get; private set; }
     public Entity Owner { get; set; }
     public int Capacity { get { return m_capacity; } set { m_capacity = value; } }
 
@@ -17,7 +18,9 @@ public class Inventory : MonoBehaviour
     {
         Weapons = new List<Weapon>();
         Items = new List<ItemEntity>();
+        EquippedItems = new EquipmentSet();
         UpdateInventory();
+        EquipWeapon(Weapons[0]); // TODO: DELETE ME
     }
 
     public bool ObtainItem(ItemEntity item)
@@ -26,7 +29,8 @@ public class Inventory : MonoBehaviour
             return false;
 
         item.transform.parent = m_items.transform;
-        Items.Add(item);
+        if (!Items.Contains(item))
+            Items.Add(item);
 
         return true;
     }
@@ -42,7 +46,8 @@ public class Inventory : MonoBehaviour
             return false;
 
         weapon.transform.parent = m_weapons.transform;
-        Weapons.Add(weapon);
+        if (!Weapons.Contains(weapon))
+            Weapons.Add(weapon);
 
         return true;
     }
@@ -50,6 +55,12 @@ public class Inventory : MonoBehaviour
     public void DropWeapon(Weapon weapon)
     {
         Weapons.Remove(weapon);
+    }
+
+    public void EquipWeapon(Weapon weapon)
+    {
+        ObtainWeapon(weapon); // Will do nothing if inventory already contains weapon
+        EquippedItems.Weapon = weapon;
     }
 
     private bool Full()
