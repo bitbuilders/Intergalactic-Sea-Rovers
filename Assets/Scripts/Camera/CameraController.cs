@@ -57,7 +57,7 @@ public class CameraController : Singleton<CameraController>
             Vector3 offset = Vector3.up * m_heightFromTarget;
             Vector3 dirToTarget = m_target.position - m_playerController.transform.position;
             Vector3 newPos = -dirToTarget.normalized * m_distanceFromTarget + m_playerController.transform.position;
-            newPos.y = 0.0f;
+            //newPos.y = 0.0f;
             newPos += offset;
             m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness);
             //TODO: Place camera behind player to see target
