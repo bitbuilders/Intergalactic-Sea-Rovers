@@ -14,7 +14,7 @@ public class CameraController : Singleton<CameraController>
     [SerializeField] [Range(0.0f, 1.0f)] float m_shakeTime = 1.0f;
     [SerializeField] bool m_2D = true;
 
-    Controller m_playerController;
+    Player m_player;
     Camera m_camera;
     Vector3 m_actualPosition;
     Vector3 m_shake;
@@ -22,7 +22,7 @@ public class CameraController : Singleton<CameraController>
     void Start()
     {
         m_target = FindObjectOfType<Player>().transform;
-        m_playerController = m_target.GetComponent<Player>().Controller;
+        m_player = m_target.GetComponent<Player>();
         m_camera = GetComponent<Camera>();
         m_actualPosition = transform.position;
         m_shake = Vector3.zero;
@@ -45,8 +45,8 @@ public class CameraController : Singleton<CameraController>
         if (m_2D)
         {
             Vector3 offset = Vector3.zero;
-            offset.x = m_playerController.SpeedPercentageHoriz * m_cameraLead;
-            offset.y = m_playerController.SpeedPercentageVert * m_cameraLead;
+            offset.x = m_player.Controller.SpeedPercentageHoriz * m_cameraLead;
+            offset.y = m_player.Controller.SpeedPercentageVert * m_cameraLead;
             Vector3 nextPosition = Vector3.zero;
             nextPosition = m_target.transform.position + offset;
             nextPosition.z = -10.0f;
@@ -54,13 +54,16 @@ public class CameraController : Singleton<CameraController>
         }
         else
         {
+
             Vector3 offset = Vector3.up * m_heightFromTarget;
-            Vector3 dirToTarget = m_target.position - m_playerController.transform.position;
-            Vector3 newPos = -dirToTarget.normalized * m_distanceFromTarget + m_playerController.transform.position;
-            //newPos.y = 0.0f;
+            Vector3 dirToTarget = m_target.position - m_player.Controller.transform.position;
+            Vector3 newPos = -dirToTarget.normalized * m_distanceFromTarget + m_player.Controller.transform.position;
             newPos += offset;
+            if (!m_player.Controller.OnGround)
+            {
+                newPos.y = m_actualPosition.y;
+            }
             m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness);
-            //TODO: Place camera behind player to see target
 
             Quaternion rotation = Quaternion.LookRotation(m_target.position - transform.position);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * m_cameraStiffness);

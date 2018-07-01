@@ -1,0 +1,13 @@
+Animation Times:
+Walk - 0-60
+Idle - 70-130
+Run - 140-200
+Jump - 210-225
+Take Damage - 250-280
+Slice (TR -> BL) - 290-305
+Slice (BL -> TR) -
+Slice (R -> L) - 
+Slice (L -> R) -
+Slice (BL -> R | Spin) -
+Jab -
+Jump Slice -
