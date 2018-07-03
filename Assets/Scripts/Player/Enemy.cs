@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Entity
 {
     [SerializeField] [Range(0.0f, 10.0f)] float m_jumpResistance = 3.0f;
     [SerializeField] [Range(0.0f, 10.0f)] float m_fallSpeed = 3.0f;
@@ -56,5 +56,10 @@ public class Enemy : MonoBehaviour
         }
 
         m_animator.SetFloat("yVelocity", m_rigidbody.velocity.y);
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        Health -= damage;
     }
 }

@@ -7,6 +7,7 @@ public class Player : Entity
     [SerializeField] Controller m_controller = null;
     [SerializeField] GameObject m_2DCharacter = null;
     [SerializeField] GameObject m_3DCharacter = null;
+    [SerializeField] MeshFilter m_weaponMesh = null;
 
     public Controller Controller { get { return m_controller; } }
 
@@ -24,6 +25,9 @@ public class Player : Entity
         CanMove = true;
         base.Initialize(this);
         m_rigidbody = GetComponent<Rigidbody>();
+
+        Inventory.EquipWeapon(Inventory.Weapons[0]);
+        SetEquippedWeaponMesh(m_weaponMesh);
     }
 
     private void Update()
@@ -37,6 +41,11 @@ public class Player : Entity
     private void FixedUpdate()
     {
         m_controller.PhysicsUpdate();
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        Health -= damage;
     }
 
     public void SwapControllers(string controller)

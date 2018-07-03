@@ -222,6 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4461477542129016}
   - component: {fileID: 114822666950285434}
+  - component: {fileID: 114343431250254152}
   - component: {fileID: 95241131904426168}
   - component: {fileID: 136873698158565340}
   m_Layer: 0
@@ -735,8 +736,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1327047701457356}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4370188723036752}
@@ -745,7 +746,7 @@ Transform:
   - {fileID: 4586833504486898}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4851964408736590
 Transform:
   m_ObjectHideFlags: 1
@@ -1237,7 +1238,7 @@ MeshCollider:
   m_GameObject: {fileID: 1249026017195672}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
@@ -1311,6 +1312,20 @@ MonoBehaviour:
   m_attackRange: 1
   m_projectileSpeed: 1
   m_projectileFalloff: 1
+--- !u!114 &114343431250254152
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1428332030482282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6de83b1040c0544a8cd3204256bd897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 114686178159637444}
+  m_hitableTags:
+  - Player
 --- !u!114 &114428033982475078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1461,6 +1476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a49d1cb7ea66897419585fc6b3c28b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_interacteeInfo: {fileID: 0}
   m_jumpResistance: 2
   m_fallSpeed: 3
   m_groundTouch: {fileID: 4428153039222342}

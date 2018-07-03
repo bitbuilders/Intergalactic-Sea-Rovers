@@ -14,13 +14,12 @@ public class Inventory : MonoBehaviour
     public Entity Owner { get; set; }
     public int Capacity { get { return m_capacity; } set { m_capacity = value; } }
 
-    private void Start()
+    private void Awake()
     {
         Weapons = new List<Weapon>();
         Items = new List<ItemEntity>();
         EquippedItems = new EquipmentSet();
         UpdateInventory();
-        EquipWeapon(Weapons[0]); // TODO: DELETE ME
     }
 
     public bool ObtainItem(ItemEntity item)
@@ -87,7 +86,7 @@ public class Inventory : MonoBehaviour
     private void UpdateList<T>(GameObject parent, List<T> list)
     {
         list.Clear();
-        T[] ts = m_weapons.GetComponentsInChildren<T>();
+        T[] ts = parent.GetComponentsInChildren<T>();
         foreach (T t in ts)
         {
             list.Add(t);

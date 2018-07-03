@@ -16,4 +16,9 @@ public class NPC : Interactable
         var dialog = interactionManager.CreateInteraction(m_interacteeInfo, InteractionData.InteractionType.CONVERSATION, "test2", m_player.m_interacteeInfo);
         interactionManager.Interact(dialog, this);
     }
+
+    public override void TakeDamage(float damage)
+    {
+        Health -= damage;
+    }
 }
