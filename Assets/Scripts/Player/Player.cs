@@ -43,11 +43,6 @@ public class Player : Entity
         m_controller.PhysicsUpdate();
     }
 
-    public override void TakeDamage(float damage)
-    {
-        Health -= damage;
-    }
-
     public void SwapControllers(string controller)
     {
         if (controller.ToLower() == "2d")

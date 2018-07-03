@@ -176,9 +176,10 @@ GameObject:
   - component: {fileID: 33058771189002308}
   - component: {fileID: 23333554157951190}
   - component: {fileID: 64573497162553184}
+  - component: {fileID: 54865385272310364}
   m_Layer: 0
   m_Name: Cutlass
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -211,6 +212,7 @@ GameObject:
   - component: {fileID: 114933189211323878}
   - component: {fileID: 114773114937849264}
   - component: {fileID: 54337933757432978}
+  - component: {fileID: 114677584679630194}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -273,17 +275,16 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4012692230318190}
+  - component: {fileID: 114992560720947162}
   - component: {fileID: 95413123450969950}
   - component: {fileID: 136538410943204248}
-  - component: {fileID: 114992560720947162}
-  - component: {fileID: 114771520810514506}
   m_Layer: 0
   m_Name: Player3D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4012692230318190
 Transform:
   m_ObjectHideFlags: 1
@@ -900,6 +901,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!54 &54865385272310364
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1773053134316606}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!64 &64573497162553184
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -959,7 +975,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_image: {fileID: 21300000, guid: 0db8990eb1fb2fe44b35e750d61d5d92, type: 3}
-  m_name: Generic Item
+  m_name: Cutlass
   m_goldValue: 10
   m_rarity: 0
   m_projectileTemplate: {fileID: 0}
@@ -967,7 +983,7 @@ MonoBehaviour:
   m_itemType: 0
   m_attackCooldown: 1
   m_attackDuration: 1
-  m_damage: 1
+  m_damage: 25
   m_attackRange: 1
   m_projectileSpeed: 1
   m_projectileFalloff: 1
@@ -1001,22 +1017,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_interacteeInfo: {fileID: 11400000, guid: 2edb5896b5a1a8d48a4cf78822429d15, type: 2}
+  m_weaponCollider: {fileID: 114992560720947162}
   m_controller: {fileID: 114207816655335664}
   m_2DCharacter: {fileID: 1520827171964842}
   m_3DCharacter: {fileID: 1980980534976662}
   m_weaponMesh: {fileID: 33058771189002308}
---- !u!114 &114771520810514506
+--- !u!114 &114677584679630194
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1980980534976662}
+  m_GameObject: {fileID: 1908784483321062}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6de83b1040c0544a8cd3204256bd897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_parent: {fileID: 114363003542304804}
   m_hitableTags:
   - Enemy
 --- !u!114 &114773114937849264

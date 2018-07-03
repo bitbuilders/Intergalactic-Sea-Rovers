@@ -5,24 +5,27 @@ using UnityEngine;
 
 public class HitDetector : MonoBehaviour
 {
-    [SerializeField] Entity m_parent = null;
     [SerializeField] string[] m_hitableTags = null;
 
+    Entity m_parent = null;
+
+    private void Start()
+    {
+        m_parent = GetComponent<Entity>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
+        print("Trigger");
         if (IsValidTag(other.tag))
         {
-            Enemy e = other.GetComponent<Enemy>();
-            Player p = other.GetComponent<Player>();
+            Entity e = other.GetComponentInParent<Entity>();
+            e.WeaponCollider.SetColliderInactive(e.Inventory.EquippedItems.Weapon.Name);
+
             float damage = 0.0f;
             if (e != null)
             {
                 damage = e.Inventory.EquippedItems.Weapon.Damage;
-            }
-            else
-            {
-                damage = p.Inventory.EquippedItems.Weapon.Damage;
             }
             m_parent.TakeDamage(damage);
         }

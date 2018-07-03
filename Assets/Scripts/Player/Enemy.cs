@@ -6,6 +6,7 @@ public class Enemy : Entity
 {
     [SerializeField] [Range(0.0f, 10.0f)] float m_jumpResistance = 3.0f;
     [SerializeField] [Range(0.0f, 10.0f)] float m_fallSpeed = 3.0f;
+    [SerializeField] MeshFilter m_weaponMesh = null;
     [SerializeField] Transform m_groundTouch;
     [SerializeField] LayerMask m_groundMask = 0;
 
@@ -35,6 +36,10 @@ public class Enemy : Entity
         m_player = GetComponent<EnemyPlayer>();
         m_rigidbody = GetComponent<Rigidbody>();
         m_animator = GetComponentInChildren<Animator>();
+        base.Initialize(this);
+
+        Inventory.EquipWeapon(Inventory.Weapons[0]);
+        SetEquippedWeaponMesh(m_weaponMesh);
     }
 
     private void Update()
@@ -56,10 +61,5 @@ public class Enemy : Entity
         }
 
         m_animator.SetFloat("yVelocity", m_rigidbody.velocity.y);
-    }
-
-    public override void TakeDamage(float damage)
-    {
-        Health -= damage;
     }
 }
