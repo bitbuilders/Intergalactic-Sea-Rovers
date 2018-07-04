@@ -12,7 +12,6 @@ public abstract class Controller : MonoBehaviour
     public Vector3 Velocity { get { return m_velocity; } protected set { m_velocity = value; } }
     public float SpeedPercentageHoriz { get { return m_speedPercentageHoriz; } protected set { m_speedPercentageHoriz = value; } }
     public float SpeedPercentageVert { get { return m_speedPercentageVert; } protected set { m_speedPercentageVert = value; } }
-    public bool OnGround { get; protected set; }
 
 
     public abstract void Move();

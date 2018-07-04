@@ -23,6 +23,7 @@ public class Weapon : ItemEntity
     [SerializeField] [Range(0.0f, 5000.0f)] float m_projectileSpeed = 1.0f;
     [SerializeField] [Range(0.0f, 5000.0f)] float m_projectileFalloff = 1.0f;
 
+    public float Cooldown { get { return m_attackCooldown; } }
     public float Damage { get { return m_damage; } }
     public float Range { get { return m_attackRange; } }
     public ItemType Type { get { return m_itemType; } }

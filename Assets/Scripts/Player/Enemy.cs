@@ -10,8 +10,6 @@ public class Enemy : Entity
     [SerializeField] Transform m_groundTouch;
     [SerializeField] LayerMask m_groundMask = 0;
 
-    public bool OnGround { get; protected set; }
-
     EnemyAI m_AI;
     EnemyPlayer m_player;
     Animator m_animator;
@@ -40,6 +38,7 @@ public class Enemy : Entity
 
         Inventory.EquipWeapon(Inventory.Weapons[0]);
         SetEquippedWeaponMesh(m_weaponMesh);
+        GetComponent<AttackController>().Initialize();
     }
 
     private void Update()

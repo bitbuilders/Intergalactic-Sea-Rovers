@@ -8,17 +8,23 @@ public class Controller2D : Controller
     [SerializeField] [Range(0.0f, 30.0f)] float speedRamp = 2.0f;
     [SerializeField] [Range(0.1f, 30.0f)] float maxSpeed = 5.0f;
     [SerializeField] LayerMask m_barrierMask = 0;
-    
+
+    Entity m_entity;
     float horizontalSpeed = 0.0f;
     float verticalSpeed = 0.0f;
+
+    private void Start()
+    {
+        m_entity = GetComponent<Entity>();
+    }
 
     public override void Move()
     {
         m_velocity = Vector3.zero;
 
         float s = Time.deltaTime * speedRamp;
-        horizontalSpeed += Input.GetAxis("Horizontal") * s;
-        verticalSpeed += Input.GetAxis("Vertical") * s;
+        horizontalSpeed += Input.GetAxis(m_entity.PlayerNumber + "_Horizontal") * s;
+        verticalSpeed += Input.GetAxis(m_entity.PlayerNumber + "_Vertical") * s;
 
         horizontalSpeed = Mathf.Clamp(horizontalSpeed, -maxSpeed, maxSpeed);
         verticalSpeed = Mathf.Clamp(verticalSpeed, -maxSpeed, maxSpeed);

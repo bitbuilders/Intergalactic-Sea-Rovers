@@ -59,7 +59,7 @@ public class CameraController : Singleton<CameraController>
             Vector3 dirToTarget = m_target.position - m_player.Controller.transform.position;
             Vector3 newPos = -dirToTarget.normalized * m_distanceFromTarget + m_player.Controller.transform.position;
             newPos += offset;
-            if (!m_player.Controller.OnGround)
+            if (!m_player.OnGround)
             {
                 newPos.y = m_actualPosition.y;
             }

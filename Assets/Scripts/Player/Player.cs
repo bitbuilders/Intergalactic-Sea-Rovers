@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : Entity
 {
+
     [SerializeField] Controller m_controller = null;
     [SerializeField] GameObject m_2DCharacter = null;
     [SerializeField] GameObject m_3DCharacter = null;
@@ -28,6 +29,7 @@ public class Player : Entity
 
         Inventory.EquipWeapon(Inventory.Weapons[0]);
         SetEquippedWeaponMesh(m_weaponMesh);
+        GetComponent<AttackController>().Initialize();
     }
 
     private void Update()
