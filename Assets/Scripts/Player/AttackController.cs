@@ -29,16 +29,26 @@ public class AttackController : MonoBehaviour
             return;
 
         m_attackTime += Time.deltaTime;
-        if (m_attackTime >= m_attackCooldown && m_entity.OnGround && Input.GetButtonDown(m_playerNumber + "_AttackNormal"))
-        {
-            m_attackTime = 0.0f;
-            m_animator.SetTrigger("Attack_Normal");
-        }
+        Attack(true);
     }
 
     public void Refresh()
     {
         SetAttackTimes();
+    }
+
+    public bool Attack(bool usePlayerInput)
+    {
+        if (m_attackTime >= m_attackCooldown && m_entity.OnGround)
+        {
+            if ((usePlayerInput && Input.GetButtonDown(m_playerNumber + "_AttackNormal")) || !usePlayerInput)
+            {
+                m_attackTime = 0.0f;
+                m_animator.SetTrigger("Attack_Normal");
+                return true;
+            }
+        }
+        return false;
     }
 
     private void SetAttackTimes()

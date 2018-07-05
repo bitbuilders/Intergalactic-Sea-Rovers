@@ -31,12 +31,12 @@ public class InteractionManager : Singleton<InteractionManager>
     [SerializeField] Transform m_rightPositionEnd = null;
     [SerializeField] Transform m_rightPositionStart = null;
     [Header("General")]
+    [SerializeField] CameraController m_camera = null;
 
     AudioManager m_audioManager;
     DialogData m_dialogData = null;
     Interactable m_npc = null;
     Interactee[] m_currentInteractees = null;
-    CameraController m_camera = null;
     int m_dialogIndex = 0;
     bool m_playAction = false;
     bool m_textFinished = false;
@@ -45,7 +45,6 @@ public class InteractionManager : Singleton<InteractionManager>
     private void Awake()
     {
         m_audioManager = AudioManager.Instance;
-        m_camera = CameraController.Instance;
         m_currentInteractees = new Interactee[2];
     }
 

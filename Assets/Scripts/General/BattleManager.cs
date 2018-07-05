@@ -22,10 +22,11 @@ public class BattleManager : Singleton<BattleManager>
         m_player = FindObjectOfType<Player>();
     }
 
-    public void LoadBattle(Transform target)
+    public void LoadBattle()
     {
         m_player.transform.position = Vector3.zero;
         m_player.SwapControllers("3D");
-        FindObjectOfType<CameraController>().Target(target);
+        bool splitscreen = (Game.Instance.GameMode == Game.Mode.MULTIPLAYER);
+        SplitscreenManager.Instance.SetSplitscreen(splitscreen, m_player);
     }
 }

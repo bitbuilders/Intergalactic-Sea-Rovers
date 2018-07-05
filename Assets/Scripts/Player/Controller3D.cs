@@ -22,7 +22,7 @@ public class Controller3D : Controller
         m_entity = GetComponent<Entity>();
     }
 
-    public override void Move()
+    public override void Move(CameraController camera)
     {
         Collider[] b = Physics.OverlapSphere(m_groundTouch.position, 0.1f, m_groundMask);
         m_entity.OnGround = b.Length > 0;
@@ -33,7 +33,7 @@ public class Controller3D : Controller
         float verticalSpeed = Input.GetAxis(m_entity.PlayerNumber + "_Vertical");
         m_velocity.x = horizontalSpeed; // Limits velocity if traveling diagonally
         m_velocity.z = verticalSpeed; // "
-        m_velocity = CameraController.Instance.transform.rotation * m_velocity;
+        m_velocity = camera.transform.rotation * m_velocity;
         m_velocity.Normalize();
         m_velocity *= Time.deltaTime * m_speed;
         m_velocity.y = 0.0f;
@@ -61,7 +61,7 @@ public class Controller3D : Controller
         if (m_velocity.magnitude != 0.0f)
         {
             Vector3 dir = (m_velocity + transform.position) - transform.position;
-            Quaternion look = Quaternion.LookRotation(dir.normalized, Vector3.up);
+            Quaternion look = Quaternion.LookRotation(dir, Vector3.up);
             transform.rotation = Quaternion.Lerp(transform.rotation, look, Time.deltaTime * m_rotationSpeed);
         }
     }

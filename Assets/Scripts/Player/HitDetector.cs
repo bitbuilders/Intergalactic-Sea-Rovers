@@ -16,7 +16,6 @@ public class HitDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("Trigger");
         if (IsValidTag(other.tag))
         {
             Entity e = other.GetComponentInParent<Entity>();

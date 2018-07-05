@@ -18,7 +18,7 @@ public class Controller2D : Controller
         m_entity = GetComponent<Entity>();
     }
 
-    public override void Move()
+    public override void Move(CameraController camera)
     {
         m_velocity = Vector3.zero;
 

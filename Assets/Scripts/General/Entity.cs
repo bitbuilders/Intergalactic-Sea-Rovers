@@ -13,6 +13,7 @@ public abstract class Entity : MonoBehaviour
 
     [SerializeField] public Interactee m_interacteeInfo = null;
     [SerializeField] WeaponCollider m_weaponCollider = null;
+    [SerializeField] protected Animator m_animator;
     [SerializeField] PlayerType m_playerType = PlayerType.P1;
 
     public Inventory Inventory { get; protected set; }
@@ -23,6 +24,8 @@ public abstract class Entity : MonoBehaviour
     public bool Alive { get { return Health > 0.0f; } }
     public bool OnGround { get; set; }
     public WeaponCollider WeaponCollider { get { return m_weaponCollider; } }
+    public Controller Controller { get; protected set; }
+    public CameraController Camera { get; set; }
 
 
     protected void Initialize(Entity entity)
@@ -49,6 +52,7 @@ public abstract class Entity : MonoBehaviour
     virtual public void TakeDamage(float damage)
     {
         Health -= damage;
+        m_animator.SetTrigger("TakeDamage");
         if (!Alive)
         {
             Respawn();

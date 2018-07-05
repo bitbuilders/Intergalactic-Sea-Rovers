@@ -5,7 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class Game : Singleton<Game>
 {
+    public enum Mode
+    {
+        SINGLEPLAYER,
+        MULTIPLAYER
+    }
+
     [SerializeField] Player m_player = null;
+
+    public Mode GameMode { get; set; }
 
     static Game ms_instance = null;
     private void Start()

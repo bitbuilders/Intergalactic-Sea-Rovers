@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : Singleton<CameraController>
+public class CameraController : MonoBehaviour
 {
     [SerializeField] Transform m_target = null;
     [SerializeField] [Range(1.0f, 20.0f)] float m_cameraStiffness = 5.0f;
@@ -15,15 +15,18 @@ public class CameraController : Singleton<CameraController>
     [SerializeField] [Range(0.0f, 1.0f)] float m_shakeTime = 1.0f;
     [SerializeField] bool m_2D = true;
 
-    Player m_player;
+    Entity m_player;
     Camera m_camera;
     Vector3 m_actualPosition;
     Vector3 m_shake;
 
-    void Start()
+    void Awake()
     {
-        m_target = FindObjectOfType<Player>().transform;
-        m_player = m_target.GetComponent<Player>();
+        if (m_2D)
+        {
+            m_target = FindObjectOfType<Player>().transform;
+            m_player = m_target.GetComponent<Entity>();
+        }
         m_camera = GetComponent<Camera>();
         m_actualPosition = transform.position;
         m_shake = Vector3.zero;
@@ -63,7 +66,7 @@ public class CameraController : Singleton<CameraController>
             {
                 newPos.y = m_actualPosition.y;
             }
-            float close = (dirToTarget.magnitude <= m_closeDistance) ? 0.5f : 1.0f;
+            float close = (dirToTarget.magnitude <= m_closeDistance) ? 0.75f : 1.0f;
             m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness * close);
 
             Quaternion rotation = Quaternion.LookRotation(m_target.position + Vector3.up * 0.5f - transform.position);
@@ -73,6 +76,11 @@ public class CameraController : Singleton<CameraController>
         Vector3 newPosition = m_actualPosition + m_shake;
 
         transform.position = newPosition;
+    }
+
+    public void Entity(Entity entity)
+    {
+        m_player = entity;
     }
 
     public void Target(Transform target)

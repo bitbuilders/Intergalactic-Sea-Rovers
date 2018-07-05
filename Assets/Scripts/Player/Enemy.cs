@@ -6,32 +6,35 @@ public class Enemy : Entity
 {
     [SerializeField] [Range(0.0f, 10.0f)] float m_jumpResistance = 3.0f;
     [SerializeField] [Range(0.0f, 10.0f)] float m_fallSpeed = 3.0f;
+    [SerializeField] Controller3DAI m_controllerAI;
+    [SerializeField] Controller3D m_controllerPlayer;
     [SerializeField] MeshFilter m_weaponMesh = null;
     [SerializeField] Transform m_groundTouch;
     [SerializeField] LayerMask m_groundMask = 0;
-
-    EnemyAI m_AI;
-    EnemyPlayer m_player;
-    Animator m_animator;
+    
     Rigidbody m_rigidbody;
 
     public bool IsHuman
     {
         get
         {
-            return m_player.enabled;
+            return Controller == m_controllerPlayer;
         }
         set
         {
-            m_player.enabled = value;
-            m_AI.enabled = !value;
+            if (value)
+            {
+                Controller = m_controllerPlayer;
+            }
+            else
+            {
+                Controller = m_controllerAI;
+            }
         }
     }
 
     private void Start()
     {
-        m_AI = GetComponent<EnemyAI>();
-        m_player = GetComponent<EnemyPlayer>();
         m_rigidbody = GetComponent<Rigidbody>();
         m_animator = GetComponentInChildren<Animator>();
         base.Initialize(this);
@@ -46,6 +49,11 @@ public class Enemy : Entity
         Collider[] b = Physics.OverlapSphere(m_groundTouch.position, 0.1f, m_groundMask);
         OnGround = b.Length > 0;
         m_animator.SetBool("OnGround", OnGround);
+
+        if (Controller != null)
+        {
+            Controller.Move(Camera);
+        }
     }
 
     private void FixedUpdate()

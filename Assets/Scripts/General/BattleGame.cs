@@ -8,32 +8,33 @@ public class BattleGame : MonoBehaviour
     [SerializeField] HealthBar m_p1HBar = null;
     [SerializeField] HealthBar m_p2HBar = null;
 
+    Player m_player;
+    Enemy m_enemy;
+
     void Start()
     {
-        BattleManager.Instance.LoadBattle(m_opponent.transform);
+        BattleManager.Instance.LoadBattle();
+        m_player = FindObjectOfType<Player>();
+        m_enemy = m_opponent.GetComponent<Enemy>();
     }
 
     private void Update()
     {
-        Player p = FindObjectOfType<Player>();
-        Enemy e = m_opponent.GetComponent<Enemy>();
-        m_p1HBar.UpdateHealth(p.Health / p.MaxHealth);
-        m_p2HBar.UpdateHealth(e.Health / e.MaxHealth);
+        m_p1HBar.UpdateHealth(m_player.Health / m_player.MaxHealth);
+        m_p2HBar.UpdateHealth(m_enemy.Health / m_enemy.MaxHealth);
     }
 
     private void LateUpdate()
     {
-        Player p = FindObjectOfType<Player>();
-        Enemy e = m_opponent.GetComponent<Enemy>();
-        if (!p.Alive && !e.Alive)
+        if (!m_player.Alive && !m_enemy.Alive)
         {
 
         }
-        else if (!p.Alive)
+        else if (!m_player.Alive)
         {
 
         }
-        else if (!e.Alive)
+        else if (!m_enemy.Alive)
         {
 
         }

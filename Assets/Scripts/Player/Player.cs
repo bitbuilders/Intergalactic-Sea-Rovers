@@ -10,8 +10,6 @@ public class Player : Entity
     [SerializeField] GameObject m_3DCharacter = null;
     [SerializeField] MeshFilter m_weaponMesh = null;
 
-    public Controller Controller { get { return m_controller; } }
-
     Rigidbody m_rigidbody;
 
     static Player ms_instance = null;
@@ -30,13 +28,14 @@ public class Player : Entity
         Inventory.EquipWeapon(Inventory.Weapons[0]);
         SetEquippedWeaponMesh(m_weaponMesh);
         GetComponent<AttackController>().Initialize();
+        Controller = m_controller;
     }
 
     private void Update()
     {
         if (CanMove)
         {
-            m_controller.Move();
+            m_controller.Move(Camera);
         }
     }
 
