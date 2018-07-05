@@ -8,15 +8,19 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] AudioData[] m_audioClips = null;
 
     AudioSource[] m_loopedSounds;
-
+    
     static AudioManager ms_instance = null;
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
         if (ms_instance == null)
+        {
             ms_instance = this;
+        }
         else
+        {
             Destroy(gameObject);
+        }
 
         m_loopedSounds = new AudioSource[m_channelCount];
 
@@ -33,15 +37,28 @@ public class AudioManager : Singleton<AudioManager>
         {
             if (clip.playOnAwake)
             {
-                PlayClip(clip.clipName, clip.startPosition, false, transform, 1.0f);
+                PlayClip(clip.clipName, clip.startPosition, false, transform);
             }
         }
     }
 
-    public void PlayClip(string clipName, Vector3 position, bool playIndefinitely, Transform parent, float pitch, float duration = 0.0f)
+    public void StopClip(string clip)
+    {
+        AudioData data = GetClipFromName(clip);
+
+        foreach (AudioSource source in m_loopedSounds)
+        {
+            if (source.isPlaying && source.clip == data.clip)
+            {
+                source.Stop();
+                break;
+            }
+        }
+    }
+
+    public void PlayClip(string clipName, Vector3 position, bool playIndefinitely, Transform parent, float duration = 0.0f)
     {
         AudioData data = GetClipFromName(clipName);
-        data.pitch = pitch;
 
         if (data.global)
         {

@@ -15,6 +15,7 @@ public class WeaponCollider : MonoBehaviour
 
     public void SetColliderActive(string name)
     {
+        AudioManager.Instance.PlayClip("SwordWoosh", transform.parent.position, false, transform);
         GetColliderFromName(name).enabled = true;
     }
 
