@@ -74,6 +74,8 @@ public class PauseManager : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        AudioManager.Instance.StopClip("BattleMusic");
+        AudioManager.Instance.PlayClip("MenuMusic", Vector3.zero, true, null);
         UnpauseGame();
         Game.Instance.ReturnToMainMenu();
     }
