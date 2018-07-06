@@ -1757,7 +1757,7 @@ Light:
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 0.9056604, g: 0.6064216, b: 0.15806337, a: 1}
-  m_Intensity: 5
+  m_Intensity: 10
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -1795,7 +1795,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_forceRate: 20
-  m_forceMagnitude: 10
+  m_forceMagnitude: 15
   m_lanternBody: {fileID: 54114543324756096}
 --- !u!135 &135406396488645336
 SphereCollider:
