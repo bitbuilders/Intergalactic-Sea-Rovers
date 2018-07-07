@@ -56,7 +56,7 @@ public abstract class Entity : MonoBehaviour
         m_animator.SetTrigger("TakeDamage");
         if (!Alive)
         {
-            Respawn();
+            //Respawn();
         }
     }
 }

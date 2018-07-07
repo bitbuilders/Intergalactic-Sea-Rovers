@@ -28,15 +28,18 @@ public class BattleGame : MonoBehaviour
     {
         if (!m_player.Alive && !m_enemy.Alive)
         {
-
+            Game.Instance.LoadLevel("Pedestal");
         }
         else if (!m_player.Alive)
         {
-
+            DontDestroyOnLoad(m_enemy.gameObject);
+            Destroy(m_player.gameObject);
+            Game.Instance.LoadLevel("Pedestal");
         }
         else if (!m_enemy.Alive)
         {
-
+            Destroy(m_enemy.gameObject);
+            Game.Instance.LoadLevel("Pedestal");
         }
     }
 }

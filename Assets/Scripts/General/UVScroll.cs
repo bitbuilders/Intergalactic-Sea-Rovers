@@ -9,6 +9,9 @@ public class UVScroll : MonoBehaviour
 
     Material m_material;
 
+    float x;
+    float y;
+
     private void Start()
     {
         m_material = GetComponent<MeshRenderer>().material;
@@ -16,8 +19,8 @@ public class UVScroll : MonoBehaviour
 
     private void Update()
     {
-        float x = Time.time * m_horizontalSpeed;
-        float y = Time.time * m_verticalSpeed;
+        x += Time.deltaTime * m_horizontalSpeed;
+        y += Time.deltaTime * m_verticalSpeed;
         m_material.SetTextureOffset("_MainTex", new Vector2(x, y));
     }
 }

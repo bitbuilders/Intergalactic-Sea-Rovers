@@ -2,9 +2,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
+    [SerializeField] Button m_playButton = null;
+    [SerializeField] Button m_gameModeSelectionB = null;
+    [SerializeField] Button m_playerModeSelectionB = null;
+    [SerializeField] Button m_storyModeSelectionB = null;
+    [SerializeField] GameObject m_gameModeSelection = null;
+    [SerializeField] GameObject m_playerModeSelection = null;
+    [SerializeField] GameObject m_storyModeSelection = null;
+
+    private void Start()
+    {
+        m_playButton.Select();
+    }
+
+    private void Update()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            if (m_gameModeSelection.activeSelf)
+                m_gameModeSelectionB.onClick.Invoke();
+            else if (m_playerModeSelection.activeSelf)
+                m_playerModeSelectionB.onClick.Invoke();
+            else if (m_storyModeSelection.activeSelf)
+                m_storyModeSelectionB.onClick.Invoke();
+        }
+    }
+
+    public void Select(Button b)
+    {
+        b.Select();
+    }
+
     public void QuitGame()
     {
         Game.Instance.Quit();

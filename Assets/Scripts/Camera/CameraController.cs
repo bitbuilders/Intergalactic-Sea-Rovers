@@ -10,10 +10,11 @@ public class CameraController : MonoBehaviour
     [SerializeField] [Range(-10.0f, 10.0f)] float m_heightFromTarget = 5.0f;
     [SerializeField] [Range(0.0f, 10.0f)] float m_cameraLead = 5.0f;
     [SerializeField] [Range(0.0f, 10.0f)] float m_closeDistance = 2.0f;
-    [SerializeField] [Range(1.0f, 25.0f)] float m_shakeAmplitude = 5.0f;
-    [SerializeField] [Range(1.0f, 50.0f)] float m_shakeRate = 5.0f;
+    [SerializeField] [Range(0.0f, 25.0f)] float m_shakeAmplitude = 5.0f;
+    [SerializeField] [Range(0.0f, 50.0f)] float m_shakeRate = 5.0f;
     [SerializeField] [Range(0.0f, 1.0f)] float m_shakeTime = 1.0f;
     [SerializeField] bool m_2D = true;
+    [SerializeField] bool m_constantShake = false;
 
     Entity m_player;
     Camera m_camera;
@@ -36,7 +37,8 @@ public class CameraController : MonoBehaviour
     
     void Update()
     {
-        m_shakeTime -= Time.deltaTime;
+        if (!m_constantShake)
+            m_shakeTime -= Time.deltaTime;
         m_shakeTime = Mathf.Clamp01(m_shakeTime);
         
         float t = Time.time * m_shakeRate;
@@ -73,7 +75,7 @@ public class CameraController : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * m_cameraStiffness);
         }
         
-        Vector3 newPosition = m_actualPosition + m_shake;
+        Vector3 newPosition = m_actualPosition + (transform.rotation * m_shake);
 
         transform.position = newPosition;
     }

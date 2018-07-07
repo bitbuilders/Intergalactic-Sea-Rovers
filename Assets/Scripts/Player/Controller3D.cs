@@ -28,6 +28,9 @@ public class Controller3D : Controller
         m_entity.OnGround = b.Length > 0;
         m_animator.SetBool("OnGround", m_entity.OnGround);
 
+        if (camera == null)
+            return;
+
         m_velocity = Vector3.zero;
         float horizontalSpeed = Input.GetAxis(m_entity.PlayerNumber + "_Horizontal");
         float verticalSpeed = Input.GetAxis(m_entity.PlayerNumber + "_Vertical");
@@ -51,7 +54,6 @@ public class Controller3D : Controller
 
         transform.position += m_velocity;
         m_animator.SetFloat("yVelocity", m_rigidbody.velocity.y * 0.1f);
-
 
         if (Input.GetButtonDown(m_entity.PlayerNumber + "_Jump") && m_entity.OnGround)
         {

@@ -57,6 +57,9 @@ public class Controller3DAI : Controller
         m_entity.OnGround = b.Length > 0;
         m_animator.SetBool("OnGround", m_entity.OnGround);
 
+        if (m_player == null)
+            return;
+
         m_velocity = Vector3.zero;
 
         m_stateTime -= Time.deltaTime;
