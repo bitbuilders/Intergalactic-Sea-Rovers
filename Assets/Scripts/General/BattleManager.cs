@@ -5,6 +5,9 @@ using UnityEngine;
 public class BattleManager : Singleton<BattleManager>
 {
     Player m_player = null;
+    public Player Player { get; set; }
+    public Enemy Enemy { get; set; }
+    public Entity Winner { get; set; }
 
     static BattleManager ms_instance = null;
     private void Start()

@@ -6240,6 +6240,62 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1197163495}
+--- !u!1001 &1213967133
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4236040230680922, guid: 71b2a9b3fd786de499bfa19da946306e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236040230680922, guid: 71b2a9b3fd786de499bfa19da946306e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236040230680922, guid: 71b2a9b3fd786de499bfa19da946306e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236040230680922, guid: 71b2a9b3fd786de499bfa19da946306e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236040230680922, guid: 71b2a9b3fd786de499bfa19da946306e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236040230680922, guid: 71b2a9b3fd786de499bfa19da946306e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236040230680922, guid: 71b2a9b3fd786de499bfa19da946306e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236040230680922, guid: 71b2a9b3fd786de499bfa19da946306e, type: 2}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1446420062388056, guid: 71b2a9b3fd786de499bfa19da946306e, type: 2}
+      propertyPath: m_Name
+      value: SceneTransition
+      objectReference: {fileID: 0}
+    - target: {fileID: 114957788780148232, guid: 71b2a9b3fd786de499bfa19da946306e,
+        type: 2}
+      propertyPath: m_transitioner
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114957788780148232, guid: 71b2a9b3fd786de499bfa19da946306e,
+        type: 2}
+      propertyPath: m_transitionSpeed
+      value: 2.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 71b2a9b3fd786de499bfa19da946306e, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1240659435
 GameObject:
   m_ObjectHideFlags: 0

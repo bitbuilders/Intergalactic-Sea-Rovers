@@ -16,6 +16,8 @@ public class BattleGame : MonoBehaviour
         BattleManager.Instance.LoadBattle();
         m_player = FindObjectOfType<Player>();
         m_enemy = m_opponent.GetComponent<Enemy>();
+        BattleManager.Instance.Player = m_player;
+        BattleManager.Instance.Enemy = m_enemy;
     }
 
     private void Update()
@@ -28,18 +30,23 @@ public class BattleGame : MonoBehaviour
     {
         if (!m_player.Alive && !m_enemy.Alive)
         {
-            Game.Instance.LoadLevel("Pedestal");
+            SceneTransition.Instance.Transition(true, "Pedestal");
         }
         else if (!m_player.Alive)
         {
+            BattleManager.Instance.Winner = m_enemy;
             DontDestroyOnLoad(m_enemy.gameObject);
-            Destroy(m_player.gameObject);
-            Game.Instance.LoadLevel("Pedestal");
+            m_player.Respawn();
+            Controller3DAI ai = m_enemy.GetComponent<Controller3DAI>();
+            if (Game.Instance.GameMode == Game.Mode.SINGLEPLAYER)
+                Destroy(ai);
+            SceneTransition.Instance.Transition(true, "Pedestal");
         }
         else if (!m_enemy.Alive)
         {
-            Destroy(m_enemy.gameObject);
-            Game.Instance.LoadLevel("Pedestal");
+            BattleManager.Instance.Winner = m_player;
+            m_enemy.Respawn();
+            SceneTransition.Instance.Transition(true, "Pedestal");
         }
     }
 }

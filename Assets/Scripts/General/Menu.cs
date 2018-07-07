@@ -45,8 +45,16 @@ public class Menu : MonoBehaviour
     public void Load(string level)
     {
         AudioManager.Instance.StopClip("MenuMusic");
+        AudioManager.Instance.StopClip("BattleMusic");
         AudioManager.Instance.PlayClip("BattleMusic", Vector3.zero, true, null);
-        Game.Instance.LoadLevel(level);
+        SceneTransition.Instance.Transition(true, level);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        AudioManager.Instance.StopClip("BattleMusic");
+        AudioManager.Instance.PlayClip("MenuMusic", Vector3.zero, true, null);
+        SceneTransition.Instance.Transition(true, "MainMenu");
     }
 
     public void PlayHoverSound()
