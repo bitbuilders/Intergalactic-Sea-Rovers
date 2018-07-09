@@ -68,11 +68,12 @@ public class CameraController : MonoBehaviour
             {
                 newPos.y = m_actualPosition.y;
             }
-            float close = (dirToTarget.magnitude <= m_closeDistance) ? 0.75f : 1.0f;
-            m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness * close);
+            m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness);
+            //m_actualPosition = newPos;
 
             Quaternion rotation = Quaternion.LookRotation(m_target.position + Vector3.up * 0.5f - transform.position);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * m_cameraStiffness);
+            //transform.rotation = rotation;
         }
         
         Vector3 newPosition = m_actualPosition + (transform.rotation * m_shake);
