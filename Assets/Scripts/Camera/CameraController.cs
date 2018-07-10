@@ -64,6 +64,7 @@ public class CameraController : MonoBehaviour
             Vector3 offset = Vector3.up * m_heightFromTarget;
             Vector3 dirToTarget = m_target.position - m_player.Controller.transform.position;
             Vector3 newPos = Vector3.zero;
+            Quaternion rotation = Quaternion.identity;
             if (dirToTarget.magnitude > m_closeDistance)
             {
                 newPos = -dirToTarget.normalized * m_distanceFromTarget + m_player.Controller.transform.position;
@@ -73,24 +74,16 @@ public class CameraController : MonoBehaviour
                     newPos.y = m_actualPosition.y;
                 }
                 m_lastPlayerPos = newPos;
+                rotation = Quaternion.LookRotation(m_target.position + Vector3.up * 0.5f - transform.position);
             }
             else
             {
-                Vector3 heightOffset = Vector3.up * ((dirToTarget.magnitude - m_closeDistance) * 0.25f);
-                if ((m_lastPlayerPos - (m_actualPosition - heightOffset)).magnitude >= m_closeDistance + 2.0f)
-                {
-                    m_lastPlayerPos = -dirToTarget.normalized * m_distanceFromTarget + m_player.Controller.transform.position; ;
-                }
-                newPos += m_lastPlayerPos + offset + heightOffset;
+                newPos = m_actualPosition;
 
-                if (!m_player.OnGround)
-                {
-                    newPos.y = m_actualPosition.y;
-                }
+                rotation = Quaternion.LookRotation(m_target.position + Vector3.up * 0.5f - transform.position);
             }
             m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness);
 
-            Quaternion rotation = Quaternion.LookRotation(m_target.position + Vector3.up * 0.5f - transform.position);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * m_cameraStiffness);
         }
         
