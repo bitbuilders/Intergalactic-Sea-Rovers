@@ -1069,7 +1069,7 @@ MonoBehaviour:
   m_distanceFromTarget: 4
   m_heightFromTarget: 4
   m_cameraLead: 5
-  m_closeDistance: 2
+  m_closeDistance: 3
   m_shakeAmplitude: 0.25
   m_shakeRate: 0.75
   m_shakeTime: 1
@@ -1203,9 +1203,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d38ff0446f551d948821c6b84979bebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_cameras:
-  - {fileID: 658557216}
-  - {fileID: 1117181022}
+  m_players:
+  - {fileID: 1075855134}
 --- !u!81 &816549436
 AudioListener:
   m_ObjectHideFlags: 0
@@ -6153,7 +6152,7 @@ MonoBehaviour:
   m_distanceFromTarget: 4
   m_heightFromTarget: 4
   m_cameraLead: 5
-  m_closeDistance: 2
+  m_closeDistance: 3
   m_shakeAmplitude: 0.25
   m_shakeRate: 0.75
   m_shakeTime: 1

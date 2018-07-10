@@ -20,6 +20,7 @@ public class CameraController : MonoBehaviour
     Camera m_camera;
     Vector3 m_actualPosition;
     Vector3 m_shake;
+    Vector3 m_lastPlayerPos;
 
     void Awake()
     {
@@ -62,18 +63,35 @@ public class CameraController : MonoBehaviour
         {
             Vector3 offset = Vector3.up * m_heightFromTarget;
             Vector3 dirToTarget = m_target.position - m_player.Controller.transform.position;
-            Vector3 newPos = -dirToTarget.normalized * m_distanceFromTarget + m_player.Controller.transform.position;
-            newPos += offset;
-            if (!m_player.OnGround)
+            Vector3 newPos = Vector3.zero;
+            if (dirToTarget.magnitude > m_closeDistance)
             {
-                newPos.y = m_actualPosition.y;
+                newPos = -dirToTarget.normalized * m_distanceFromTarget + m_player.Controller.transform.position;
+                newPos += offset;
+                if (!m_player.OnGround)
+                {
+                    newPos.y = m_actualPosition.y;
+                }
+                m_lastPlayerPos = newPos;
+            }
+            else
+            {
+                Vector3 heightOffset = Vector3.up * ((dirToTarget.magnitude - m_closeDistance) * 0.25f);
+                if ((m_lastPlayerPos - (m_actualPosition - heightOffset)).magnitude >= m_closeDistance + 2.0f)
+                {
+                    m_lastPlayerPos = -dirToTarget.normalized * m_distanceFromTarget + m_player.Controller.transform.position; ;
+                }
+                newPos += m_lastPlayerPos + offset + heightOffset;
+
+                if (!m_player.OnGround)
+                {
+                    newPos.y = m_actualPosition.y;
+                }
             }
             m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness);
-            //m_actualPosition = newPos;
 
             Quaternion rotation = Quaternion.LookRotation(m_target.position + Vector3.up * 0.5f - transform.position);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * m_cameraStiffness);
-            //transform.rotation = rotation;
         }
         
         Vector3 newPosition = m_actualPosition + (transform.rotation * m_shake);

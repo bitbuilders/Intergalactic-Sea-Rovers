@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class AudioListener : MonoBehaviour
 {
-    [SerializeField] List<GameObject> m_cameras = null;
-
-    int m_numOfCameras;
+    [SerializeField] List<GameObject> m_players = null;
 
     private void Start()
     {
-        m_numOfCameras = Game.Instance.GameMode == Game.Mode.MULTIPLAYER ? 2 : 1;
+        m_players.Add(FindObjectOfType<Player>().gameObject);
     }
 
     void Update()
@@ -22,11 +20,11 @@ public class AudioListener : MonoBehaviour
     {
         Vector3 center = Vector3.zero;
 
-        for (int i = 0; i < m_numOfCameras; i++)
+        for (int i = m_players.Count - 1; i >= 0; i--)
         {
-            center += m_cameras[i].transform.position;
+            center += m_players[i].transform.position;
         }
-        center /= m_numOfCameras;
+        center /= m_players.Count;
         return center;
     }
 }
