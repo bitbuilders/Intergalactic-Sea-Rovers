@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] [Range(-10.0f, 10.0f)] float m_heightFromTarget = 5.0f;
     [SerializeField] [Range(0.0f, 10.0f)] float m_cameraLead = 5.0f;
     [SerializeField] [Range(0.0f, 10.0f)] float m_closeDistance = 2.0f;
+    [SerializeField] [Range(0.0f, 60.0f)] float m_fovZoom = 20.0f;
     [SerializeField] [Range(0.0f, 25.0f)] float m_shakeAmplitude = 5.0f;
     [SerializeField] [Range(0.0f, 50.0f)] float m_shakeRate = 5.0f;
     [SerializeField] [Range(0.0f, 1.0f)] float m_shakeTime = 1.0f;
@@ -65,25 +66,15 @@ public class CameraController : MonoBehaviour
             Vector3 dirToTarget = m_target.position - m_player.Controller.transform.position;
             Vector3 newPos = Vector3.zero;
             Quaternion rotation = Quaternion.identity;
-            if (dirToTarget.magnitude > m_closeDistance)
-            {
-                newPos = -dirToTarget.normalized * m_distanceFromTarget + m_player.Controller.transform.position;
-                newPos += offset;
-                if (!m_player.OnGround)
-                {
-                    newPos.y = m_actualPosition.y;
-                }
-                m_lastPlayerPos = newPos;
-                rotation = Quaternion.LookRotation(m_target.position + Vector3.up * 0.5f - transform.position);
-            }
-            else
-            {
-                newPos = m_actualPosition;
+            m_camera.fieldOfView = (m_closeDistance - dirToTarget.magnitude) / m_closeDistance * m_fovZoom + 60.0f;
+            m_camera.fieldOfView = Mathf.Clamp(m_camera.fieldOfView, 60.0f, 60.0f + m_fovZoom);
 
-                rotation = Quaternion.LookRotation(m_target.position + Vector3.up * 0.5f - transform.position);
-            }
+            Vector3 center = (m_player.Controller.transform.position - m_target.position) * 0.5f + m_target.position;
+            Vector3 off = dirToTarget.normalized * m_distanceFromTarget;
+            newPos = center + Quaternion.AngleAxis(90.0f, Vector3.up) * off + offset;
             m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness);
 
+            rotation = Quaternion.LookRotation(center + Vector3.up * 0.5f - transform.position, Vector3.up);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * m_cameraStiffness);
         }
         

@@ -1067,7 +1067,7 @@ MonoBehaviour:
   m_target: {fileID: 0}
   m_cameraStiffness: 5
   m_distanceFromTarget: 4
-  m_heightFromTarget: 4
+  m_heightFromTarget: 5
   m_cameraLead: 5
   m_closeDistance: 3
   m_shakeAmplitude: 0.25
@@ -6150,7 +6150,7 @@ MonoBehaviour:
   m_target: {fileID: 0}
   m_cameraStiffness: 5
   m_distanceFromTarget: 4
-  m_heightFromTarget: 4
+  m_heightFromTarget: 5
   m_cameraLead: 5
   m_closeDistance: 3
   m_shakeAmplitude: 0.25
