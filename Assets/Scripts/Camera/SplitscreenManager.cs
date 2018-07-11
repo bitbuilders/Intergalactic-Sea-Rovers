@@ -24,13 +24,13 @@ public class SplitscreenManager : Singleton<SplitscreenManager>
         {
             if (m_screenType == SplitscreenType.VERTICAL_CUT)
             {
-                m_p1Cam.rect = new Rect(0.5f, 0.0f, 0.5f, 1.0f);
-                m_p2Cam.rect = new Rect(0.0f, 0.0f, 0.5f, 1.0f);
+                m_p1Cam.rect = new Rect(0.0f, 0.0f, 0.5f, 1.0f);
+                m_p2Cam.rect = new Rect(0.5f, 0.0f, 0.5f, 1.0f);
             }
             else
             {
-                m_p1Cam.rect = new Rect(0.0f, 0.0f, 1.0f, 0.5f);
-                m_p2Cam.rect = new Rect(0.0f, 0.5f, 1.0f, 0.5f);
+                m_p1Cam.rect = new Rect(0.0f, 0.5f, 1.0f, 0.5f);
+                m_p2Cam.rect = new Rect(0.0f, 0.0f, 1.0f, 0.5f);
             }
 
             m_p2Cam.GetComponent<CameraController>().Entity(m_enemy);
