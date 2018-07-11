@@ -37,9 +37,9 @@ public class Controller3D : Controller
         m_velocity.x = horizontalSpeed; // Limits velocity if traveling diagonally
         m_velocity.z = verticalSpeed; // "
         m_velocity = camera.transform.rotation * m_velocity;
+        m_velocity.y = 0.0f;
         m_velocity.Normalize();
         m_velocity *= Time.deltaTime * m_speed;
-        m_velocity.y = 0.0f;
         
         m_animator.SetFloat("MoveSpeed", m_velocity.magnitude * 10.0f);
         if (Input.GetButton(m_entity.PlayerNumber + "_Sprint"))
@@ -60,11 +60,20 @@ public class Controller3D : Controller
             m_rigidbody.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
         }
 
-        if (m_velocity.magnitude != 0.0f)
+        if (!camera.m_locked)
         {
-            Vector3 dir = (m_velocity + transform.position) - transform.position;
+            if (m_velocity.magnitude != 0.0f)
+            {
+                Vector3 dir = (m_velocity + transform.position) - transform.position;
+                Quaternion look = Quaternion.LookRotation(dir, Vector3.up);
+                transform.rotation = Quaternion.Lerp(transform.rotation, look, Time.deltaTime * m_rotationSpeed);
+            }
+        }
+        else
+        {
+            Vector3 dir = camera.m_target.transform.position - transform.position;
             Quaternion look = Quaternion.LookRotation(dir, Vector3.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, look, Time.deltaTime * m_rotationSpeed);
+            transform.rotation = Quaternion.Lerp(transform.rotation, look, Time.deltaTime * m_rotationSpeed * 4.0f);
         }
     }
 

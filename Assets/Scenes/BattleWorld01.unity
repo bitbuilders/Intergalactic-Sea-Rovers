@@ -1065,16 +1065,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_target: {fileID: 0}
+  m_rotationSpeed: 90
   m_cameraStiffness: 5
-  m_distanceFromTarget: 4
-  m_heightFromTarget: 5
+  m_distanceFromTarget: 6
+  m_heightFromTarget: 2
   m_cameraLead: 5
   m_closeDistance: 3
+  m_fovZoom: 20
   m_shakeAmplitude: 0.25
   m_shakeRate: 0.75
   m_shakeTime: 1
   m_2D: 0
   m_constantShake: 1
+  m_locked: 0
 --- !u!1 &665893187
 GameObject:
   m_ObjectHideFlags: 0
@@ -6148,16 +6151,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_target: {fileID: 0}
+  m_rotationSpeed: 90
   m_cameraStiffness: 5
-  m_distanceFromTarget: 4
-  m_heightFromTarget: 5
+  m_distanceFromTarget: 6
+  m_heightFromTarget: 2
   m_cameraLead: 5
   m_closeDistance: 3
+  m_fovZoom: 20
   m_shakeAmplitude: 0.25
   m_shakeRate: 0.75
   m_shakeTime: 1
   m_2D: 0
   m_constantShake: 1
+  m_locked: 0
 --- !u!4 &1117181027
 Transform:
   m_ObjectHideFlags: 0
