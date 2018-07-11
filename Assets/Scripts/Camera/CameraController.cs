@@ -10,8 +10,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] [Range(-10.0f, 10.0f)] float m_distanceFromTarget = 5.0f;
     [SerializeField] [Range(-10.0f, 10.0f)] float m_heightFromTarget = 5.0f;
     [SerializeField] [Range(0.0f, 10.0f)] float m_cameraLead = 5.0f;
-    [SerializeField] [Range(0.0f, 10.0f)] float m_closeDistance = 2.0f;
-    [SerializeField] [Range(0.0f, 60.0f)] float m_fovZoom = 20.0f;
     [SerializeField] [Range(0.0f, 25.0f)] float m_shakeAmplitude = 5.0f;
     [SerializeField] [Range(0.0f, 50.0f)] float m_shakeRate = 5.0f;
     [SerializeField] [Range(0.0f, 1.0f)] float m_shakeTime = 1.0f;
@@ -73,7 +71,7 @@ public class CameraController : MonoBehaviour
             Vector3 newPos = offset + m_player.transform.position;
             m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness);
             m_rotation = (m_startingRot * transform.rotation).eulerAngles;
-            m_rotation.x *= -1.0f;
+            m_rotation.x = -10.0f;
         }
     }
 
@@ -99,7 +97,7 @@ public class CameraController : MonoBehaviour
             else
             {
                 Quaternion rot = Quaternion.LookRotation(m_target.transform.position + Vector3.up * 0.5f - transform.position, Vector3.up);
-                transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * m_cameraStiffness * 4.0f);
+                transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * m_cameraStiffness * 3.0f);
             }
         }
         

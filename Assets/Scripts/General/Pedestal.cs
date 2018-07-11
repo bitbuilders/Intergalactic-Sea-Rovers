@@ -40,6 +40,7 @@ public class Pedestal : MonoBehaviour
         BattleManager.Instance.Player.gameObject.SetActive(true);
         BattleManager.Instance.Player.Respawn();
         BattleManager.Instance.Player.transform.parent = null;
+        BattleManager.Instance.Player.transform.rotation = Quaternion.identity;
         DontDestroyOnLoad(BattleManager.Instance.Player.gameObject);
     }
 
