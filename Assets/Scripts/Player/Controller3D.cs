@@ -72,6 +72,7 @@ public class Controller3D : Controller
         else
         {
             Vector3 dir = camera.m_target.transform.position - transform.position;
+            dir.y = 0.0f;
             Quaternion look = Quaternion.LookRotation(dir, Vector3.up);
             transform.rotation = Quaternion.Lerp(transform.rotation, look, Time.deltaTime * m_rotationSpeed * 4.0f);
         }

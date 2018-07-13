@@ -39,7 +39,7 @@ public class AttackController : MonoBehaviour
 
     public bool Attack(bool usePlayerInput)
     {
-        if (m_attackTime >= m_attackCooldown && m_entity.OnGround)
+        if (m_attackTime >= m_attackCooldown)
         {
             if ((usePlayerInput && Input.GetButtonDown(m_playerNumber + "_AttackNormal")) || !usePlayerInput)
             {

@@ -22,17 +22,18 @@ public class SceneTransition : Singleton<SceneTransition>
         }
     }
 
-    public void Transition(bool fadeIn, string sceneTo = "")
+    public void Transition(bool fadeIn, string sceneTo = "", float time = 0.0f)
     {
-        StartCoroutine(Fade(fadeIn, sceneTo));
+        StartCoroutine(Fade(fadeIn, sceneTo, time));
     }
 
-    IEnumerator Fade(bool fadeIn, string sceneTo = "")
+    IEnumerator Fade(bool fadeIn, string sceneTo = "", float time = 0.0f)
     {
+        float t = (time <= 0.0f) ? m_transitionSpeed : time;
         if (fadeIn)
         {
             SetTintAlpha(0.0f);
-            for (float i = 0.0f; i <= 1.0f; i+= Time.deltaTime * m_transitionSpeed)
+            for (float i = 0.0f; i <= 1.0f; i+= Time.deltaTime * t)
             {
                 SetTintAlpha(i);
                 yield return null;
@@ -42,7 +43,7 @@ public class SceneTransition : Singleton<SceneTransition>
         else
         {
             SetTintAlpha(1.0f);
-            for (float i = 1.0f; i >= 0.0f ; i -= Time.deltaTime * m_transitionSpeed)
+            for (float i = 1.0f; i >= 0.0f ; i -= Time.deltaTime * t)
             {
                 SetTintAlpha(i);
                 yield return null;

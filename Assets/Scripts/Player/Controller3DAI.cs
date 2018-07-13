@@ -79,7 +79,7 @@ public class Controller3DAI : Controller
         if (m_velocity.magnitude != 0.0f)
         {
             Vector3 dir = m_player.transform.position - transform.position;
-            dir.y = Mathf.Clamp(dir.y, -3.0f, 3.0f);
+            dir.y = 0.0f;
             Quaternion look = Quaternion.LookRotation(dir, Vector3.up);
             transform.rotation = look;
         }

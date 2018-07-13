@@ -30,7 +30,7 @@ public class BattleGame : MonoBehaviour
     {
         if (!m_player.Alive && !m_enemy.Alive)
         {
-            SceneTransition.Instance.Transition(true, "Pedestal");
+            SceneTransition.Instance.Transition(true, "Pedestal", 1.0f);
         }
         else if (!m_player.Alive)
         {
@@ -40,13 +40,13 @@ public class BattleGame : MonoBehaviour
             Controller3DAI ai = m_enemy.GetComponent<Controller3DAI>();
             if (Game.Instance.GameMode == Game.Mode.SINGLEPLAYER)
                 Destroy(ai);
-            SceneTransition.Instance.Transition(true, "Pedestal");
+            SceneTransition.Instance.Transition(true, "Pedestal", 1.0f);
         }
         else if (!m_enemy.Alive)
         {
             BattleManager.Instance.Winner = m_player;
             m_enemy.Respawn();
-            SceneTransition.Instance.Transition(true, "Pedestal");
+            SceneTransition.Instance.Transition(true, "Pedestal", 1.0f);
         }
     }
 }

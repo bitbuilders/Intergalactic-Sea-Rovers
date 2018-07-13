@@ -378,6 +378,11 @@ Prefab:
       propertyPath: m_transitioner
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114957788780148232, guid: 71b2a9b3fd786de499bfa19da946306e,
+        type: 2}
+      propertyPath: m_transitionSpeed
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 71b2a9b3fd786de499bfa19da946306e, type: 2}
   m_IsPrefabParent: 0

@@ -30,12 +30,14 @@ public class Game : Singleton<Game>
 
     public void ReturnToMainMenu()
     {
+        m_player.transform.rotation = Quaternion.identity;
         SceneManager.LoadScene("MainMenu");
         m_player.gameObject.SetActive(false);
     }
 
     public void LoadLevel(string level)
     {
+        m_player.transform.rotation = Quaternion.identity;
         SceneManager.LoadScene(level);
         m_player.gameObject.SetActive(true);
     }

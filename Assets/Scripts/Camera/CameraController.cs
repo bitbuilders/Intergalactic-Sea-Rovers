@@ -112,6 +112,9 @@ public class CameraController : MonoBehaviour
 
         m_offset.z = -m_player.transform.forward.z * m_offset.z;
         m_startingRot = m_player.transform.rotation;
+        m_rotation = Vector3.zero;
+        m_rotation.x = -15.0f;
+        m_rotation = m_startingRot * m_rotation;
     }
 
     public void Target(Transform target)
