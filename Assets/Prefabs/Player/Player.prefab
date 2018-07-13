@@ -909,7 +909,7 @@ MonoBehaviour:
   m_itemType: 0
   m_attackCooldown: 0.5
   m_attackDuration: 1
-  m_damage: 25
+  m_damage: 5
   m_attackRange: 1
   m_projectileSpeed: 1
   m_projectileFalloff: 1
@@ -1024,6 +1024,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_weapons:
   - collider: {fileID: 64573497162553184}
+    trail: {fileID: 0}
+    weaponSound: SwordWoosh
     name: Cutlass
 --- !u!136 &136538410943204248
 CapsuleCollider:

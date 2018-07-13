@@ -8,6 +8,8 @@ public class WeaponCollider : MonoBehaviour
     public struct WeaponInfo
     {
         public Collider collider;
+        public TrailRenderer trail;
+        public string weaponSound;
         public string name;
     }
 
@@ -15,24 +17,28 @@ public class WeaponCollider : MonoBehaviour
 
     public void SetColliderActive(string name)
     {
-        AudioManager.Instance.PlayClip("SwordWoosh", transform.parent.position, false, transform);
-        GetColliderFromName(name).enabled = true;
+        WeaponInfo wi = GetWeaponInfoFromName(name);
+        AudioManager.Instance.PlayClip(wi.weaponSound, transform.parent.position, false, transform);
+        wi.collider.enabled = true;
+        wi.trail.alignment = LineAlignment.View;
     }
 
     public void SetColliderInactive(string name)
     {
-        GetColliderFromName(name).enabled = false;
+        WeaponInfo wi = GetWeaponInfoFromName(name);
+        wi.collider.enabled = false;
+        wi.trail.alignment = LineAlignment.Local;
     }
 
-    private Collider GetColliderFromName(string name)
+    private WeaponInfo GetWeaponInfoFromName(string name)
     {
-        Collider c = null;
+        WeaponInfo c = default(WeaponInfo);
 
         foreach (WeaponInfo wi in m_weapons)
         {
             if (wi.name == name)
             {
-                c = wi.collider;
+                c = wi;
                 break;
             }
         }
