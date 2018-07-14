@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponCollider : MonoBehaviour
 {
     [System.Serializable]
-    public struct WeaponInfo
+    public class WeaponInfo
     {
         public Collider collider;
         public TrailRenderer trail;
@@ -15,19 +15,21 @@ public class WeaponCollider : MonoBehaviour
 
     [SerializeField] List<WeaponInfo> m_weapons = null;
 
+    private void Start()
+    {
+    }
+
     public void SetColliderActive(string name)
     {
         WeaponInfo wi = GetWeaponInfoFromName(name);
         AudioManager.Instance.PlayClip(wi.weaponSound, transform.parent.position, false, transform);
         wi.collider.enabled = true;
-        wi.trail.alignment = LineAlignment.View;
     }
 
     public void SetColliderInactive(string name)
     {
         WeaponInfo wi = GetWeaponInfoFromName(name);
         wi.collider.enabled = false;
-        wi.trail.alignment = LineAlignment.Local;
     }
 
     private WeaponInfo GetWeaponInfoFromName(string name)
