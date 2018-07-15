@@ -5,7 +5,9 @@ using UnityEngine;
 public class AttackController : MonoBehaviour
 {
     [SerializeField] Animator m_animator = null;
+    [SerializeField] [Range(0.0f, 10.0f)] float m_comboSpeed = 0.25f;
 
+    ComboHandler m_comboHandler;
     Entity m_entity;
     Inventory m_inventory;
     float m_attackCooldown;
@@ -15,6 +17,7 @@ public class AttackController : MonoBehaviour
 
     public void Initialize()
     {
+        m_comboHandler = GetComponent<ComboHandler>();
         m_inventory = GetComponent<Inventory>();
         m_entity = GetComponent<Entity>();
         SetAttackTimes();
@@ -39,15 +42,22 @@ public class AttackController : MonoBehaviour
 
     public bool Attack(bool usePlayerInput)
     {
-        if (m_attackTime >= m_attackCooldown)
+        if (m_comboHandler.Finished)
         {
-            if ((usePlayerInput && Input.GetButtonDown(m_playerNumber + "_AttackNormal")) || !usePlayerInput)
-            {
-                m_attackTime = 0.0f;
-                m_animator.SetTrigger("Attack_Normal");
-                return true;
-            }
+            m_comboHandler.Reset();
+            m_attackTime = 0.0f;
         }
+
+        if (((usePlayerInput && Input.GetButtonDown(m_playerNumber + "_AttackNormal")) || !usePlayerInput))
+        {
+            if (m_attackTime >= m_attackCooldown)
+            {
+                m_comboHandler.Attack();
+            }
+
+            return true;
+        }
+
         return false;
     }
 

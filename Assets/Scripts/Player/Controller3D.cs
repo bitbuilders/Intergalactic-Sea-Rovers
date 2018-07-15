@@ -53,6 +53,7 @@ public class Controller3D : Controller
         }
 
         transform.position += m_velocity;
+        //m_rigidbody.AddForce(m_velocity * 1000.0f);
         m_animator.SetFloat("yVelocity", m_rigidbody.velocity.y * 0.1f);
 
         if (Input.GetButtonDown(m_entity.PlayerNumber + "_Jump") && m_entity.OnGround)

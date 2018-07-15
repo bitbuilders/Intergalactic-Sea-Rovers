@@ -4,10 +4,10 @@ Idle - 70-130
 Run - 140-200
 Jump - 210-225
 Take Damage - 250-280
-Slice (TR -> BL) - 290-305
-Slice (BL -> TR) -
-Slice (R -> L) - 
+Slice (TR -> BL) - 290-305(300)
+Slice (BL -> TR) - 315-325
+Slice (TR -> L | Spin) - 335-350
 Slice (L -> R) -
-Slice (BL -> R | Spin) -
+Slice (R -> L) - 
 Jab -
 Jump Slice -

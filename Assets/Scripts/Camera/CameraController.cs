@@ -50,29 +50,6 @@ public class CameraController : MonoBehaviour
         float t = Time.time * m_shakeRate;
         m_shake.x = m_shakeTime * m_shakeAmplitude * ((Mathf.PerlinNoise(t, 0.0f) * 2.0f) - 1.0f);
         m_shake.y = m_shakeTime * m_shakeAmplitude * ((Mathf.PerlinNoise(0.0f, t) * 2.0f) - 1.0f);
-
-        bool p1Locked = Input.GetButton(m_player.PlayerNumber + "_Target");
-        bool p2Locked = Input.GetAxis(m_player.PlayerNumber + "_Target") != 0.0f;
-        m_locked = p1Locked || p2Locked;
-
-        if (!m_locked)
-        {
-            Vector3 offset = m_offset * m_distanceFromTarget;
-            m_rotation.y += Input.GetAxis(m_player.PlayerNumber + "_CamHorizontal") * Time.deltaTime * m_rotationSpeed;
-            m_rotation.x += Input.GetAxis(m_player.PlayerNumber + "_CamVertical") * Time.deltaTime * m_rotationSpeed;
-            Quaternion rotation = Quaternion.Euler(m_rotation);
-            Vector3 newPos = rotation * offset + m_player.Controller.transform.position + Vector3.up * m_heightFromTarget;
-            m_rotation.x = Mathf.Clamp(m_rotation.x, -30.0f, 25.0f);
-            m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness);
-        }
-        else
-        {
-            Vector3 offset = -m_player.transform.forward * m_distanceFromTarget + Vector3.up * (m_heightFromTarget + 1.0f);
-            Vector3 newPos = offset + m_player.transform.position;
-            m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness);
-            m_rotation = (m_startingRot * transform.rotation).eulerAngles;
-            m_rotation.x = -10.0f;
-        }
     }
 
     private void LateUpdate()
@@ -89,10 +66,33 @@ public class CameraController : MonoBehaviour
         }
         else
         {
+            bool p1Locked = Input.GetButton(m_player.PlayerNumber + "_Target");
+            bool p2Locked = Input.GetAxis(m_player.PlayerNumber + "_Target") != 0.0f;
+            m_locked = p1Locked || p2Locked;
+
             if (!m_locked)
             {
-                Quaternion rot = Quaternion.LookRotation(m_player.transform.position + Vector3.up * 0.5f - transform.position, Vector3.up);
-                transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * m_cameraStiffness * 4.0f);
+                Vector3 offset = m_offset * m_distanceFromTarget;
+                m_rotation.y += Input.GetAxis(m_player.PlayerNumber + "_CamHorizontal") * Time.deltaTime * m_rotationSpeed;
+                m_rotation.x += Input.GetAxis(m_player.PlayerNumber + "_CamVertical") * Time.deltaTime * m_rotationSpeed;
+                Quaternion rotation = Quaternion.Euler(m_rotation);
+                Vector3 newPos = rotation * offset + m_player.Controller.transform.position + Vector3.up * m_heightFromTarget;
+                m_rotation.x = Mathf.Clamp(m_rotation.x, -30.0f, 25.0f);
+                m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness);
+            }
+            else
+            {
+                Vector3 offset = -m_player.transform.forward * m_distanceFromTarget + Vector3.up * (m_heightFromTarget + 1.0f);
+                Vector3 newPos = offset + m_player.transform.position;
+                m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness);
+                m_rotation = (m_startingRot * transform.rotation).eulerAngles;
+                m_rotation.x = -10.0f;
+            }
+
+            if (!m_locked)
+            {
+                Quaternion rot = Quaternion.LookRotation(m_player.Controller.transform.position + Vector3.up * 0.5f - transform.position, Vector3.up);
+                transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * m_cameraStiffness * 3.0f);
             }
             else
             {
