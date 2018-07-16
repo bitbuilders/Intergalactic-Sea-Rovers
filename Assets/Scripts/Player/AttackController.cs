@@ -5,7 +5,6 @@ using UnityEngine;
 public class AttackController : MonoBehaviour
 {
     [SerializeField] Animator m_animator = null;
-    [SerializeField] [Range(0.0f, 10.0f)] float m_comboSpeed = 0.25f;
 
     ComboHandler m_comboHandler;
     Entity m_entity;

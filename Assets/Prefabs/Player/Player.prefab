@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4847398023242680}
   - component: {fileID: 114566729900447508}
-  - component: {fileID: 114786511441504468}
   - component: {fileID: 95359096952007754}
   - component: {fileID: 136956204434855978}
   m_Layer: 0
@@ -29,7 +28,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1221674122046662
 GameObject:
   m_ObjectHideFlags: 0
@@ -1631,7 +1630,7 @@ MonoBehaviour:
   m_projectileTemplate: {fileID: 0}
   m_collider: {fileID: 0}
   m_itemType: 0
-  m_attackCooldown: 0.5
+  m_attackCooldown: 0
   m_attackDuration: 1
   m_damage: 3
   m_attackRange: 1
@@ -1686,7 +1685,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_animator: {fileID: 95359096952007754}
-  m_comboSpeed: 0.25
 --- !u!114 &114566729900447508
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1701,6 +1699,7 @@ MonoBehaviour:
   m_weapons:
   - collider: {fileID: 64923900282358548}
     trail: {fileID: 96159430056594508}
+    time: 0
     weaponSound: SwordWoosh
     name: Cutlass
 --- !u!114 &114605220035825948
@@ -1715,7 +1714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_animator: {fileID: 95359096952007754}
-  m_comboSpeed: 0.3
+  m_comboSpeed: 0.5
 --- !u!114 &114677584679630194
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1729,6 +1728,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_hitableTags:
   - Enemy
+  m_splatterEffect: {fileID: 198861433180708154, guid: a44843b01596a5d488989a2fc0498faf,
+    type: 2}
 --- !u!114 &114773114937849264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1743,19 +1744,6 @@ MonoBehaviour:
   m_capacity: 1
   m_weapons: {fileID: 1892951195271860}
   m_items: {fileID: 1931154259360710}
---- !u!114 &114786511441504468
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1097372897040210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6de83b1040c0544a8cd3204256bd897, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_hitableTags:
-  - Enemy
 --- !u!114 &114933189211323878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1792,6 +1780,7 @@ MonoBehaviour:
   m_weapons:
   - collider: {fileID: 64573497162553184}
     trail: {fileID: 96159430056594508}
+    time: 0
     weaponSound: SwordWoosh
     name: Cutlass
 --- !u!136 &136538410943204248
