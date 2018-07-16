@@ -29,7 +29,7 @@ public class ComboHandler : MonoBehaviour
         
         if (m_comboTime >= m_comboSpeed)
         {
-            if (m_currentCombo == 3)
+            if (m_currentCombo == 3 && m_comboOrder.Count == 0)
             {
                 Finished = true;
             }
