@@ -37,7 +37,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4042544235506338}
   - component: {fileID: 114994936196451044}
-  - component: {fileID: 114871291102755144}
   - component: {fileID: 95677425586526570}
   - component: {fileID: 136911567107960152}
   m_Layer: 0
@@ -1411,7 +1410,7 @@ MeshCollider:
   m_GameObject: {fileID: 1519145230137190}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
@@ -1455,7 +1454,7 @@ Animator:
   m_GameObject: {fileID: 1428332030482282}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 98aa85b66e0235a418e80e6618042520, type: 3}
-  m_Controller: {fileID: 9100000, guid: 70c3ac63590f69b4abbcaa5cc8b05d2a, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1580,7 +1579,7 @@ TrailRenderer:
     alignment: 0
     textureMode: 1
     generateLightingData: 0
-  m_MinVertexDistance: 0.01
+  m_MinVertexDistance: 0
   m_Autodestruct: 0
 --- !u!114 &114185467875726084
 MonoBehaviour:
@@ -1595,6 +1594,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_hitableTags:
   - Player
+  m_splatterEffect: {fileID: 198861433180708154, guid: a44843b01596a5d488989a2fc0498faf,
+    type: 2}
 --- !u!114 &114204231449830734
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1607,7 +1608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_animator: {fileID: 95677425586526570}
-  m_comboSpeed: 0.35
+  m_comboSpeed: 0.5
 --- !u!114 &114270725752100856
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1620,7 +1621,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_animator: {fileID: 95677425586526570}
-  m_comboSpeed: 0.25
 --- !u!114 &114343431250254152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1634,6 +1634,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_hitableTags:
   - Player
+  m_splatterEffect: {fileID: 0}
 --- !u!114 &114391364659069188
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1717,6 +1718,7 @@ MonoBehaviour:
   m_weapons:
   - collider: {fileID: 64446649813989506}
     trail: {fileID: 96463202602137654}
+    time: 0
     weaponSound: SwordWoosh
     name: Cutlass
 --- !u!114 &114861688634640124
@@ -1737,25 +1739,12 @@ MonoBehaviour:
   m_projectileTemplate: {fileID: 0}
   m_collider: {fileID: 0}
   m_itemType: 0
-  m_attackCooldown: 0.5
+  m_attackCooldown: 0
   m_attackDuration: 1
   m_damage: 3
   m_attackRange: 1
   m_projectileSpeed: 1
   m_projectileFalloff: 1
---- !u!114 &114871291102755144
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1067482747262724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6de83b1040c0544a8cd3204256bd897, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_hitableTags:
-  - Player
 --- !u!114 &114983646394410296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1784,6 +1773,7 @@ MonoBehaviour:
   m_weapons:
   - collider: {fileID: 64277566241009910}
     trail: {fileID: 96463202602137654}
+    time: 0
     weaponSound: SwordWoosh
     name: Cutlass
 --- !u!136 &136873698158565340
