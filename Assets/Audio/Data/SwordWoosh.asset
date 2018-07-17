@@ -14,7 +14,7 @@ MonoBehaviour:
   clipName: SwordWoosh
   clip: {fileID: 8300000, guid: 512b7f6d4ac9c38479c634fa9fa72c9d, type: 3}
   startPosition: {x: 0, y: 0, z: 0}
-  volume: 0.8
+  volume: 0.7
   pitch: 1.2
   radius: 10
   global: 0

@@ -54,3 +54,4 @@ MonoBehaviour:
   m_transitioner: 1
   m_tintCanvas: {fileID: 1695041632258912, guid: 93f85dd4049d19c4e9a05267e4d036c0,
     type: 2}
+  m_transitionSpeed: 2

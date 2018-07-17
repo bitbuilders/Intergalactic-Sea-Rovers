@@ -20,9 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4145977339734790}
   - component: {fileID: 114178755588972670}
+  - component: {fileID: 114373082156373016}
+  - component: {fileID: 54892452853116710}
   m_Layer: 0
   m_Name: Barrel
-  m_TagString: Untagged
+  m_TagString: Barrel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,6 +39,7 @@ GameObject:
   - component: {fileID: 4733277467493276}
   - component: {fileID: 33148667891716232}
   - component: {fileID: 23295097197592044}
+  - component: {fileID: 136451959309894344}
   m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
@@ -51,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1462400324454920}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.233515, y: 0, z: 2.636814}
+  m_LocalPosition: {x: -6.07, y: 0, z: 5.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4733277467493276}
@@ -113,6 +116,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1710142110484610}
   m_Mesh: {fileID: 4300000, guid: 44ab198e0c2cdc843b6d759bb55d0294, type: 3}
+--- !u!54 &54892452853116710
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1462400324454920}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &114178755588972670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -129,3 +147,31 @@ MonoBehaviour:
   m_blinkMin: 0.05
   m_baseColor: {r: 1, g: 0.67031866, b: 0, a: 1}
   m_randomizeStartingValue: 1
+--- !u!114 &114373082156373016
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1462400324454920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb533e145cd1a044986d7fdf46aa29ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_launchForce: 15
+  m_jumpResistance: 3
+  m_fallMultiplier: 5
+  m_detonationTime: 1
+--- !u!136 &136451959309894344
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1710142110484610}
+  m_Material: {fileID: 13400000, guid: 9cd018ca847981345b7ced85fa377c67, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.39999998
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}

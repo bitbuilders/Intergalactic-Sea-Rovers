@@ -120,7 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_capacity: 1
-  Items: []
+  m_weapons: {fileID: 0}
+  m_items: {fileID: 0}
 --- !u!114 &114509622978820210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -133,6 +134,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_interacteeInfo: {fileID: 11400000, guid: 485322a205033a5458d0043fd1cfc2e1, type: 2}
+  m_weaponCollider: {fileID: 0}
+  m_animator: {fileID: 0}
+  m_playerType: 0
   m_interactionDistance: 2.25
   m_indicator: {fileID: 1673325655900170, guid: 047528438a58f1142a771b476f7d0a53,
     type: 2}

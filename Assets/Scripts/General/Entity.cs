@@ -53,6 +53,7 @@ public abstract class Entity : MonoBehaviour
     {
         Health -= damage;
         AudioManager.Instance.PlayClip("SwordSlice", transform.position, false, transform);
+        AudioManager.Instance.PlayClip("SwordPow", transform.position, false, transform);
         m_animator.SetTrigger("TakeDamage");
         if (!Alive)
         {
