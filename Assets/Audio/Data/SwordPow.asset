@@ -14,10 +14,10 @@ MonoBehaviour:
   clipName: SwordPow
   clip: {fileID: 8300000, guid: 033aa0baa222800409d2be0f17289455, type: 3}
   startPosition: {x: 0, y: 0, z: 0}
-  volume: 1
+  volume: 0.5
   pitch: 1
   radius: 10
-  global: 0
+  global: 1
   loop: 0
   playOnAwake: 0
   output: {fileID: 243447921656421886, guid: 6e775b00239d78047a20afc835fc64d3, type: 2}

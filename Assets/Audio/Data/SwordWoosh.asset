@@ -17,7 +17,7 @@ MonoBehaviour:
   volume: 0.7
   pitch: 1.2
   radius: 10
-  global: 0
+  global: 1
   loop: 0
   playOnAwake: 0
   output: {fileID: 243447921656421886, guid: 6e775b00239d78047a20afc835fc64d3, type: 2}

@@ -30,4 +30,10 @@ public class InteractionBlink : MonoBehaviour
         Color finalColor = m_baseColor * Mathf.LinearToGammaSpace(emission);
         m_material.SetColor("_EmissionColor", finalColor);
     }
+
+    public void Reset()
+    {
+        Color startColor = m_baseColor * Mathf.LinearToGammaSpace(-5.0f);
+        m_material.SetColor("_EmissionColor", startColor);
+    }
 }

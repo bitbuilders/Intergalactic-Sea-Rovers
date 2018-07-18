@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0bca0a033c63e6f46a95f59a2de8eed5, type: 3}
-  m_Name: SwordSlice
+  m_Name: BarrelExplosion
   m_EditorClassIdentifier: 
-  clipName: SwordSlice
-  clip: {fileID: 8300000, guid: 8b3624416fd0eb14f8d056f26c5bb703, type: 3}
+  clipName: BarrelExplosion
+  clip: {fileID: 8300000, guid: 5d951a20c6a4c6c42ada9b6d215cae05, type: 3}
   startPosition: {x: 0, y: 0, z: 0}
-  volume: 0.1
+  volume: 1
   pitch: 1
-  radius: 10
+  radius: 20
   global: 1
   loop: 0
   playOnAwake: 0
