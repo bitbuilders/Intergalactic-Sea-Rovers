@@ -5,6 +5,8 @@ using UnityEngine;
 public class Barrel : Interactable3DObject
 {
     [SerializeField] [Range(0.0f, 10.0f)] float m_detonationTime = 1.0f;
+    [SerializeField] Collider m_explosionTrigger = null;
+    [SerializeField] Collider m_collisionCollider = null;
     [SerializeField] Color m_startColor;
     [SerializeField] Color m_endColor;
     [SerializeField] AnimationCurve m_colorCurve = null;
@@ -22,6 +24,7 @@ public class Barrel : Interactable3DObject
         m_particleSystem = GetComponentInChildren<ParticleSystem>();
         m_material = GetComponentInChildren<Renderer>().material;
         m_mesh = GetComponentInChildren<MeshRenderer>().gameObject;
+        m_explosionTrigger.enabled = false;
     }
 
     new private void FixedUpdate()
@@ -71,6 +74,10 @@ public class Barrel : Interactable3DObject
             yield return null;
         }
         //yield return new WaitForSeconds(m_detonationTime);
+        StartCoroutine(HandleTrigger());
+        m_rigidbody.velocity = Vector3.zero;
+        m_rigidbody.isKinematic = true;
+        m_collisionCollider.enabled = false;
         m_particleSystem.Play(true);
         GetComponentInChildren<MeshRenderer>().enabled = false;
         AudioManager.Instance.PlayClip("BarrelExplosion", transform.position, false, transform);
@@ -80,5 +87,12 @@ public class Barrel : Interactable3DObject
             yield return null;
         }
         Destroy(gameObject);
+    }
+
+    IEnumerator HandleTrigger()
+    {
+        m_explosionTrigger.enabled = true;
+        yield return new WaitForSeconds(0.25f);
+        m_explosionTrigger.enabled = false;
     }
 }
