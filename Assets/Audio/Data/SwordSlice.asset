@@ -14,7 +14,7 @@ MonoBehaviour:
   clipName: SwordSlice
   clip: {fileID: 8300000, guid: 8b3624416fd0eb14f8d056f26c5bb703, type: 3}
   startPosition: {x: 0, y: 0, z: 0}
-  volume: 0.1
+  volume: 0.05
   pitch: 1
   radius: 10
   global: 1

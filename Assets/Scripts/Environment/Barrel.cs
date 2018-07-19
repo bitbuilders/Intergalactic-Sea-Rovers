@@ -5,12 +5,15 @@ using UnityEngine;
 public class Barrel : Interactable3DObject
 {
     [SerializeField] [Range(0.0f, 10.0f)] float m_detonationTime = 1.0f;
+    [SerializeField] [Range(1.0f, 100.0f)] float m_damage = 10.0f;
     [SerializeField] Collider m_explosionTrigger = null;
     [SerializeField] Collider m_collisionCollider = null;
     [SerializeField] Color m_startColor;
     [SerializeField] Color m_endColor;
     [SerializeField] AnimationCurve m_colorCurve = null;
     [SerializeField] AnimationCurve m_scaleCurve = null;
+
+    public float Damage { get { return m_damage; } }
 
     Vector3 m_launchOffset;
     ParticleSystem m_particleSystem;

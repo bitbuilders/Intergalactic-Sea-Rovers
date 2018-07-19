@@ -17,7 +17,7 @@ public class NPC : Interactable
         interactionManager.Interact(dialog, this);
     }
 
-    public override void TakeDamage(float damage)
+    public override void TakeDamage(float damage, DamageSource damageSource)
     {
         Health -= damage;
     }

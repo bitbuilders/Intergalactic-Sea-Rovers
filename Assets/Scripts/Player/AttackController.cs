@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class AttackController : MonoBehaviour
 {
-    [SerializeField] Animator m_animator = null;
-
     ComboHandler m_comboHandler;
     Entity m_entity;
     Inventory m_inventory;

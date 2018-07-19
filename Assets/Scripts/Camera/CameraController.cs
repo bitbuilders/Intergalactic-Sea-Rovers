@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] bool m_2D = true;
     [SerializeField] bool m_constantShake = false;
     [SerializeField] public bool m_locked = false;
+    [SerializeField] LayerMask m_groundMask = 0;
 
     Entity m_player;
     Camera m_camera;
@@ -24,6 +25,7 @@ public class CameraController : MonoBehaviour
     Vector3 m_offset;
     Vector3 m_rotation;
     Quaternion m_startingRot;
+    float m_baseDistanceFromTarget;
 
     void Awake()
     {
@@ -39,6 +41,7 @@ public class CameraController : MonoBehaviour
         if (!m_2D) m_camera.orthographic = false;
 
         m_offset = new Vector3(0.0f, 1.0f, 2.0f).normalized;
+        m_baseDistanceFromTarget = m_distanceFromTarget;
     }
     
     void Update()
@@ -66,6 +69,19 @@ public class CameraController : MonoBehaviour
         }
         else
         {
+            RaycastHit raycastHit;
+            Vector3 dir = m_actualPosition - (m_player.Controller.transform.position + Vector3.up);
+            Ray r = new Ray(m_player.Controller.transform.position, dir.normalized);
+
+            if (Physics.Raycast(r, out raycastHit, m_baseDistanceFromTarget, m_groundMask))
+            {
+                m_distanceFromTarget = raycastHit.distance;
+            }
+            else
+            {
+                m_distanceFromTarget = m_baseDistanceFromTarget;
+            }
+
             bool p1Locked = Input.GetButton(m_player.PlayerNumber + "_Target");
             bool p2Locked = Input.GetAxis(m_player.PlayerNumber + "_Target") != 0.0f;
             m_locked = p1Locked || p2Locked;

@@ -10,6 +10,13 @@ public abstract class Entity : MonoBehaviour
         P2
     }
 
+    public enum DamageSource
+    {
+        SWORD,
+        EXPLOSION,
+        MISC
+    }
+
 
     [SerializeField] public Interactee m_interacteeInfo = null;
     [SerializeField] WeaponCollider m_weaponCollider = null;
@@ -27,10 +34,12 @@ public abstract class Entity : MonoBehaviour
     public Controller Controller { get; protected set; }
     public CameraController Camera { get; set; }
 
+    protected Rigidbody m_rigidbody;
 
     protected void Initialize(Entity entity)
     {
         Inventory = GetComponent<Inventory>();
+        m_rigidbody = GetComponent<Rigidbody>();
         Inventory.Owner = entity;
         MaxHealth = 100.0f;
         Health = MaxHealth;
@@ -49,15 +58,43 @@ public abstract class Entity : MonoBehaviour
         transform.position = Vector3.zero;
     }
 
-    virtual public void TakeDamage(float damage)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Barrel"))
+        {
+            float damage = other.GetComponent<Barrel>().Damage;
+            TakeDamage(damage, DamageSource.EXPLOSION);
+            Vector3 dir = transform.position + Vector3.up * 2.0f - other.transform.position;
+            Vector3 force = dir.normalized * damage;
+            m_rigidbody.AddForce(force, ForceMode.Impulse);
+        }
+    }
+
+    virtual public void TakeDamage(float damage, DamageSource damageSource = DamageSource.SWORD)
     {
         Health -= damage;
-        AudioManager.Instance.PlayClip("SwordSlice", transform.position, false, transform);
-        AudioManager.Instance.PlayClip("SwordPow", transform.position, false, transform);
+        PlaySoundFromSource(damageSource);
         m_animator.SetTrigger("TakeDamage");
         if (!Alive)
         {
             //Respawn();
+        }
+    }
+
+    private void PlaySoundFromSource(DamageSource damageSource)
+    {
+        switch (damageSource)
+        {
+            case DamageSource.SWORD:
+                AudioManager.Instance.PlayClip("SwordSlice", transform.position, false, transform);
+                AudioManager.Instance.PlayClip("SwordPow", transform.position, false, transform);
+                break;
+            case DamageSource.EXPLOSION:
+
+                break;
+            case DamageSource.MISC:
+                AudioManager.Instance.PlayClip("SwordPow", transform.position, false, transform);
+                break;
         }
     }
 }

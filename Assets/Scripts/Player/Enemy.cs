@@ -11,8 +11,6 @@ public class Enemy : Entity
     [SerializeField] MeshFilter m_weaponMesh = null;
     [SerializeField] Transform m_groundTouch;
     [SerializeField] LayerMask m_groundMask = 0;
-    
-    Rigidbody m_rigidbody;
 
     public bool IsHuman
     {
@@ -35,7 +33,6 @@ public class Enemy : Entity
 
     private void Start()
     {
-        m_rigidbody = GetComponent<Rigidbody>();
         m_animator = GetComponentInChildren<Animator>();
         base.Initialize(this);
 

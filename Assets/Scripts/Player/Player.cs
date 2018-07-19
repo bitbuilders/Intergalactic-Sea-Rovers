@@ -10,8 +10,6 @@ public class Player : Entity
     [SerializeField] GameObject m_3DCharacter = null;
     [SerializeField] MeshFilter m_weaponMesh = null;
 
-    Rigidbody m_rigidbody;
-
     static Player ms_instance = null;
     void Start()
     {
@@ -23,7 +21,6 @@ public class Player : Entity
 
         CanMove = true;
         base.Initialize(this);
-        m_rigidbody = GetComponent<Rigidbody>();
 
         Inventory.EquipWeapon(Inventory.Weapons[0]);
         SetEquippedWeaponMesh(m_weaponMesh);

@@ -35,6 +35,7 @@ public class HitDetector : MonoBehaviour
     private void CreateSplatter(Vector3 position)
     {
         ParticleSystem ps = Instantiate(m_splatterEffect, position, Quaternion.identity, transform);
+        StartCoroutine(DestroyParticle(ps));
     }
 
     IEnumerator DestroyParticle(ParticleSystem ps)
