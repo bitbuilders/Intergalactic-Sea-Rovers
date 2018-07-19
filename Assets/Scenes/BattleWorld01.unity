@@ -1415,6 +1415,7 @@ MonoBehaviour:
   m_2D: 0
   m_constantShake: 1
   m_locked: 0
+  m_drunkProfile: {fileID: 11400000, guid: 33ac2cdfbeae8864997f90c350c824e8, type: 2}
   m_groundMask:
     serializedVersion: 2
     m_Bits: 512
@@ -6687,6 +6688,7 @@ MonoBehaviour:
   m_2D: 0
   m_constantShake: 1
   m_locked: 0
+  m_drunkProfile: {fileID: 11400000, guid: 33ac2cdfbeae8864997f90c350c824e8, type: 2}
   m_groundMask:
     serializedVersion: 2
     m_Bits: 512

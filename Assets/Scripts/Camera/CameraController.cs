@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PostProcessing;
 
 public class CameraController : MonoBehaviour
 {
@@ -16,8 +17,11 @@ public class CameraController : MonoBehaviour
     [SerializeField] bool m_2D = true;
     [SerializeField] bool m_constantShake = false;
     [SerializeField] public bool m_locked = false;
+    [SerializeField] PostProcessingProfile m_drunkProfile;
     [SerializeField] LayerMask m_groundMask = 0;
 
+    PostProcessingBehaviour m_processingBehaviour;
+    PostProcessingProfile m_normalProfile;
     Entity m_player;
     Camera m_camera;
     Vector3 m_actualPosition;
@@ -26,6 +30,8 @@ public class CameraController : MonoBehaviour
     Vector3 m_rotation;
     Quaternion m_startingRot;
     float m_baseDistanceFromTarget;
+    float m_startAmplitude;
+    float m_startRate;
 
     void Awake()
     {
@@ -35,6 +41,8 @@ public class CameraController : MonoBehaviour
             m_player = m_target.GetComponent<Entity>();
         }
         m_camera = GetComponent<Camera>();
+        m_processingBehaviour = GetComponent<PostProcessingBehaviour>();
+        m_normalProfile = m_processingBehaviour.profile;
         m_actualPosition = transform.position;
         m_shake = Vector3.zero;
         if (m_2D) m_camera.orthographic = true;
@@ -42,6 +50,8 @@ public class CameraController : MonoBehaviour
 
         m_offset = new Vector3(0.0f, 1.0f, 2.0f).normalized;
         m_baseDistanceFromTarget = m_distanceFromTarget;
+        m_startAmplitude = m_shakeAmplitude;
+        m_startRate = m_shakeRate;
     }
     
     void Update()
@@ -69,9 +79,10 @@ public class CameraController : MonoBehaviour
         }
         else
         {
+
             RaycastHit raycastHit;
-            Vector3 dir = m_actualPosition - (m_player.Controller.transform.position + Vector3.up);
-            Ray r = new Ray(m_player.Controller.transform.position, dir.normalized);
+            Vector3 dir = m_actualPosition - (m_player.transform.position + Vector3.up);
+            Ray r = new Ray(m_player.transform.position + Vector3.up, dir.normalized);
 
             if (Physics.Raycast(r, out raycastHit, m_baseDistanceFromTarget, m_groundMask))
             {
@@ -92,7 +103,7 @@ public class CameraController : MonoBehaviour
                 m_rotation.y += Input.GetAxis(m_player.PlayerNumber + "_CamHorizontal") * Time.deltaTime * m_rotationSpeed;
                 m_rotation.x += Input.GetAxis(m_player.PlayerNumber + "_CamVertical") * Time.deltaTime * m_rotationSpeed;
                 Quaternion rotation = Quaternion.Euler(m_rotation);
-                Vector3 newPos = rotation * offset + m_player.Controller.transform.position + Vector3.up * m_heightFromTarget;
+                Vector3 newPos = rotation * offset + m_player.transform.position + Vector3.up * m_heightFromTarget;
                 m_rotation.x = Mathf.Clamp(m_rotation.x, -30.0f, 25.0f);
                 m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness);
             }
@@ -116,9 +127,8 @@ public class CameraController : MonoBehaviour
                 transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * m_cameraStiffness * 3.0f);
             }
         }
-        
-        Vector3 newPosition = m_actualPosition + (transform.rotation * m_shake);
 
+        Vector3 newPosition = m_actualPosition + (transform.rotation * m_shake);
         transform.position = newPosition;
     }
 
@@ -144,5 +154,30 @@ public class CameraController : MonoBehaviour
         m_shakeAmplitude = amplitude;
         m_shakeRate = rate;
         m_shakeTime = Mathf.Clamp01(m_shakeTime);
+    }
+
+    public void Drunk(float duration, float drunkiness)
+    {
+        m_shakeAmplitude = m_startAmplitude * drunkiness;
+        m_shakeRate = m_startRate;
+        m_processingBehaviour.profile = m_drunkProfile;
+        StopAllCoroutines();
+        StartCoroutine(LessDrunk(m_startAmplitude, m_startRate, duration));
+    }
+
+    IEnumerator LessDrunk(float startAmp, float startRate, float duration)
+    {
+        float maxA = m_shakeAmplitude;
+        float maxR = m_shakeRate;
+        yield return new WaitForSeconds(duration - 1.0f);
+        for (float i = 1.0f; i > 0.0f; i -= Time.deltaTime)
+        {
+            m_shakeAmplitude = Mathf.Lerp(startAmp, maxA, i);
+            m_shakeRate = Mathf.Lerp(startRate, maxR, i);
+            yield return null;
+        }
+        m_shakeAmplitude = startAmp;
+        m_shakeRate = startRate;
+        m_processingBehaviour.profile = m_normalProfile;
     }
 }

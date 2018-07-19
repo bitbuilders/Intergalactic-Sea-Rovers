@@ -17,6 +17,12 @@ public abstract class Entity : MonoBehaviour
         MISC
     }
 
+    public enum HealSource
+    {
+        BOTTLE,
+        MISC
+    }
+
 
     [SerializeField] public Interactee m_interacteeInfo = null;
     [SerializeField] WeaponCollider m_weaponCollider = null;
@@ -73,7 +79,7 @@ public abstract class Entity : MonoBehaviour
     virtual public void TakeDamage(float damage, DamageSource damageSource = DamageSource.SWORD)
     {
         Health -= damage;
-        PlaySoundFromSource(damageSource);
+        PlaySoundFromDamageSource(damageSource);
         m_animator.SetTrigger("TakeDamage");
         if (!Alive)
         {
@@ -81,7 +87,7 @@ public abstract class Entity : MonoBehaviour
         }
     }
 
-    private void PlaySoundFromSource(DamageSource damageSource)
+    private void PlaySoundFromDamageSource(DamageSource damageSource)
     {
         switch (damageSource)
         {
@@ -94,6 +100,26 @@ public abstract class Entity : MonoBehaviour
                 break;
             case DamageSource.MISC:
                 AudioManager.Instance.PlayClip("SwordPow", transform.position, false, transform);
+                break;
+        }
+    }
+
+    virtual public void Heal(float amount, HealSource healSource = HealSource.BOTTLE)
+    {
+        Health += amount;
+        Health = Mathf.Clamp(Health, 0.0f, MaxHealth);
+        PlaySoundFromHealSource(healSource);
+    }
+
+    private void PlaySoundFromHealSource(HealSource healSource)
+    {
+        switch (healSource)
+        {
+            case HealSource.BOTTLE:
+                AudioManager.Instance.PlayClip("Drink", transform.position, false, transform);
+                break;
+            case HealSource.MISC:
+                AudioManager.Instance.PlayClip("Drink", transform.position, false, transform);
                 break;
         }
     }

@@ -9,15 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0bca0a033c63e6f46a95f59a2de8eed5, type: 3}
-  m_Name: BattleMusic
+  m_Name: Drink
   m_EditorClassIdentifier: 
-  clipName: BattleMusic
-  clip: {fileID: 8300000, guid: 696bcb41154e0ac4093b3d72d29bc757, type: 3}
+  clipName: Drink
+  clip: {fileID: 8300000, guid: fec03f8e3d08e2245b993bd764c5bc7b, type: 3}
   startPosition: {x: 0, y: 0, z: 0}
-  volume: 0.05
+  volume: 0.8
   pitch: 1
-  radius: 0
+  radius: 10
   global: 1
-  loop: 1
+  loop: 0
   playOnAwake: 0
-  output: {fileID: 243024569571258016, guid: 6e775b00239d78047a20afc835fc64d3, type: 2}
+  output: {fileID: 243447921656421886, guid: 6e775b00239d78047a20afc835fc64d3, type: 2}

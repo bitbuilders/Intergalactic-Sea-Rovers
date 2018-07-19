@@ -13,6 +13,8 @@ public class Barrel : Interactable3DObject
     [SerializeField] AnimationCurve m_colorCurve = null;
     [SerializeField] AnimationCurve m_scaleCurve = null;
 
+    bool m_exploding;
+
     public float Damage { get { return m_damage; } }
 
     Vector3 m_launchOffset;
@@ -28,6 +30,7 @@ public class Barrel : Interactable3DObject
         m_material = GetComponentInChildren<Renderer>().material;
         m_mesh = GetComponentInChildren<MeshRenderer>().gameObject;
         m_explosionTrigger.enabled = false;
+        m_exploding = false;
     }
 
     new private void FixedUpdate()
@@ -37,7 +40,7 @@ public class Barrel : Interactable3DObject
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !m_exploding)
         {
             m_rigidbody.isKinematic = false;
             m_rigidbody.useGravity = true;
@@ -46,7 +49,7 @@ public class Barrel : Interactable3DObject
             dir += m_launchOffset;
             m_rigidbody.AddForce(dir.normalized * m_launchForce, ForceMode.Impulse);
             Quaternion rotation = e.transform.rotation * Quaternion.Euler(new Vector3(90.0f, 90.0f, 0.0f));
-            StartCoroutine(RotateX(rotation, 2.0f));
+            StartCoroutine(RotateX(rotation, 1.0f));
             StartCoroutine(Explode());
         }
     }
@@ -64,6 +67,7 @@ public class Barrel : Interactable3DObject
 
     IEnumerator Explode()
     {
+        m_exploding = true;
         GetComponent<InteractionBlink>().Reset();
         GetComponent<InteractionBlink>().enabled = false;
         for (float i = 0.0f; i <= 1.0f; i+= Time.deltaTime / m_detonationTime)

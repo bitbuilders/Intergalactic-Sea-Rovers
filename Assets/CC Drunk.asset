@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a3bdb2cd68f901469e7cc149151eb49, type: 3}
-  m_Name: CC
+  m_Name: CC Drunk
   m_EditorClassIdentifier: 
   debugViews:
     m_Enabled: 1
@@ -120,23 +120,23 @@ MonoBehaviour:
         neutralWhiteLevel: 5.3
         neutralWhiteClip: 10
       basic:
-        postExposure: 0
-        temperature: 0
-        tint: 0
-        hueShift: 0
-        saturation: 1
-        contrast: 1
+        postExposure: 3.31
+        temperature: -57
+        tint: 100
+        hueShift: 69
+        saturation: 1.09
+        contrast: 0.99
       channelMixer:
-        red: {x: 1, y: 0, z: 0}
+        red: {x: 1, y: -0.3, z: -0.25}
         green: {x: 0, y: 1, z: 0}
         blue: {x: 0, y: 0, z: 1}
         currentEditingChannel: 0
       colorWheels:
         mode: 1
         log:
-          slope: {r: 1, g: 1, b: 1, a: 0}
-          power: {r: 1, g: 1, b: 1, a: 0}
-          offset: {r: 1, g: 1, b: 1, a: 0}
+          slope: {r: 1, g: 0.31078595, b: 0.61765426, a: 0}
+          power: {r: 0.3880353, g: 1, b: 0.7754973, a: 0}
+          offset: {r: 0.612026, g: 1, b: 0.10868889, a: 0}
         linear:
           lift: {r: 0, g: 0, b: 0, a: 0}
           gamma: {r: 0, g: 0, b: 0, a: 0}
@@ -151,6 +151,15 @@ MonoBehaviour:
               value: 0
               inSlope: 1
               outSlope: 1
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 0.65957445
+              value: 0.20129871
+              inSlope: 1.2368414
+              outSlope: 1.2368414
               tangentMode: 0
               weightedMode: 0
               inWeight: 0
@@ -310,19 +319,19 @@ MonoBehaviour:
       spectralTexture: {fileID: 0}
       intensity: 0.1
   grain:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       colored: 1
-      intensity: 0.5
-      size: 1
-      luminanceContribution: 0.8
+      intensity: 0.258
+      size: 1.12
+      luminanceContribution: 0.719
   vignette:
     m_Enabled: 1
     m_Settings:
       mode: 0
-      color: {r: 1, g: 0.89133006, b: 0, a: 1}
+      color: {r: 0, g: 0, b: 0, a: 1}
       center: {x: 0.5, y: 0.5}
-      intensity: 0.217
+      intensity: 0.589
       smoothness: 0.2
       roundness: 1
       mask: {fileID: 0}
