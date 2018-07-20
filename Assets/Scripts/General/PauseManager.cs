@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class PauseManager : MonoBehaviour
+public class PauseManager : Singleton<PauseManager>
 {
     [SerializeField] GameObject m_pauseCanvas = null;
     [SerializeField] GameObject[] m_pauseCanvasElements = null;
+    [SerializeField] Button m_resumeButton = null;
 
     public bool Disabled { get { return SceneManager.GetActiveScene().name == "MainMenu"; } }
     public bool Paused { get { return m_pauseCanvas.activeSelf; } }
@@ -27,7 +29,7 @@ public class PauseManager : MonoBehaviour
 
     private void Update()
     {
-        if (!Prompting && Input.GetButtonDown("Pause"))
+        if (!Prompting && Input.GetButtonDown("Pause") && SceneManager.GetActiveScene().name != "MainMenu")
         {
             Pause();
         }
@@ -45,11 +47,17 @@ public class PauseManager : MonoBehaviour
         }
     }
 
+    public void Select(Button button)
+    {
+        button.Select();
+    }
+
     private void PauseGame()
     {
         Time.timeScale = 0.0f;
         SetElementsActive(false);
         m_pauseCanvas.SetActive(true);
+        m_resumeButton.Select();
     }
 
     private void UnpauseGame()
@@ -83,5 +91,15 @@ public class PauseManager : MonoBehaviour
     public void PromptPlayer(bool prompting)
     {
         Prompting = prompting;
+    }
+
+    public void PlayHoverSound()
+    {
+        AudioManager.Instance.PlayClip("UIHover", Vector3.zero, false, transform, 1.0f);
+    }
+
+    public void PlayClickSound()
+    {
+        AudioManager.Instance.PlayClip("UIClick", Vector3.zero, false, transform, 1.0f);
     }
 }

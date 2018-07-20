@@ -40,7 +40,7 @@ public class Barrel : Interactable3DObject
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !m_exploding)
+        if ((other.CompareTag("Enemy") || other.CompareTag("Player")) && !m_exploding)
         {
             m_rigidbody.isKinematic = false;
             m_rigidbody.useGravity = true;

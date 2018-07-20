@@ -24,6 +24,9 @@ public class Controller3D : Controller
 
     public override void Move(CameraController camera)
     {
+        if (PauseManager.Instance.Paused)
+            return;
+
         Collider[] b = Physics.OverlapSphere(m_groundTouch.position, 0.1f, m_groundMask);
         m_entity.OnGround = b.Length > 0;
         m_animator.SetBool("OnGround", m_entity.OnGround);
@@ -39,7 +42,7 @@ public class Controller3D : Controller
         m_velocity = camera.transform.rotation * m_velocity;
         m_velocity.y = 0.0f;
         m_velocity.Normalize();
-        m_velocity *= Time.deltaTime * m_speed;
+        m_velocity *= Time.deltaTime * (m_speed + m_entity.SpeedModifier);
         
         m_animator.SetFloat("MoveSpeed", m_velocity.magnitude * 10.0f);
         if (Input.GetButton(m_entity.PlayerNumber + "_Sprint"))

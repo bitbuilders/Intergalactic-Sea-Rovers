@@ -6,6 +6,7 @@ public class Bottle : Interactable3DObject
 {
     [SerializeField] [Range(0.0f, 10.0f)] float m_interactionDistance = 2.0f;
     [SerializeField] [Range(0.0f, 50.0f)] float m_healAmount = 10.0f;
+    [SerializeField] [Range(0.0f, 10.0f)] float m_speedIncrease = 2.0f;
     [SerializeField] [Range(1.0f, 20.0f)] float m_alchoholLevel = 5.0f;
     [SerializeField] [Range(1.0f, 20.0f)] float m_alchoholLinger = 5.0f;
 
@@ -32,8 +33,11 @@ public class Bottle : Interactable3DObject
             if (p1 || p2)
             {
                 entity.Heal(m_healAmount, Entity.HealSource.BOTTLE);
+                entity.SpeedModifier = m_speedIncrease;
+                StopAllCoroutines();
+                StartCoroutine(StopSpeed(entity));
+                entity.PlayDrunkParticles();
                 entity.Camera.Drunk(m_alchoholLinger, m_alchoholLevel);
-                Destroy(gameObject);
             }
         }
     }
@@ -54,5 +58,15 @@ public class Bottle : Interactable3DObject
         }
 
         return closest;
+    }
+
+    IEnumerator StopSpeed(Entity entity)
+    {
+        GetComponentInChildren<MeshRenderer>().enabled = false;
+        GetComponentInChildren<MeshCollider>().enabled = false;
+        yield return new WaitForSeconds(m_alchoholLinger);
+        entity.StopDrunkParticles();
+        entity.SpeedModifier = 0.0f;
+        Destroy(gameObject);
     }
 }

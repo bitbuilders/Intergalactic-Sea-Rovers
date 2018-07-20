@@ -10,9 +10,11 @@ public class Menu : MonoBehaviour
     [SerializeField] Button m_gameModeSelectionB = null;
     [SerializeField] Button m_playerModeSelectionB = null;
     [SerializeField] Button m_storyModeSelectionB = null;
+    [SerializeField] Button m_controlsWindowB = null;
     [SerializeField] GameObject m_gameModeSelection = null;
     [SerializeField] GameObject m_playerModeSelection = null;
     [SerializeField] GameObject m_storyModeSelection = null;
+    [SerializeField] GameObject m_controlsWindow = null;
 
     private void Start()
     {
@@ -29,6 +31,8 @@ public class Menu : MonoBehaviour
                 m_playerModeSelectionB.onClick.Invoke();
             else if (m_storyModeSelection.activeSelf)
                 m_storyModeSelectionB.onClick.Invoke();
+            else if (m_controlsWindow.activeSelf)
+                m_controlsWindowB.onClick.Invoke();
         }
     }
 

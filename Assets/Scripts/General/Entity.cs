@@ -28,11 +28,13 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] WeaponCollider m_weaponCollider = null;
     [SerializeField] protected Animator m_animator;
     [SerializeField] PlayerType m_playerType = PlayerType.P1;
+    [SerializeField] ParticleSystem m_drunkParticles = null;
 
     public Inventory Inventory { get; protected set; }
     public PlayerType PlayerNumber { get { return m_playerType; } }
     public float Health { get; protected set; }
     public float MaxHealth { get; protected set; }
+    public float SpeedModifier { get; set; }
     public bool CanMove { get; set; }
     public bool Alive { get { return Health > 0.0f; } }
     public bool OnGround { get; set; }
@@ -49,6 +51,7 @@ public abstract class Entity : MonoBehaviour
         Inventory.Owner = entity;
         MaxHealth = 100.0f;
         Health = MaxHealth;
+        SpeedModifier = 0.0f;
     }
 
     protected void SetEquippedWeaponMesh(MeshFilter filter)
@@ -122,5 +125,15 @@ public abstract class Entity : MonoBehaviour
                 AudioManager.Instance.PlayClip("Drink", transform.position, false, transform);
                 break;
         }
+    }
+
+    public void PlayDrunkParticles()
+    {
+        m_drunkParticles.Play();
+    }
+
+    public void StopDrunkParticles()
+    {
+        m_drunkParticles.Stop();
     }
 }
