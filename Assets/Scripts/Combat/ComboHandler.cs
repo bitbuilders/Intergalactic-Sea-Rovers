@@ -27,7 +27,7 @@ public class ComboHandler : MonoBehaviour
     {
         m_comboTime += Time.deltaTime;
         
-        if (m_comboTime >= m_comboSpeed)
+        if (m_comboTime >= m_comboSpeed || (m_currentCombo == 1 && m_comboOrder.Count == 1))
         {
             if (m_currentCombo == 3 && m_comboOrder.Count == 0)
             {

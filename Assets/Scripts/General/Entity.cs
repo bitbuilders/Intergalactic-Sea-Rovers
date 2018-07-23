@@ -29,20 +29,38 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] protected Animator m_animator;
     [SerializeField] PlayerType m_playerType = PlayerType.P1;
     [SerializeField] ParticleSystem m_drunkParticles = null;
+    [SerializeField] [Range(1.0f, 10.0f)] float m_drunkSpeed = 2.0f;
 
     public Inventory Inventory { get; protected set; }
     public PlayerType PlayerNumber { get { return m_playerType; } }
     public float Health { get; protected set; }
     public float MaxHealth { get; protected set; }
     public float SpeedModifier { get; set; }
+    public float DrunkTime { get; set; }
     public bool CanMove { get; set; }
     public bool Alive { get { return Health > 0.0f; } }
     public bool OnGround { get; set; }
+    public bool Drunk { get { return DrunkTime > 0.0f; } }
     public WeaponCollider WeaponCollider { get { return m_weaponCollider; } }
     public Controller Controller { get; protected set; }
     public CameraController Camera { get; set; }
 
     protected Rigidbody m_rigidbody;
+
+    protected void Update()
+    {
+        if (Drunk)
+        {
+            DrunkTime -= Time.deltaTime;
+            SpeedModifier = m_drunkSpeed;
+            if (DrunkTime <= 0.0f)
+            {
+                StopDrunkParticles();
+                SpeedModifier = 0.0f;
+                DrunkTime = 0.0f;
+            }
+        }
+    }
 
     protected void Initialize(Entity entity)
     {

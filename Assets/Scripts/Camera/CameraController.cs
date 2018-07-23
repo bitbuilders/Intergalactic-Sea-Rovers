@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] public Transform m_target = null;
     [SerializeField] [Range(0.0f, 900.0f)] float m_rotationSpeed = 90.0f;
+    [SerializeField] [Range(0.0f, 900.0f)] float m_drunkRotationSpeed = 135.0f;
     [SerializeField] [Range(1.0f, 20.0f)] float m_cameraStiffness = 5.0f;
     [SerializeField] [Range(-10.0f, 10.0f)] float m_distanceFromTarget = 5.0f;
     [SerializeField] [Range(-10.0f, 10.0f)] float m_heightFromTarget = 5.0f;
@@ -32,6 +33,8 @@ public class CameraController : MonoBehaviour
     float m_baseDistanceFromTarget;
     float m_startAmplitude;
     float m_startRate;
+    float m_responsiveness;
+    bool m_p2ResetLock;
 
     void Awake()
     {
@@ -52,6 +55,8 @@ public class CameraController : MonoBehaviour
         m_baseDistanceFromTarget = m_distanceFromTarget;
         m_startAmplitude = m_shakeAmplitude;
         m_startRate = m_shakeRate;
+        m_p2ResetLock = false;
+        m_responsiveness = m_cameraStiffness;
     }
     
     void Update()
@@ -75,7 +80,7 @@ public class CameraController : MonoBehaviour
             Vector3 nextPosition = Vector3.zero;
             nextPosition = m_target.transform.position + offset;
             nextPosition.z = -10.0f;
-            m_actualPosition = Vector3.Lerp(m_actualPosition, nextPosition, Time.deltaTime * m_cameraStiffness);
+            m_actualPosition = Vector3.Lerp(m_actualPosition, nextPosition, Time.deltaTime * m_responsiveness);
         }
         else
         {
@@ -93,25 +98,43 @@ public class CameraController : MonoBehaviour
                 m_distanceFromTarget = m_baseDistanceFromTarget;
             }
 
-            bool p1Locked = Input.GetButton(m_player.PlayerNumber + "_Target");
-            bool p2Locked = Input.GetAxis(m_player.PlayerNumber + "_Target") != 0.0f;
-            m_locked = p1Locked || p2Locked;
+            bool p1Locked = Input.GetButtonDown(m_player.PlayerNumber + "_Target");
+            bool reset = Input.GetAxis(m_player.PlayerNumber + "_Target") == 0.0f;
+            if (reset)
+                m_p2ResetLock = true;
+
+            bool p2Locked = Input.GetAxis(m_player.PlayerNumber + "_Target") != 0.0f && m_p2ResetLock;
+
+            if (p1Locked || p2Locked)
+            {
+                m_locked = !m_locked;
+                m_p2ResetLock = false;
+            }
+            if (m_player.Drunk)
+            {
+                m_responsiveness = m_cameraStiffness * 0.5f;
+            }
+            else
+            {
+                m_responsiveness = m_cameraStiffness;
+            }
 
             if (!m_locked)
             {
                 Vector3 offset = m_offset * m_distanceFromTarget;
-                m_rotation.y += Input.GetAxis(m_player.PlayerNumber + "_CamHorizontal") * Time.deltaTime * m_rotationSpeed;
-                m_rotation.x += Input.GetAxis(m_player.PlayerNumber + "_CamVertical") * Time.deltaTime * m_rotationSpeed;
+                float rotSpeed = (m_player.Drunk) ? m_drunkRotationSpeed : m_rotationSpeed;
+                m_rotation.y += Input.GetAxis(m_player.PlayerNumber + "_CamHorizontal") * Time.deltaTime * rotSpeed;
+                m_rotation.x += Input.GetAxis(m_player.PlayerNumber + "_CamVertical") * Time.deltaTime * rotSpeed;
                 Quaternion rotation = Quaternion.Euler(m_rotation);
                 Vector3 newPos = rotation * offset + m_player.transform.position + Vector3.up * m_heightFromTarget;
                 m_rotation.x = Mathf.Clamp(m_rotation.x, -30.0f, 25.0f);
-                m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness);
+                m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_responsiveness);
             }
             else
             {
                 Vector3 offset = -m_player.transform.forward * m_distanceFromTarget + Vector3.up * (m_heightFromTarget + 1.0f);
                 Vector3 newPos = offset + m_player.transform.position;
-                m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_cameraStiffness);
+                m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_responsiveness);
                 m_rotation = (m_startingRot * transform.rotation).eulerAngles;
                 m_rotation.x = -10.0f;
             }
@@ -119,12 +142,12 @@ public class CameraController : MonoBehaviour
             if (!m_locked)
             {
                 Quaternion rot = Quaternion.LookRotation(m_player.Controller.transform.position + Vector3.up * 0.5f - transform.position, Vector3.up);
-                transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * m_cameraStiffness * 3.0f);
+                transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * m_responsiveness * 3.0f);
             }
             else
             {
                 Quaternion rot = Quaternion.LookRotation(m_target.transform.position + Vector3.up * 0.5f - transform.position, Vector3.up);
-                transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * m_cameraStiffness * 3.0f);
+                transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * m_responsiveness * 3.0f);
             }
         }
 

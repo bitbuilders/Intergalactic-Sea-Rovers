@@ -28,8 +28,9 @@ public class Player : Entity
         Controller = m_controller;
     }
 
-    private void Update()
+    new private void Update()
     {
+        base.Update();
         if (CanMove)
         {
             m_controller.Move(Camera);

@@ -162,7 +162,7 @@ MonoBehaviour:
   m_interactionDistance: 2
   m_healAmount: 10
   m_alchoholLevel: 8
-  m_alchoholLinger: 12
+  m_alchoholLinger: 9
 --- !u!114 &114624368367184626
 MonoBehaviour:
   m_ObjectHideFlags: 1

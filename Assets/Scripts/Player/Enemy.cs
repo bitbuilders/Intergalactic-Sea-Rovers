@@ -41,8 +41,10 @@ public class Enemy : Entity
         GetComponent<AttackController>().Initialize();
     }
 
-    private void Update()
+    new private void Update()
     {
+        base.Update();
+
         Collider[] b = Physics.OverlapSphere(m_groundTouch.position, 0.1f, m_groundMask);
         OnGround = b.Length > 0;
         m_animator.SetBool("OnGround", OnGround);

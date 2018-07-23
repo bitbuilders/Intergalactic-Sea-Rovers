@@ -1405,7 +1405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_target: {fileID: 0}
   m_rotationSpeed: 70
-  m_cameraStiffness: 5
+  m_cameraStiffness: 7
   m_distanceFromTarget: 6
   m_heightFromTarget: 2
   m_cameraLead: 5
@@ -6678,7 +6678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_target: {fileID: 0}
   m_rotationSpeed: 70
-  m_cameraStiffness: 5
+  m_cameraStiffness: 7
   m_distanceFromTarget: 6
   m_heightFromTarget: 2
   m_cameraLead: 5
