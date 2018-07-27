@@ -44,6 +44,7 @@ public abstract class Entity : MonoBehaviour
     public WeaponCollider WeaponCollider { get { return m_weaponCollider; } }
     public Controller Controller { get; protected set; }
     public CameraController Camera { get; set; }
+    public Quaternion MoveAngle { get; set; }
 
     protected Rigidbody m_rigidbody;
 

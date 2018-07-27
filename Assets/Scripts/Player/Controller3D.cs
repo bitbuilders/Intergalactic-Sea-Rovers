@@ -27,7 +27,7 @@ public class Controller3D : Controller
         if (PauseManager.Instance.Paused)
             return;
 
-        Collider[] b = Physics.OverlapSphere(m_groundTouch.position, 0.1f, m_groundMask);
+        Collider[] b = Physics.OverlapSphere(m_groundTouch.position, 0.2f, m_groundMask);
         m_entity.OnGround = b.Length > 0;
         m_animator.SetBool("OnGround", m_entity.OnGround);
 
@@ -55,10 +55,6 @@ public class Controller3D : Controller
             m_animator.SetBool("Walking", true);
         }
 
-        transform.position += m_velocity;
-        //m_rigidbody.AddForce(m_velocity * 1000.0f);
-        m_animator.SetFloat("yVelocity", m_rigidbody.velocity.y * 0.1f);
-
         if (Input.GetButtonDown(m_entity.PlayerNumber + "_Jump") && m_entity.OnGround)
         {
             m_rigidbody.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
@@ -80,6 +76,11 @@ public class Controller3D : Controller
             Quaternion look = Quaternion.LookRotation(dir, Vector3.up);
             transform.rotation = Quaternion.Lerp(transform.rotation, look, Time.deltaTime * m_rotationSpeed * 4.0f);
         }
+
+        m_velocity = m_entity.MoveAngle * m_velocity;
+        transform.position += m_velocity;
+        //m_rigidbody.AddForce(m_velocity * 1000.0f);
+        m_animator.SetFloat("yVelocity", m_rigidbody.velocity.y * 0.1f);
     }
 
     public override void PhysicsUpdate()
