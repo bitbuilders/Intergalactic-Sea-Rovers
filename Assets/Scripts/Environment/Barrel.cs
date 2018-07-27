@@ -40,15 +40,29 @@ public class Barrel : Interactable3DObject
 
     private void OnTriggerEnter(Collider other)
     {
-        if ((other.CompareTag("Enemy") || other.CompareTag("Player")) && !m_exploding)
+        GameObject entity = null;
+        Quaternion rotation = Quaternion.identity;
+        if (!m_exploding)
+        {
+            if (other.CompareTag("Barrel"))
+            {
+                entity = other.gameObject;
+                float angle = Vector3.Angle(entity.transform.position, transform.position);
+                rotation = Quaternion.AngleAxis(angle, Vector3.up) * Quaternion.Euler(new Vector3(90.0f, 90.0f, 0.0f));
+            }
+            else if ((other.CompareTag("Enemy") || other.CompareTag("Player")))
+            {
+                entity = other.GetComponentInParent<Entity>().gameObject;
+                rotation = entity.transform.rotation * Quaternion.Euler(new Vector3(90.0f, 90.0f, 0.0f));
+            }
+        }
+        
+        if (entity != null)
         {
             m_rigidbody.isKinematic = false;
             m_rigidbody.useGravity = true;
-            Entity e = other.GetComponentInParent<Entity>();
-            Vector3 dir = transform.position - e.transform.position;
-            dir += m_launchOffset;
+            Vector3 dir = transform.position + m_launchOffset - entity.transform.position;
             m_rigidbody.AddForce(dir.normalized * m_launchForce, ForceMode.Impulse);
-            Quaternion rotation = e.transform.rotation * Quaternion.Euler(new Vector3(90.0f, 90.0f, 0.0f));
             StartCoroutine(RotateX(rotation, 1.0f));
             StartCoroutine(Explode());
         }
