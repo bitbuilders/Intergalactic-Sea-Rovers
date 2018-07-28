@@ -21,7 +21,8 @@ public class Controller3DAI : Controller
     [SerializeField] Animator m_animator = null;
     [SerializeField] AttackController m_attackController = null;
     [SerializeField] LayerMask m_groundMask = 0;
-    
+
+    ComboHandler m_comboHandler;
     Rigidbody m_rigidbody;
     Entity m_entity;
     Player m_player;
@@ -32,21 +33,20 @@ public class Controller3DAI : Controller
     Vector2 m_retreatMinMax;
     float m_stateTime;
     float m_strafeAngle;
-    int m_attacks;
     int m_attackLimit;
 
     private void Start()
     {
+        m_comboHandler = GetComponent<ComboHandler>();
         m_rigidbody = GetComponent<Rigidbody>();
         m_entity = GetComponent<Entity>();
         m_player = FindObjectOfType<Player>();
         m_state = State.STRAFE;
         m_strafeMinMax = new Vector2(2.0f, 5.0f);
         m_strafeDirMinMax = new Vector2(60.0f, 80.0f);
-        m_chargeAttackMinMax = new Vector2(2.0f, 4.0f);
+        m_chargeAttackMinMax = new Vector2(4.0f, 8.0f);
         m_retreatMinMax = new Vector2(0.25f, 0.75f);
         m_attackLimit = Random.Range((int)m_chargeAttackMinMax.x, (int)m_chargeAttackMinMax.y);
-        m_attacks = 0;
         m_strafeAngle = RandomBetweenRange(m_strafeDirMinMax, true);
         m_stateTime = RandomBetweenRange(m_strafeMinMax, false);
     }
@@ -75,14 +75,11 @@ public class Controller3DAI : Controller
                 Retreat();
                 break;
         }
-
-        if (m_velocity.magnitude != 0.0f)
-        {
-            Vector3 dir = m_player.transform.position - transform.position;
-            dir.y = 0.0f;
-            Quaternion look = Quaternion.LookRotation(dir, Vector3.up);
-            transform.rotation = look;
-        }
+        
+        Vector3 dir = m_player.transform.position - transform.position;
+        dir.y = 0.0f;
+        Quaternion look = Quaternion.LookRotation(dir, Vector3.up);
+        transform.rotation = look;
 
         m_animator.SetFloat("MoveSpeed", m_velocity.magnitude * 10.0f);
         if (Input.GetButton(m_entity.PlayerNumber + "_Sprint"))
@@ -142,13 +139,12 @@ public class Controller3DAI : Controller
         {
             if (m_attackController.Attack(false))
             {
-                m_attacks++;
-                if (m_attacks >= m_attackLimit)
+                if (m_comboHandler.Attacks >= m_attackLimit)
                 {
                     m_state = State.RETREAT;
                     Leap(-transform.forward);
                     m_stateTime = RandomBetweenRange(m_retreatMinMax, false);
-                    m_attacks = 0;
+                    m_comboHandler.Attacks = 0;
                 }
             }
         }

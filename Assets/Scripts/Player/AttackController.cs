@@ -44,8 +44,8 @@ public class AttackController : MonoBehaviour
             m_comboHandler.Reset();
             m_attackTime = 0.0f;
         }
-
-        if (((usePlayerInput && Input.GetButtonDown(m_playerNumber + "_AttackNormal")) || !usePlayerInput))
+        
+        if (((usePlayerInput && Input.GetButtonDown(m_playerNumber + "_AttackNormal")) || (!usePlayerInput)))
         {
             if (m_attackTime >= m_attackCooldown)
             {

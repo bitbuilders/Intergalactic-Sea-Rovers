@@ -8,6 +8,7 @@ public class ComboHandler : MonoBehaviour
     [SerializeField] [Range(0.0f, 10.0f)] float m_comboSpeed = 0.25f;
     
     public bool Finished { get; private set; }
+    public int Attacks { get; set; }
 
     List<ComboPiece> m_combos;
     Queue<ComboPiece> m_comboOrder;
@@ -26,7 +27,7 @@ public class ComboHandler : MonoBehaviour
     private void Update()
     {
         m_comboTime += Time.deltaTime;
-        
+
         if (m_comboTime >= m_comboSpeed || (m_currentCombo == 1 && m_comboOrder.Count == 1))
         {
             if (m_currentCombo == 3 && m_comboOrder.Count == 0)
@@ -37,6 +38,7 @@ public class ComboHandler : MonoBehaviour
             {
                 m_comboOrder.Dequeue().Trigger();
                 m_comboTime = 0.0f;
+                Attacks++;
             }
             else
             {
@@ -49,7 +51,9 @@ public class ComboHandler : MonoBehaviour
     public void Attack()
     {
         if (m_currentCombo < 3)
+        {
             m_comboOrder.Enqueue(m_combos[m_currentCombo++]);
+        }
     }
 
     public void Reset()
