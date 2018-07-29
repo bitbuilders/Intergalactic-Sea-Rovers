@@ -338,6 +338,11 @@ Prefab:
       propertyPath: m_Convex
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23851413094215418, guid: 2f92268d86d372a46a0e2098ca0bcccd,
+        type: 2}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2f92268d86d372a46a0e2098ca0bcccd, type: 2}
   m_IsPrefabParent: 0
@@ -1002,6 +1007,10 @@ Prefab:
     - target: {fileID: 100000, guid: 87634485a70da5749bd581ec89af1878, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 87634485a70da5749bd581ec89af1878, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87634485a70da5749bd581ec89af1878, type: 3}
@@ -9438,6 +9447,10 @@ Prefab:
     - target: {fileID: 400002, guid: dc74fbf9071f3834db7a37a3d666b75c, type: 3}
       propertyPath: m_RootOrder
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: dc74fbf9071f3834db7a37a3d666b75c, type: 3}
+      propertyPath: m_CastShadows
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dc74fbf9071f3834db7a37a3d666b75c, type: 3}
