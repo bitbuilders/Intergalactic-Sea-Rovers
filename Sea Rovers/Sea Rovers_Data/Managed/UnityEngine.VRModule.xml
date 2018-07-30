@@ -9,80 +9,29 @@
         <para>The VR module implements support for virtual reality devices in Unity.</para>
       </summary>
     </member>
-    <member name="T:UnityEngine.XR.InputTracking">
+    <member name="T:UnityEngine.XR.GameViewRenderMode">
       <summary>
-        <para>A collection of methods and properties for interacting with the XR tracking system.</para>
+        <para>Enumeration of available modes for XR rendering in the Game view or in the main window on a host PC. XR rendering only occurs when the Unity Editor is in Play Mode.</para>
       </summary>
     </member>
-    <member name="P:UnityEngine.XR.InputTracking.disablePositionalTracking">
+    <member name="F:UnityEngine.XR.GameViewRenderMode.BothEyes">
       <summary>
-        <para>Disables positional tracking in XR. This takes effect the next time the head pose is sampled.  If set to true the camera only tracks headset rotation state.</para>
+        <para>Renders both eyes of the XR device side-by-side in the Game view or in the main window on a host PC.</para>
       </summary>
     </member>
-    <member name="?:UnityEngine.XR.InputTracking.nodeAdded(System.Action`1&lt;UnityEngine.XR.XRNodeState&gt;)">
+    <member name="F:UnityEngine.XR.GameViewRenderMode.LeftEye">
       <summary>
-        <para>Called when a tracked node is added to the underlying XR system.</para>
+        <para>Renders the left eye of the XR device in the Game View window or in main window on a host PC.</para>
       </summary>
-      <param name="nodeState">Describes the node that has been added.</param>
-      <param name="value"></param>
     </member>
-    <member name="?:UnityEngine.XR.InputTracking.nodeRemoved(System.Action`1&lt;UnityEngine.XR.XRNodeState&gt;)">
+    <member name="F:UnityEngine.XR.GameViewRenderMode.OcclusionMesh">
       <summary>
-        <para>Called when a tracked node is removed from the underlying XR system.</para>
+        <para>Renders both eyes of the XR device, and the occlusion mesh, side-by-side in the Game view or in the main window on a host PC.</para>
       </summary>
-      <param name="nodeState">Describes the node that has been removed.</param>
-      <param name="value"></param>
     </member>
-    <member name="?:UnityEngine.XR.InputTracking.trackingAcquired(System.Action`1&lt;UnityEngine.XR.XRNodeState&gt;)">
+    <member name="F:UnityEngine.XR.GameViewRenderMode.RightEye">
       <summary>
-        <para>Called when a tracked node begins reporting tracking information.</para>
-      </summary>
-      <param name="nodeState">Describes the node that has begun being tracked.</param>
-      <param name="value"></param>
-    </member>
-    <member name="?:UnityEngine.XR.InputTracking.trackingLost(System.Action`1&lt;UnityEngine.XR.XRNodeState&gt;)">
-      <summary>
-        <para>Called when a tracked node stops reporting tracking information.</para>
-      </summary>
-      <param name="nodeState">Describes the node that has lost tracking.</param>
-      <param name="value"></param>
-    </member>
-    <member name="M:UnityEngine.XR.InputTracking.GetLocalPosition(UnityEngine.XR.XRNode)">
-      <summary>
-        <para>Gets the position of a specific node.</para>
-      </summary>
-      <param name="node">Specifies which node's position should be returned.</param>
-      <returns>
-        <para>The position of the node in its local tracking space.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode)">
-      <summary>
-        <para>Gets the rotation of a specific node.</para>
-      </summary>
-      <param name="node">Specifies which node's rotation should be returned.</param>
-      <returns>
-        <para>The rotation of the node in its local tracking space.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.XR.InputTracking.GetNodeName(System.UInt64)">
-      <summary>
-        <para>Accepts the unique identifier for a tracked node and returns a friendly name for it.</para>
-      </summary>
-      <param name="uniqueID">The unique identifier for the Node index.</param>
-      <returns>
-        <para>The name of the tracked node if the given 64-bit identifier maps to a currently tracked node. Empty string otherwise.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.XR.InputTracking.GetNodeStates">
-      <summary>
-        <para>Describes all presently connected XR nodes and provides available tracking state.</para>
-      </summary>
-      <param name="nodeStates">A list that is populated with XR.XRNodeState objects.</param>
-    </member>
-    <member name="M:UnityEngine.XR.InputTracking.Recenter">
-      <summary>
-        <para>Center tracking to the current position and orientation of the HMD.</para>
+        <para>Renders the right eye of the XR device in the Game View window or in main window on a host PC.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.XR.TrackingSpaceType">
@@ -125,6 +74,16 @@
         <para>The device does not support detecting user presence.</para>
       </summary>
     </member>
+    <member name="T:UnityEngine.XR.WSA.HolographicRemoting">
+      <summary>
+        <para>he Holographic Remoting interface allows you to connect an application to a remote holographic device, and stream data between the application and that device.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.WSA.HolographicRemoting.ConnectionState">
+      <summary>
+        <para>Whether the app is displaying protected content.</para>
+      </summary>
+    </member>
     <member name="T:UnityEngine.XR.WSA.HolographicSettings">
       <summary>
         <para>The Holographic Settings contain functions which effect the performance and presentation of Holograms on Windows Holographic platforms.</para>
@@ -161,6 +120,11 @@
         <para>Whether the app is displaying protected content.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.XR.WSA.HolographicSettings.IsDisplayOpaque">
+      <summary>
+        <para>This method returns whether or not the display associated with the main camera reports as opaque.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.XR.WSA.HolographicSettings.IsLatentFramePresentation">
       <summary>
         <para>Returns true if Holographic rendering is currently running with Latent Frame Presentation.  Default value is false.</para>
@@ -171,39 +135,83 @@
         <para>The kind of reprojection the app is requesting to stabilize its holographic rendering relative to the user's head motion.</para>
       </summary>
     </member>
-    <member name="T:UnityEngine.XR.WSA.PositionalLocatorState">
+    <member name="M:UnityEngine.XR.WSA.HolographicSettings.SetFocusPointForFrame(UnityEngine.Vector3)">
       <summary>
-        <para>Indicates the lifecycle state of the device's spatial location system.</para>
+        <para>Sets a point in 3d space that is the focal point of the scene for the user for this frame. This helps improve the visual fidelity of content around this point. This must be set every frame.</para>
+      </summary>
+      <param name="position">The position of the focal point in the scene, relative to the camera.</param>
+      <param name="normal">Surface normal of the plane being viewed at the focal point.</param>
+      <param name="velocity">A vector that describes how the focus point is moving in the scene at this point in time. This allows the HoloLens to compensate for both your head movement and the movement of the object in the scene.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.HolographicSettings.SetFocusPointForFrame(UnityEngine.Vector3,UnityEngine.Vector3)">
+      <summary>
+        <para>Sets a point in 3d space that is the focal point of the scene for the user for this frame. This helps improve the visual fidelity of content around this point. This must be set every frame.</para>
+      </summary>
+      <param name="position">The position of the focal point in the scene, relative to the camera.</param>
+      <param name="normal">Surface normal of the plane being viewed at the focal point.</param>
+      <param name="velocity">A vector that describes how the focus point is moving in the scene at this point in time. This allows the HoloLens to compensate for both your head movement and the movement of the object in the scene.</param>
+    </member>
+    <member name="M:UnityEngine.XR.WSA.HolographicSettings.SetFocusPointForFrame(UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Vector3)">
+      <summary>
+        <para>Sets a point in 3d space that is the focal point of the scene for the user for this frame. This helps improve the visual fidelity of content around this point. This must be set every frame.</para>
+      </summary>
+      <param name="position">The position of the focal point in the scene, relative to the camera.</param>
+      <param name="normal">Surface normal of the plane being viewed at the focal point.</param>
+      <param name="velocity">A vector that describes how the focus point is moving in the scene at this point in time. This allows the HoloLens to compensate for both your head movement and the movement of the object in the scene.</param>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.HolographicStreamerConnectionFailureReason">
+      <summary>
+        <para>Enum indicating the reason why connection to remote device has failed.</para>
       </summary>
     </member>
-    <member name="F:UnityEngine.XR.WSA.PositionalLocatorState.Activating">
+    <member name="F:UnityEngine.XR.WSA.HolographicStreamerConnectionFailureReason.ConnectionLost">
       <summary>
-        <para>The device is reporting its orientation and is preparing to locate its position in the user's surroundings.</para>
+        <para>Enum indicating the reason why remote connection failed.</para>
       </summary>
     </member>
-    <member name="F:UnityEngine.XR.WSA.PositionalLocatorState.Active">
+    <member name="F:UnityEngine.XR.WSA.HolographicStreamerConnectionFailureReason.HandshakeFailed">
       <summary>
-        <para>The device is reporting its orientation and position in the user's surroundings.</para>
+        <para>Handskahe failed while traying to establish connection with remote device.</para>
       </summary>
     </member>
-    <member name="F:UnityEngine.XR.WSA.PositionalLocatorState.Inhibited">
+    <member name="F:UnityEngine.XR.WSA.HolographicStreamerConnectionFailureReason.None">
       <summary>
-        <para>The device is reporting its orientation but cannot locate its position in the user's surroundings due to external factors like poor lighting conditions.</para>
+        <para>No failure.</para>
       </summary>
     </member>
-    <member name="F:UnityEngine.XR.WSA.PositionalLocatorState.OrientationOnly">
+    <member name="F:UnityEngine.XR.WSA.HolographicStreamerConnectionFailureReason.ProtocolVersionMismatch">
       <summary>
-        <para>The device is reporting its orientation and has not been asked to report its position in the user's surroundings.</para>
+        <para>Protocol used by the app does not match remoting app running on remote device.</para>
       </summary>
     </member>
-    <member name="F:UnityEngine.XR.WSA.PositionalLocatorState.Unavailable">
+    <member name="F:UnityEngine.XR.WSA.HolographicStreamerConnectionFailureReason.Unknown">
       <summary>
-        <para>The device's spatial location system is not available.</para>
+        <para>Couldn't identify the reason why connection failed.</para>
       </summary>
     </member>
-    <member name="T:UnityEngine.XR.WSA.WorldManager">
+    <member name="F:UnityEngine.XR.WSA.HolographicStreamerConnectionFailureReason.Unreachable">
       <summary>
-        <para>This class represents the state of the real world tracking system.</para>
+        <para>Remove device is not reachable.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.WSA.HolographicStreamerConnectionState">
+      <summary>
+        <para>Current state of the holographis streamer remote connection.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.HolographicStreamerConnectionState.Connected">
+      <summary>
+        <para>Indicates app being connected to remote device.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.HolographicStreamerConnectionState.Connecting">
+      <summary>
+        <para>Indicates app trying to connect to remote device.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.WSA.HolographicStreamerConnectionState.Disconnected">
+      <summary>
+        <para>Indicates app being currently disconnected from any other remote device.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.XR.XRDevice">
@@ -277,153 +285,6 @@
         <para>True on success. False if the given TrackingSpaceType is not supported or the device fails to switch.</para>
       </returns>
     </member>
-    <member name="T:UnityEngine.XR.XRNode">
-      <summary>
-        <para>Enumeration of tracked XR nodes which can be updated by XR input.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEngine.XR.XRNode.CenterEye">
-      <summary>
-        <para>Node representing a point between the left and right eyes.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEngine.XR.XRNode.GameController">
-      <summary>
-        <para>Represents a tracked game Controller not associated with a specific hand.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEngine.XR.XRNode.HardwareTracker">
-      <summary>
-        <para>Represents a physical device that provides tracking data for objects to which it is attached.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEngine.XR.XRNode.Head">
-      <summary>
-        <para>Node representing the user's head.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEngine.XR.XRNode.LeftEye">
-      <summary>
-        <para>Node representing the left eye.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEngine.XR.XRNode.LeftHand">
-      <summary>
-        <para>Node representing the left hand.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEngine.XR.XRNode.RightEye">
-      <summary>
-        <para>Node representing the right eye.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEngine.XR.XRNode.RightHand">
-      <summary>
-        <para>Node representing the right hand.</para>
-      </summary>
-    </member>
-    <member name="F:UnityEngine.XR.XRNode.TrackingReference">
-      <summary>
-        <para>Represents a stationary physical device that can be used as a point of reference in the tracked area.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.XR.XRNodeState.acceleration">
-      <summary>
-        <para>Sets the vector representing the current acceleration of the tracked node.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.XR.XRNodeState.angularAcceleration">
-      <summary>
-        <para>Sets the vector representing the current angular acceleration of the tracked node.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.XR.XRNodeState.angularVelocity">
-      <summary>
-        <para>Sets the vector representing the current angular velocity of the tracked node.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.XR.XRNodeState.nodeType">
-      <summary>
-        <para>The type of the tracked node as specified in XR.XRNode.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.XR.XRNodeState.position">
-      <summary>
-        <para>Sets the vector representing the current position of the tracked node.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.XR.XRNodeState.rotation">
-      <summary>
-        <para>Sets the quaternion representing the current rotation of the tracked node.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.XR.XRNodeState.tracked">
-      <summary>
-        <para>
-          Set to true if the node is presently being tracked by the underlying XR system,
-and false if the node is not presently being tracked by the underlying XR system.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.XR.XRNodeState.uniqueID">
-      <summary>
-        <para>The unique identifier of the tracked node.</para>
-      </summary>
-    </member>
-    <member name="P:UnityEngine.XR.XRNodeState.velocity">
-      <summary>
-        <para>Sets the vector representing the current velocity of the tracked node.</para>
-      </summary>
-    </member>
-    <member name="M:UnityEngine.XR.XRNodeState.TryGetAcceleration">
-      <summary>
-        <para>Attempt to retrieve a vector representing the current acceleration of the tracked node.</para>
-      </summary>
-      <returns>
-        <para>True if the acceleration was set in the output parameter. False if the acceleration is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.XR.XRNodeState.TryGetAngularAcceleration(UnityEngine.Vector3&amp;)">
-      <summary>
-        <para>Attempt to retrieve a Vector3 representing the current angular acceleration of the tracked node.</para>
-      </summary>
-      <param name="angularAcceleration"></param>
-      <returns>
-        <para>True if the angular acceleration was set in the output parameter. False if the angular acceleration is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.XR.XRNodeState.TryGetAngularVelocity(UnityEngine.Vector3&amp;)">
-      <summary>
-        <para>Attempt to retrieve a Vector3 representing the current angular velocity of the tracked node.</para>
-      </summary>
-      <param name="angularVelocity"></param>
-      <returns>
-        <para>True if the angular velocity was set in the output parameter. False if the angular velocity is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.XR.XRNodeState.TryGetPosition">
-      <summary>
-        <para>Attempt to retrieve a vector representing the current position of the tracked node.</para>
-      </summary>
-      <returns>
-        <para>True if the position was set in the output parameter. False if the position is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.XR.XRNodeState.TryGetRotation">
-      <summary>
-        <para>Attempt to retrieve a quaternion representing the current rotation of the tracked node.</para>
-      </summary>
-      <returns>
-        <para>True if the rotation was set in the output parameter. False if the rotation is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
-      </returns>
-    </member>
-    <member name="M:UnityEngine.XR.XRNodeState.TryGetVelocity">
-      <summary>
-        <para>Attempt to retrieve a vector representing the current velocity of the tracked node.</para>
-      </summary>
-      <returns>
-        <para>True if the velocity was set in the output parameter. False if the velocity is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
-      </returns>
-    </member>
     <member name="T:UnityEngine.XR.XRSettings">
       <summary>
         <para>Global XR related settings.</para>
@@ -454,6 +315,11 @@ and false if the node is not presently being tracked by the underlying XR system
         <para>The current width of an eye texture for the loaded device.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.XR.XRSettings.gameViewRenderMode">
+      <summary>
+        <para>Sets the render mode for the XR device. The render mode controls how the view of the XR device renders in the Game view and in the main window on a host PC.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.XR.XRSettings.isDeviceActive">
       <summary>
         <para>Read-only value that can be used to determine if the XR device is active.</para>
@@ -481,7 +347,7 @@ and false if the node is not presently being tracked by the underlying XR system
     </member>
     <member name="P:UnityEngine.XR.XRSettings.showDeviceView">
       <summary>
-        <para>Mirror what is shown on the device to the main display, if possible.</para>
+        <para>This property has been deprecated. Use XRSettings.gameViewRenderMode instead.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.XR.XRSettings.supportedDevices">

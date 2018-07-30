@@ -994,7 +994,7 @@ Sometimes it is not possible to project (for example when the joints form a cycl
     </member>
     <member name="P:UnityEngine.PhysicMaterial.dynamicFriction">
       <summary>
-        <para>The friction used when already moving.  This value has to be between 0 and 1.</para>
+        <para>The friction used when already moving.  This value is usually between 0 and 1.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.PhysicMaterial.dynamicFriction2">
@@ -1196,6 +1196,7 @@ Note that there is a special case when the two overlapping colliders have physic
       <param name="maxDistance">The max length of the cast.</param>
       <param name="layermask">A that is used to selectively ignore colliders when casting a capsule.</param>
       <param name="queryTriggerInteraction">Specifies whether this query should hit Triggers.</param>
+      <param name="layerMask"></param>
       <returns>
         <para>All colliders that were hit.</para>
       </returns>
@@ -1212,6 +1213,7 @@ Note that there is a special case when the two overlapping colliders have physic
       <param name="maxDistance">The max length of the cast.</param>
       <param name="layermask">A that is used to selectively ignore colliders when casting a capsule.</param>
       <param name="queryTriggerInteraction">Specifies whether this query should hit Triggers.</param>
+      <param name="layerMask"></param>
       <returns>
         <para>The amount of hits stored to the results buffer.</para>
       </returns>
@@ -1255,6 +1257,7 @@ Note that there is a special case when the two overlapping colliders have physic
       <param name="maxDistance">The max length of the sweep.</param>
       <param name="layermask">A that is used to selectively ignore colliders when casting a capsule.</param>
       <param name="queryTriggerInteraction">Specifies whether this query should hit Triggers.</param>
+      <param name="layerMask"></param>
       <returns>
         <para>An array of all colliders hit in the sweep.</para>
       </returns>
@@ -1271,6 +1274,7 @@ Note that there is a special case when the two overlapping colliders have physic
       <param name="maxDistance">The max length of the sweep.</param>
       <param name="layermask">A that is used to selectively ignore colliders when casting a capsule.</param>
       <param name="queryTriggerInteraction">Specifies whether this query should hit Triggers.</param>
+      <param name="layerMask"></param>
       <returns>
         <para>The amount of hits stored into the buffer.</para>
       </returns>
@@ -1297,6 +1301,7 @@ Note that there is a special case when the two overlapping colliders have physic
       <param name="radius">The radius of the capsule.</param>
       <param name="layermask">A that is used to selectively ignore colliders when casting a capsule.</param>
       <param name="queryTriggerInteraction">Specifies whether this query should hit Triggers.</param>
+      <param name="layerMask"></param>
     </member>
     <member name="M:UnityEngine.Physics.CheckSphere(UnityEngine.Vector3,System.Single,System.Int32,UnityEngine.QueryTriggerInteraction)">
       <summary>
@@ -1414,6 +1419,7 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
       <param name="orientation">Rotation of the box.</param>
       <param name="layerMask">A that is used to selectively ignore colliders when casting a ray.</param>
       <param name="queryTriggerInteraction">Specifies whether this query should hit Triggers.</param>
+      <param name="mask"></param>
       <returns>
         <para>The amount of colliders stored in results.</para>
       </returns>
@@ -1537,6 +1543,7 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
       <param name="maxDistance">The max distance the rayhit is allowed to be from the start of the ray.</param>
       <param name="layermask">A that is used to selectively ignore colliders when casting a ray.</param>
       <param name="queryTriggerInteraction">Specifies whether this query should hit Triggers.</param>
+      <param name="layerMask"></param>
     </member>
     <member name="M:UnityEngine.Physics.RaycastNonAlloc(UnityEngine.Ray,UnityEngine.RaycastHit[],System.Single,System.Int32,UnityEngine.QueryTriggerInteraction)">
       <summary>
@@ -1561,6 +1568,7 @@ Note that IgnoreLayerCollision will reset the trigger state of affected collider
       <param name="maxDistance">The max distance the rayhit is allowed to be from the start of the ray.</param>
       <param name="layermask">A that is used to selectively ignore colliders when casting a ray.</param>
       <param name="queryTriggerInteraction">Specifies whether this query should hit Triggers.</param>
+      <param name="layerMask"></param>
       <returns>
         <para>The amount of hits stored into the results buffer.</para>
       </returns>

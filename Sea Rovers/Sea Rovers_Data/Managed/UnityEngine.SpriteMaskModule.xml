@@ -44,5 +44,10 @@
         <para>The Sprite used to define the mask.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.SpriteMask.spriteSortPoint">
+      <summary>
+        <para>Determines the position of the Sprite used for sorting the SpriteMask.</para>
+      </summary>
+    </member>
   </members>
 </doc>

@@ -511,6 +511,11 @@ Instance is used to enable and disable the inputs coming from a specific plugin.
         <para>Information about an Input subsystem.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Experimental.XR.XRInputSubsystemDescriptor.disablesLegacyInput">
+      <summary>
+        <para>When true, will suppress legacy support for Daydream, Oculus, OpenVR, and Windows MR built directly into the Unity runtime from generating input. This is useful when adding an XRInputSubsystem that supports these devices.</para>
+      </summary>
+    </member>
     <member name="T:UnityEngine.Experimental.XR.XRPlaneSubsystem">
       <summary>
         <para>Provides methods, events, and properties that provides information about planes detected in the environment. </para>
@@ -716,6 +721,234 @@ Instance is used to enable and disable the inputs coming from a specific plugin.
       <summary>
         <para>Class providing information about XRSessionSubsystem registration.</para>
       </summary>
+    </member>
+    <member name="A:UnityEngine.XRModule">
+      <summary>
+        <para>The XR module contains the VR and AR related platform support functionality.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.InputTracking">
+      <summary>
+        <para>A collection of methods and properties for interacting with the XR tracking system.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.InputTracking.disablePositionalTracking">
+      <summary>
+        <para>Disables positional tracking in XR. This takes effect the next time the head pose is sampled.  If set to true the camera only tracks headset rotation state.</para>
+      </summary>
+    </member>
+    <member name="?:UnityEngine.XR.InputTracking.nodeAdded(System.Action`1&lt;UnityEngine.XR.XRNodeState&gt;)">
+      <summary>
+        <para>Called when a tracked node is added to the underlying XR system.</para>
+      </summary>
+      <param name="nodeState">Describes the node that has been added.</param>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.InputTracking.nodeRemoved(System.Action`1&lt;UnityEngine.XR.XRNodeState&gt;)">
+      <summary>
+        <para>Called when a tracked node is removed from the underlying XR system.</para>
+      </summary>
+      <param name="nodeState">Describes the node that has been removed.</param>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.InputTracking.trackingAcquired(System.Action`1&lt;UnityEngine.XR.XRNodeState&gt;)">
+      <summary>
+        <para>Called when a tracked node begins reporting tracking information.</para>
+      </summary>
+      <param name="nodeState">Describes the node that has begun being tracked.</param>
+      <param name="value"></param>
+    </member>
+    <member name="?:UnityEngine.XR.InputTracking.trackingLost(System.Action`1&lt;UnityEngine.XR.XRNodeState&gt;)">
+      <summary>
+        <para>Called when a tracked node stops reporting tracking information.</para>
+      </summary>
+      <param name="nodeState">Describes the node that has lost tracking.</param>
+      <param name="value"></param>
+    </member>
+    <member name="M:UnityEngine.XR.InputTracking.GetLocalPosition(UnityEngine.XR.XRNode)">
+      <summary>
+        <para>Gets the position of a specific node.</para>
+      </summary>
+      <param name="node">Specifies which node's position should be returned.</param>
+      <returns>
+        <para>The position of the node in its local tracking space.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.InputTracking.GetLocalRotation(UnityEngine.XR.XRNode)">
+      <summary>
+        <para>Gets the rotation of a specific node.</para>
+      </summary>
+      <param name="node">Specifies which node's rotation should be returned.</param>
+      <returns>
+        <para>The rotation of the node in its local tracking space.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.InputTracking.GetNodeName(System.UInt64)">
+      <summary>
+        <para>Accepts the unique identifier for a tracked node and returns a friendly name for it.</para>
+      </summary>
+      <param name="uniqueID">The unique identifier for the Node index.</param>
+      <returns>
+        <para>The name of the tracked node if the given 64-bit identifier maps to a currently tracked node. Empty string otherwise.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.InputTracking.GetNodeStates">
+      <summary>
+        <para>Describes all currently connected XRNodes and provides available tracking states for each.</para>
+      </summary>
+      <param name="nodeStates">A list that is populated with XR.XRNodeState objects.</param>
+    </member>
+    <member name="M:UnityEngine.XR.InputTracking.Recenter">
+      <summary>
+        <para>Center tracking to the current position and orientation of the HMD.</para>
+      </summary>
+    </member>
+    <member name="T:UnityEngine.XR.XRNode">
+      <summary>
+        <para>Enumeration of tracked XR nodes which can be updated by XR input.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.CenterEye">
+      <summary>
+        <para>Node representing a point between the left and right eyes.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.GameController">
+      <summary>
+        <para>Represents a tracked game Controller not associated with a specific hand.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.HardwareTracker">
+      <summary>
+        <para>Represents a physical device that provides tracking data for objects to which it is attached.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.Head">
+      <summary>
+        <para>Node representing the user's head.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.LeftEye">
+      <summary>
+        <para>Node representing the left eye.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.LeftHand">
+      <summary>
+        <para>Node representing the left hand.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.RightEye">
+      <summary>
+        <para>Node representing the right eye.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.RightHand">
+      <summary>
+        <para>Node representing the right hand.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.XR.XRNode.TrackingReference">
+      <summary>
+        <para>Represents a stationary physical device that can be used as a point of reference in the tracked area.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.acceleration">
+      <summary>
+        <para>Sets the vector representing the current acceleration of the tracked node.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.angularAcceleration">
+      <summary>
+        <para>Sets the vector representing the current angular acceleration of the tracked node.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.angularVelocity">
+      <summary>
+        <para>Sets the vector representing the current angular velocity of the tracked node.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.nodeType">
+      <summary>
+        <para>The type of the tracked node as specified in XR.XRNode.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.position">
+      <summary>
+        <para>Sets the vector representing the current position of the tracked node.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.rotation">
+      <summary>
+        <para>Sets the quaternion representing the current rotation of the tracked node.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.tracked">
+      <summary>
+        <para>
+          Set to true if the node is presently being tracked by the underlying XR system,
+and false if the node is not presently being tracked by the underlying XR system.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.uniqueID">
+      <summary>
+        <para>The unique identifier of the tracked node.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.XR.XRNodeState.velocity">
+      <summary>
+        <para>Sets the vector representing the current velocity of the tracked node.</para>
+      </summary>
+    </member>
+    <member name="M:UnityEngine.XR.XRNodeState.TryGetAcceleration">
+      <summary>
+        <para>Attempt to retrieve a vector representing the current acceleration of the tracked node.</para>
+      </summary>
+      <returns>
+        <para>True if the acceleration was set in the output parameter. False if the acceleration is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.XRNodeState.TryGetAngularAcceleration(UnityEngine.Vector3&amp;)">
+      <summary>
+        <para>Attempt to retrieve a Vector3 representing the current angular acceleration of the tracked node.</para>
+      </summary>
+      <param name="angularAcceleration"></param>
+      <returns>
+        <para>True if the angular acceleration was set in the output parameter. False if the angular acceleration is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.XRNodeState.TryGetAngularVelocity(UnityEngine.Vector3&amp;)">
+      <summary>
+        <para>Attempt to retrieve a Vector3 representing the current angular velocity of the tracked node.</para>
+      </summary>
+      <param name="angularVelocity"></param>
+      <returns>
+        <para>True if the angular velocity was set in the output parameter. False if the angular velocity is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.XRNodeState.TryGetPosition">
+      <summary>
+        <para>Attempt to retrieve a vector representing the current position of the tracked node.</para>
+      </summary>
+      <returns>
+        <para>True if the position was set in the output parameter. False if the position is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.XRNodeState.TryGetRotation">
+      <summary>
+        <para>Attempt to retrieve a quaternion representing the current rotation of the tracked node.</para>
+      </summary>
+      <returns>
+        <para>True if the rotation was set in the output parameter. False if the rotation is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.XR.XRNodeState.TryGetVelocity">
+      <summary>
+        <para>Attempt to retrieve a vector representing the current velocity of the tracked node.</para>
+      </summary>
+      <returns>
+        <para>True if the velocity was set in the output parameter. False if the velocity is not available due to limitations of the underlying platform or if the node is not presently tracked.</para>
+      </returns>
     </member>
   </members>
 </doc>

@@ -220,6 +220,11 @@
         <para>Indicates whether geometry emitted by this renderer is ignored.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.CanvasRenderer.cullTransparentMesh">
+      <summary>
+        <para>Indicates whether geometry emitted by this renderer can be ignored when the vertex color alpha is close to zero for every vertex of the mesh.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.CanvasRenderer.hasMoved">
       <summary>
         <para>True if any change has occured that would invalidate the positions of generated geometry.</para>

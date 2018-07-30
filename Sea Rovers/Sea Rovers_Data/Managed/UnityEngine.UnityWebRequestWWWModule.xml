@@ -230,7 +230,7 @@ The latter will disable seeking on the clip (with .time and/or .timeSamples).</p
     </member>
     <member name="M:UnityEngine.WWW.GetMovieTexture">
       <summary>
-        <para>Returns a MovieTexture generated from the downloaded data (Read Only).</para>
+        <para>MovieTexture has been deprecated. Refer to the new movie playback solution VideoPlayer.</para>
       </summary>
     </member>
     <member name="M:UnityEngine.WWW.LoadFromCacheOrDownload(System.String,System.Int32)">

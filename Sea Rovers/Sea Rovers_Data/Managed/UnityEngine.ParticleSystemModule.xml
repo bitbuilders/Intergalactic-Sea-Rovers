@@ -1027,11 +1027,11 @@
     </member>
     <member name="M:UnityEngine.ParticleSystem.IsAlive(System.Boolean)">
       <summary>
-        <para>Does the system contain any live particles? (or will produce more).</para>
+        <para>Does the system contain any live particles, or will it produce more?</para>
       </summary>
       <param name="withChildren">Check all child particle systems as well.</param>
       <returns>
-        <para>True if the particle system is still "alive", false if the particle system is done emitting particles and all particles are dead.</para>
+        <para>True if the Particle System is still "alive". False if the Particle System has stopped emitting particles and all particles are dead.</para>
       </returns>
     </member>
     <member name="T:UnityEngine.ParticleSystem.LightsModule">
@@ -1206,7 +1206,7 @@
     </member>
     <member name="P:UnityEngine.ParticleSystem.MainModule.flipRotation">
       <summary>
-        <para>Cause some particles to spin in  the opposite direction.</para>
+        <para>Makes some particles spin in the opposite direction.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.ParticleSystem.MainModule.gravityModifier">
@@ -1849,7 +1849,7 @@ The Noise Module allows you to apply turbulence to the movement of your particle
       <summary>
         <para>Pauses the system so no new particles are emitted and the existing particles are not updated.</para>
       </summary>
-      <param name="withChildren">Pause all child particle systems as well.</param>
+      <param name="withChildren">Pause all child Particle Systems as well.</param>
     </member>
     <member name="M:UnityEngine.ParticleSystem.Play(System.Boolean)">
       <summary>
@@ -2136,6 +2136,16 @@ The Noise Module allows you to apply turbulence to the movement of your particle
         <para>Spherizes the starting direction of particles.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.ParticleSystem.ShapeModule.sprite">
+      <summary>
+        <para>Sprite to emit particles from.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.ParticleSystem.ShapeModule.spriteRenderer">
+      <summary>
+        <para>SpriteRenderer to emit particles from.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.ParticleSystem.ShapeModule.texture">
       <summary>
         <para>Selects a texture to be used for tinting particle start colors.</para>
@@ -2153,7 +2163,7 @@ The Noise Module allows you to apply turbulence to the movement of your particle
     </member>
     <member name="P:UnityEngine.ParticleSystem.ShapeModule.textureClipChannel">
       <summary>
-        <para>Selected which channel of the texture to be used for dicarding particles.</para>
+        <para>Selects which channel of the texture is used for discarding particles.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.ParticleSystem.ShapeModule.textureClipThreshold">
@@ -2784,7 +2794,7 @@ The Noise Module allows you to apply turbulence to the movement of your particle
     </member>
     <member name="P:UnityEngine.ParticleSystem.VelocityOverLifetimeModule.radial">
       <summary>
-        <para>Curve to control particle speed based on lifetime, away from a cetner position.</para>
+        <para>Curve to control particle speed based on lifetime, away from a center position.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.ParticleSystem.VelocityOverLifetimeModule.radialMultiplier">
@@ -3211,6 +3221,70 @@ The Noise Module allows you to apply turbulence to the movement of your particle
         <para>Whether all the queried streams are enabled or not.</para>
       </returns>
     </member>
+    <member name="M:UnityEngine.ParticleSystemRenderer.BakeMesh(UnityEngine.Mesh)">
+      <summary>
+        <para>Creates a snapshot of ParticleSystemRenderer and stores it in mesh.</para>
+      </summary>
+      <param name="mesh">A static mesh that will receive the snapshot of the particles.</param>
+      <param name="camera">The camera used for determining which way view space particles will face.</param>
+      <param name="useTransform">Include the rotation and scale of the Transform in the baked mesh.</param>
+    </member>
+    <member name="M:UnityEngine.ParticleSystemRenderer.BakeMesh(UnityEngine.Mesh,System.Boolean)">
+      <summary>
+        <para>Creates a snapshot of ParticleSystemRenderer and stores it in mesh.</para>
+      </summary>
+      <param name="mesh">A static mesh that will receive the snapshot of the particles.</param>
+      <param name="camera">The camera used for determining which way view space particles will face.</param>
+      <param name="useTransform">Include the rotation and scale of the Transform in the baked mesh.</param>
+    </member>
+    <member name="M:UnityEngine.ParticleSystemRenderer.BakeMesh(UnityEngine.Mesh,UnityEngine.Camera)">
+      <summary>
+        <para>Creates a snapshot of ParticleSystemRenderer and stores it in mesh.</para>
+      </summary>
+      <param name="mesh">A static mesh that will receive the snapshot of the particles.</param>
+      <param name="camera">The camera used for determining which way view space particles will face.</param>
+      <param name="useTransform">Include the rotation and scale of the Transform in the baked mesh.</param>
+    </member>
+    <member name="M:UnityEngine.ParticleSystemRenderer.BakeMesh(UnityEngine.Mesh,UnityEngine.Camera,System.Boolean)">
+      <summary>
+        <para>Creates a snapshot of ParticleSystemRenderer and stores it in mesh.</para>
+      </summary>
+      <param name="mesh">A static mesh that will receive the snapshot of the particles.</param>
+      <param name="camera">The camera used for determining which way view space particles will face.</param>
+      <param name="useTransform">Include the rotation and scale of the Transform in the baked mesh.</param>
+    </member>
+    <member name="M:UnityEngine.ParticleSystemRenderer.BakeTrailsMesh(UnityEngine.Mesh)">
+      <summary>
+        <para>Creates a snapshot of ParticleSystem Trails and stores them in mesh.</para>
+      </summary>
+      <param name="mesh">A static mesh that will receive the snapshot of the particle trails.</param>
+      <param name="camera">The camera used for determining which way view space trails will face.</param>
+      <param name="useTransform">Include the rotation and scale of the Transform in the baked mesh.</param>
+    </member>
+    <member name="M:UnityEngine.ParticleSystemRenderer.BakeTrailsMesh(UnityEngine.Mesh,System.Boolean)">
+      <summary>
+        <para>Creates a snapshot of ParticleSystem Trails and stores them in mesh.</para>
+      </summary>
+      <param name="mesh">A static mesh that will receive the snapshot of the particle trails.</param>
+      <param name="camera">The camera used for determining which way view space trails will face.</param>
+      <param name="useTransform">Include the rotation and scale of the Transform in the baked mesh.</param>
+    </member>
+    <member name="M:UnityEngine.ParticleSystemRenderer.BakeTrailsMesh(UnityEngine.Mesh,UnityEngine.Camera)">
+      <summary>
+        <para>Creates a snapshot of ParticleSystem Trails and stores them in mesh.</para>
+      </summary>
+      <param name="mesh">A static mesh that will receive the snapshot of the particle trails.</param>
+      <param name="camera">The camera used for determining which way view space trails will face.</param>
+      <param name="useTransform">Include the rotation and scale of the Transform in the baked mesh.</param>
+    </member>
+    <member name="M:UnityEngine.ParticleSystemRenderer.BakeTrailsMesh(UnityEngine.Mesh,UnityEngine.Camera,System.Boolean)">
+      <summary>
+        <para>Creates a snapshot of ParticleSystem Trails and stores them in mesh.</para>
+      </summary>
+      <param name="mesh">A static mesh that will receive the snapshot of the particle trails.</param>
+      <param name="camera">The camera used for determining which way view space trails will face.</param>
+      <param name="useTransform">Include the rotation and scale of the Transform in the baked mesh.</param>
+    </member>
     <member name="M:UnityEngine.ParticleSystemRenderer.DisableVertexStreams(UnityEngine.ParticleSystemVertexStreams)">
       <summary>
         <para>Disable a set of vertex shader streams on the particle system renderer.
@@ -3503,6 +3577,16 @@ The position stream is always enabled, and any attempts to remove it will be ign
     <member name="F:UnityEngine.ParticleSystemShapeType.SphereShell">
       <summary>
         <para>Emit from the surface of a sphere.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.ParticleSystemShapeType.Sprite">
+      <summary>
+        <para>Emit from a sprite.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.ParticleSystemShapeType.SpriteRenderer">
+      <summary>
+        <para>Emit from a sprite renderer.</para>
       </summary>
     </member>
     <member name="T:UnityEngine.ParticleSystemSimulationSpace">

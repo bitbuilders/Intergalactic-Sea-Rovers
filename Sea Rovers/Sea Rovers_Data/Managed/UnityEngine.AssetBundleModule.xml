@@ -308,5 +308,10 @@
         <para>Asset object being loaded (Read Only).</para>
       </summary>
     </member>
+    <member name="A:UnityEngine.AssetBundleModule">
+      <summary>
+        <para>The AssetBundle module implements the AssetBundle class and related APIs to load data from AssetBundles.</para>
+      </summary>
+    </member>
   </members>
 </doc>

@@ -432,9 +432,14 @@
         <para>The incoming Collider2D involved in the collision with the otherCollider.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Collision2D.contactCount">
+      <summary>
+        <para>Gets the number of contacts for this collision.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.Collision2D.contacts">
       <summary>
-        <para>The specific points of contact with the incoming Collider2D.  You should avoid using this as it produces memory garbage.  Use GetContacts instead.</para>
+        <para>The specific points of contact with the incoming Collider2D. You should avoid using this as it produces memory garbage. Use GetContact or GetContacts instead.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Collision2D.enabled">
@@ -471,6 +476,15 @@
       <summary>
         <para>The Transform of the incoming object involved in the collision.</para>
       </summary>
+    </member>
+    <member name="M:UnityEngine.Collision2D.GetContact(System.Int32)">
+      <summary>
+        <para>Gets the contact point at the specified index.</para>
+      </summary>
+      <param name="index">The index of the contact to retrieve.</param>
+      <returns>
+        <para>The contact at the specified index.</para>
+      </returns>
     </member>
     <member name="M:UnityEngine.Collision2D.GetContacts(UnityEngine.ContactPoint2D[])">
       <summary>

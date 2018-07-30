@@ -651,7 +651,7 @@
         <para>Specify which types of debug data to collect when building the NavMesh.</para>
       </summary>
     </member>
-    <member name="T:UnityEditor.AI.NavMeshBuilder">
+    <member name="T:UnityEngine.AI.NavMeshBuilder">
       <summary>
         <para>Navigation mesh builder interface.</para>
       </summary>
@@ -670,7 +670,7 @@
 The newly built NavMeshData, or null if the NavMeshData was empty or an error occurred.</para>
       </returns>
     </member>
-    <member name="M:UnityEditor.AI.NavMeshBuilder.Cancel(UnityEngine.AI.NavMeshData)">
+    <member name="M:UnityEngine.AI.NavMeshBuilder.Cancel(UnityEngine.AI.NavMeshData)">
       <summary>
         <para>Cancels an asynchronous update of the specified NavMesh data. See Also: UpdateNavMeshDataAsync.</para>
       </summary>

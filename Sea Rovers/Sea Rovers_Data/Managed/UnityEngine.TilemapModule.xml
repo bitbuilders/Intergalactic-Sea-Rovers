@@ -941,5 +941,10 @@ Only one class at any one time should set defaultBrush to true.</para>
         <para>Sorts tiles for rendering starting from the tile with the highest X and the lowest Y cell positions.</para>
       </summary>
     </member>
+    <member name="A:UnityEngine.TilemapModule">
+      <summary>
+        <para>The Tilemap module implements the Tilemap class.</para>
+      </summary>
+    </member>
   </members>
 </doc>

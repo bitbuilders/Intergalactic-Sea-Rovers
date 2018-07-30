@@ -176,5 +176,10 @@
         <para>Stops playback of the current Playable and destroys the corresponding graph.</para>
       </summary>
     </member>
+    <member name="A:UnityEngine.DirectorModule">
+      <summary>
+        <para>The Director module implements the PlayableDirector class.</para>
+      </summary>
+    </member>
   </members>
 </doc>

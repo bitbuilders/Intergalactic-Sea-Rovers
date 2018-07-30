@@ -84,6 +84,21 @@
         <para>Will show the prototype using diffuse shading.</para>
       </summary>
     </member>
+    <member name="T:UnityEngine.PatchExtents">
+      <summary>
+        <para>Structure containing minimum and maximum terrain patch height values.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.PatchExtents.max">
+      <summary>
+        <para>Maximum height of a terrain patch.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.PatchExtents.min">
+      <summary>
+        <para>Minimum height of a terrain patch.</para>
+      </summary>
+    </member>
     <member name="T:UnityEngine.SplatPrototype">
       <summary>
         <para>A Splat prototype is just a texture that is used by the TerrainData.</para>
@@ -222,6 +237,11 @@
     <member name="P:UnityEngine.Terrain.patchBoundsMultiplier">
       <summary>
         <para>Set the terrain bounding box scale.</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.Terrain.preserveTreePrototypeLayers">
+      <summary>
+        <para>Allows you to specify how Unity chooses the for tree instances.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.Terrain.realtimeLightmapIndex">
@@ -571,6 +591,22 @@
       <param name="x"></param>
       <param name="y"></param>
     </member>
+    <member name="M:UnityEngine.TerrainData.GetMaximumHeightError">
+      <summary>
+        <para>Returns an array of tesselation maximum height error values per renderable terrain patch.  The returned array can be modified and passed to OverrideMaximumHeightError.</para>
+      </summary>
+      <returns>
+        <para>Float array of maximum height error values.</para>
+      </returns>
+    </member>
+    <member name="M:UnityEngine.TerrainData.GetPatchMinMaxHeights">
+      <summary>
+        <para>Returns an array of min max height values for all the renderable patches in a terrain.  The returned array can be modified and then passed to OverrideMinMaxPatchHeights.</para>
+      </summary>
+      <returns>
+        <para>Minimum and maximum height values for each patch.</para>
+      </returns>
+    </member>
     <member name="M:UnityEngine.TerrainData.GetSteepness(System.Single,System.Single)">
       <summary>
         <para>Gets the gradient of the terrain at point (x,y).</para>
@@ -592,6 +628,18 @@
         <para>Get the tree instance at the specified index. It is used as a faster version of treeInstances[index] as this function doesn't create the entire tree instances array.</para>
       </summary>
       <param name="index">The index of the tree instance.</param>
+    </member>
+    <member name="M:UnityEngine.TerrainData.OverrideMaximumHeightError(System.Single[])">
+      <summary>
+        <para>Override the maximum tessellation height error with user provided values.  Note that the overriden values get reset when the terrain resolution is changed and stays unchanged when the terrain heightmap is painted or changed via script.</para>
+      </summary>
+      <param name="maxError">Provided maximum height error values.</param>
+    </member>
+    <member name="M:UnityEngine.TerrainData.OverrideMinMaxPatchHeights(UnityEngine.PatchExtents[])">
+      <summary>
+        <para>Override the minimum and maximum patch heights for every renderable terrain patch.  Note that the overriden values get reset when the terrain resolution is changed and stays unchanged when the terrain heightmap is painted or changed via script.</para>
+      </summary>
+      <param name="minMaxHeights">Array of minimum and maximum terrain patch height values.</param>
     </member>
     <member name="M:UnityEngine.TerrainData.RefreshPrototypes">
       <summary>
@@ -764,7 +812,7 @@ Rotation of the tree on X-Z plane (in radians).</para>
     </member>
     <member name="P:UnityEngine.TreePrototype.prefab">
       <summary>
-        <para>Retrieves the actual GameObect used by the tree.</para>
+        <para>Retrieves the actual GameObject used by the tree.</para>
       </summary>
     </member>
     <member name="A:UnityEngine.TerrainModule">
