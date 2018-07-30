@@ -32,8 +32,9 @@ public abstract class Interactable : Entity
         CreateIndicator();
     }
 
-    private void Update()
+    new private void Update()
     {
+        base.Update();
         if (!m_player)
             return;
 

@@ -84,20 +84,6 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-
-            RaycastHit raycastHit;
-            Vector3 dir = m_actualPosition - (m_player.transform.position + Vector3.up);
-            Ray r = new Ray(m_player.transform.position + Vector3.up, dir.normalized);
-
-            if (Physics.Raycast(r, out raycastHit, m_baseDistanceFromTarget, m_groundMask))
-            {
-                m_distanceFromTarget = raycastHit.distance;
-            }
-            else
-            {
-                m_distanceFromTarget = m_baseDistanceFromTarget;
-            }
-
             bool p1Locked = Input.GetButtonDown(m_player.PlayerNumber + "_Target");
             bool reset = Input.GetAxis(m_player.PlayerNumber + "_Target") == 0.0f;
             if (reset)
@@ -149,6 +135,19 @@ public class CameraController : MonoBehaviour
                 Quaternion rot = Quaternion.LookRotation(m_target.transform.position + Vector3.up * 0.5f - transform.position, Vector3.up);
                 transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * m_responsiveness * 3.0f);
             }
+        }
+
+        RaycastHit raycastHit;
+        Vector3 dir = m_actualPosition - (m_player.transform.position + Vector3.up);
+        Ray r = new Ray(m_player.transform.position + Vector3.up * m_heightFromTarget, dir.normalized);
+
+        if (Physics.Raycast(r, out raycastHit, m_baseDistanceFromTarget, m_groundMask))
+        {
+            m_distanceFromTarget = raycastHit.distance;
+        }
+        else
+        {
+            m_distanceFromTarget = m_baseDistanceFromTarget;
         }
 
         Vector3 newPosition = m_actualPosition + (transform.rotation * m_shake);
