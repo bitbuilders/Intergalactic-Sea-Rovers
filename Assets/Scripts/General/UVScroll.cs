@@ -11,16 +11,22 @@ public class UVScroll : MonoBehaviour
 
     float x;
     float y;
+    float x_speed;
+    float y_speed;
 
     private void Start()
     {
         m_material = GetComponent<MeshRenderer>().material;
+        x_speed = m_horizontalSpeed;
+        y_speed = m_verticalSpeed;
     }
 
     private void Update()
     {
-        x += Time.deltaTime * m_horizontalSpeed;
-        y += Time.deltaTime * m_verticalSpeed;
+        x_speed = Mathf.PingPong(Time.time * 0.01f, Mathf.Abs(m_horizontalSpeed)) * 2.0f - Mathf.Abs(m_horizontalSpeed);
+        y_speed = Mathf.PingPong(Time.time * 0.01f, Mathf.Abs(m_verticalSpeed)) * 2.0f - Mathf.Abs(m_verticalSpeed);
+        x += Time.deltaTime * x_speed;
+        y += Time.deltaTime * y_speed;
         m_material.SetTextureOffset("_MainTex", new Vector2(x, y));
     }
 }
