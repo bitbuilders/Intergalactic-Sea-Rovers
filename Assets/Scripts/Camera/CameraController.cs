@@ -50,6 +50,7 @@ public class CameraController : MonoBehaviour
         m_shake = Vector3.zero;
         if (m_2D) m_camera.orthographic = true;
         if (!m_2D) m_camera.orthographic = false;
+        m_rotation.x = 10.0f;
 
         m_offset = new Vector3(0.0f, 0.0f, 2.0f).normalized;
         m_baseDistanceFromTarget = m_distanceFromTarget;
@@ -122,7 +123,7 @@ public class CameraController : MonoBehaviour
                 Vector3 newPos = offset + m_player.transform.position;
                 m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_responsiveness);
                 m_rotation = (m_startingRot * transform.rotation).eulerAngles;
-                m_rotation.x = 0.0f;
+                m_rotation.x = 10.0f;
             }
 
             if (!m_locked)
@@ -161,7 +162,7 @@ public class CameraController : MonoBehaviour
         m_offset.z = -m_player.transform.forward.z * m_offset.z;
         m_startingRot = m_player.transform.rotation;
         m_rotation = Vector3.zero;
-        m_rotation.x = -15.0f;
+        m_rotation.x = 10.0f;
         m_rotation = m_startingRot * m_rotation;
     }
 
