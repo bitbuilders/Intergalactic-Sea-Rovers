@@ -456,7 +456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 925.13074, y: -50}
+  m_AnchoredPosition: {x: 1017.3308, y: -50}
   m_SizeDelta: {x: 800, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &149686326
@@ -1362,8 +1362,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 675.06537, y: -682.6006}
-  m_SizeDelta: {x: 1350.1307, y: 1365.2012}
+  m_AnchoredPosition: {x: 721.1654, y: -638.9657}
+  m_SizeDelta: {x: 1442.3308, y: 1277.9314}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &424507695
 Prefab:
@@ -1985,7 +1985,7 @@ MonoBehaviour:
   m_rotationSpeed: 70
   m_drunkRotationSpeed: 135
   m_cameraStiffness: 7
-  m_distanceFromTarget: 6
+  m_distanceFromTarget: 5
   m_heightFromTarget: 2
   m_cameraLead: 5
   m_shakeAmplitude: 0.25
@@ -7505,7 +7505,7 @@ MonoBehaviour:
   m_rotationSpeed: 70
   m_drunkRotationSpeed: 135
   m_cameraStiffness: 7
-  m_distanceFromTarget: 6
+  m_distanceFromTarget: 5
   m_heightFromTarget: 2
   m_cameraLead: 5
   m_shakeAmplitude: 0.25
@@ -8264,8 +8264,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 2025.196, y: -682.6006}
-  m_SizeDelta: {x: 1350.1307, y: 1365.2012}
+  m_AnchoredPosition: {x: 2163.496, y: -638.9657}
+  m_SizeDelta: {x: 1442.3308, y: 1277.9314}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1253948739
 Prefab:

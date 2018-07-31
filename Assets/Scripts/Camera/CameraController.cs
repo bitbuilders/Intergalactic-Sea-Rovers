@@ -51,7 +51,7 @@ public class CameraController : MonoBehaviour
         if (m_2D) m_camera.orthographic = true;
         if (!m_2D) m_camera.orthographic = false;
 
-        m_offset = new Vector3(0.0f, 1.0f, 2.0f).normalized;
+        m_offset = new Vector3(0.0f, 0.0f, 2.0f).normalized;
         m_baseDistanceFromTarget = m_distanceFromTarget;
         m_startAmplitude = m_shakeAmplitude;
         m_startRate = m_shakeRate;
@@ -113,7 +113,7 @@ public class CameraController : MonoBehaviour
                 m_rotation.x += Input.GetAxis(m_player.PlayerNumber + "_CamVertical") * Time.deltaTime * rotSpeed;
                 Quaternion rotation = Quaternion.Euler(m_rotation);
                 Vector3 newPos = rotation * offset + m_player.transform.position + Vector3.up * m_heightFromTarget;
-                m_rotation.x = Mathf.Clamp(m_rotation.x, -30.0f, 25.0f);
+                m_rotation.x = Mathf.Clamp(m_rotation.x, 0.0f, 25.0f);
                 m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_responsiveness);
             }
             else
@@ -122,7 +122,7 @@ public class CameraController : MonoBehaviour
                 Vector3 newPos = offset + m_player.transform.position;
                 m_actualPosition = Vector3.Lerp(m_actualPosition, newPos, Time.deltaTime * m_responsiveness);
                 m_rotation = (m_startingRot * transform.rotation).eulerAngles;
-                m_rotation.x = -10.0f;
+                m_rotation.x = 0.0f;
             }
 
             if (!m_locked)
@@ -139,7 +139,7 @@ public class CameraController : MonoBehaviour
 
         RaycastHit raycastHit;
         Vector3 dir = m_actualPosition - (m_player.transform.position + Vector3.up);
-        Ray r = new Ray(m_player.transform.position + Vector3.up * m_heightFromTarget, dir.normalized);
+        Ray r = new Ray(m_player.transform.position + Vector3.up * (m_heightFromTarget), dir.normalized);
 
         if (Physics.Raycast(r, out raycastHit, m_baseDistanceFromTarget, m_groundMask))
         {
